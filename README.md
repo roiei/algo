@@ -1,11 +1,9 @@
 # algo
 
 Hi, I'm Roy.
-I updated some instructive here codes because I just want to share my codes throughout studying various kins of algorithms and data structures.
-I'll be very happy if you update some codes of algorithm and data structure.
+I updated some instructive codes here because I just want to share my codes written throughout studying various kins of algorithms and data structures.
+I'll be very happy if you update some codes about algorithm and data structure.
 
-In the first commit, 
-I added the following items.
 
 A. data structure
 
@@ -33,3 +31,8 @@ B. algorithms
      boubble sort : i is from 0 to n-1, j is from 1 to n-i, 
      compare j-1 to j -> exchange
      
+  4. merge_sort.py : merge sort using merge is added
+     merge sort is merging two parts of source from the unit size 1 and the unit size is going to increased as multiple of 2
+     
+
+
