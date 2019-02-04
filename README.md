@@ -6,7 +6,9 @@ I'll be very happy if you update some codes of algorithm and data structure.
 
 In the first commit, 
 I added the following items.
+
 A. data structure
+
   1. bst.py : binary search tree
   2. graph.py : undirected, directed, weighted graph, 
      DFS, BFS, MCST PFS, MCST Krukusal, PFS, Dijkstra
@@ -14,7 +16,9 @@ A. data structure
   4. hash_separate_chanining.py : hash implementation with separate chaining as collision avoidance
   5. prio.queue.py : priority queue implementation based on heap sort
   6. Set.py : set data structure
+  
 B. algorithms
+
   1. MazeGraph.py : algorithm to check if it is possible to get through to the exit point with the given array
   2. quick_sort.py : quick sort implementation
      recursive version, stack version
