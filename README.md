@@ -23,6 +23,12 @@ B. algorithms
   2. quick_sort.py : quick sort implementation
      recursive version, stack version
   3. sort.py : basic sort algorithms with O(N^2)
-     select sort : i is from 0 to n-1, j is from i to n-1, and compare i to j -> exchange
-     insert sort : i is from 1 to n-1, j is from i to 0, compare j-1 to j -> exchange
-     boubble sort : i is from 0 to n-1, j is from 1 to n-i, compare j-1 to j -> exchange
+     select sort : i is from 0 to n-1, j is from i to n-1, 
+     and compare i to j -> exchange
+     
+     insert sort : i is from 1 to n-1, j is from i to 0, 
+     compare j-1 to j -> exchange
+     
+     boubble sort : i is from 0 to n-1, j is from 1 to n-i, 
+     compare j-1 to j -> exchange
+     
