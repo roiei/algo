@@ -34,5 +34,8 @@ B. algorithms
   4. merge_sort.py : merge sort using merge is added
      merge sort is merging two parts of source from the unit size 1 and the unit size is going to increased as multiple of 2
      
+C. Problem Solving
 
+1) Algorithm code for the problems from 'LeetCode'
 
+2) Algorithm code for the problems from HackerRank, acmpic, etc.
