@@ -79,6 +79,20 @@ def sort_boubble(a, n):
             if a[j-1] > a[j]:
                 a[j-1], a[j] = a[j], a[j-1]
 
+def sort_shell(a, n):
+    h = 1
+    while h < n:
+        h = 3*h+1
+
+    
+    for h in range(h / 3, 0, h / 3):
+        pass
+    while h > 0:
+        for i in range(h):
+            h /= 3
+
+
+
 a = [] 
 for ch in 'ALGORITHM':
     a.append(ch)

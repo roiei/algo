@@ -100,6 +100,40 @@ class Tree:
         self.num += 1
 
     def remove(self, key):
+        '''
+            1)
+                  [ ] <- parent
+                  /             <- if left, set cur parent's left = cur
+                [ ]   <- del       if right, set cur parent's right = cur
+               /   \
+             [ ]   [ ]
+    unlink->    \
+                [ ]
+                   \
+                  [CUR]  <- sel as cur
+                  /   \
+                [a]   nil
+
+                  [ ] <- parent
+                  /
+                [CUR]     parent'child = cur
+               /   \'     cur's right = del's right
+             [ ]   [ ]    cur's left = del's left
+    unlink->    \
+                [ ]       
+                  \'      
+                   [a]    cur's parent's right = cur's previous left
+            
+            2)
+                [ ]  <- del
+                   \
+                   [ ]
+                  /   
+                [ ]  <- sel as cur
+
+            3)  [ ]  <- del
+              nil  nil
+        '''
         direction = ''
         node = self.find(key)
         if None == node:
@@ -119,16 +153,17 @@ class Tree:
             cur = node
 
         # what about root?
-
         if node.parent.right == node:
             node.parent.right = cur
         else:
             node.parent.left = cur
+
+        # unlink
         if None != cur:
             if direction == 'right':
-                cur.parent.right = None
+                cur.parent.right = cur.left  # cur's parent's right = cur's previous left
             elif direction == 'left':
-                cur.parent.left = None
+                cur.parent.left = cur.right
             cur.right = node.right
             cur.left  = node.left
         return node
@@ -142,7 +177,7 @@ class Tree:
 
 tree = Tree()
 
-values = [45, 27, 90, 20, 31, 12, 22, 80, 74, 85, 72, 75, 84, 87, 97, 101]
+values = [45, 27, 90, 20, 31, 12, 22, 80, 74, 85, 72, 75, 84, 87, 97, 101, 86]
 for val in values:
     tree.insert(Node(val))
 
@@ -153,8 +188,8 @@ tree.traverse('in')
 print('\npost order')
 tree.traverse('post')
 
-print('removing 27')
-tree.remove(27)
+print('removing 90')
+tree.remove(90)
 tree.traverse('post')
 tree.traverse('level')
 

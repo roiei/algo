@@ -204,7 +204,10 @@ class Graph:
         while not traq.empty():
             cur_v = traq.get()
             for v in self.vertices:
-                if v.visit == False and v.distance > 0 and cur_v.distance > v.distance:
+                if (v.visit == False 
+                    and v.distance > 0 
+                    and cur_v.distance > v.distance):
+
                     v.visit = True
                     traq.put(v)
                     for link in v.adjlist:
