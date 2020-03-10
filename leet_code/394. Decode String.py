@@ -1,30 +1,30 @@
 
 class Solution:
-    def decode(self, s, i):
-        res = ''
-        while i < len(s) and s[i] != ']':
-            if not ('0' <= s[i] <= '9'):
-                res+= s[i]
-                i+= 1
-            else:
-                n = 0
-                while i < len(s) and '0' <= s[i] <= '9':
-                    n = n*10 + int(s[i])
-                    i+= 1
+    def decodeString(self, s: str) -> str:
+        def dfs(s, l, r):
+            res = ''
+            while l < r:
+                if s[l] == ']':
+                    break
 
-                i+= 1
-                t, i = self.decode(s, i)
-                i+= 1
-
-                while n > 0:
-                    res+= t
-                    n-= 1
-
-        return res, i
-
-    def decodeString(self, s):
-        dec_str, len = self.decode(s, 0)
-        return dec_str;
+                if 'a' <= s[l] <= 'z' or 'A' <= s[l] <= 'Z':
+                    res += s[l]
+                    l += 1
+                    continue
+                
+                num = 0
+                while l < r and ('0' <= s[l] <= '9'):
+                    num = num*10 + int(s[l])
+                    l += 1
+                
+                l += 1      # for '['
+                ret, l = dfs(s, l, r)
+                res += ret*num
+            
+            return res, l+1
+        
+        dstr, l = dfs(s, 0, len(s))
+        return dstr
 
 
 sequence = "3[a]2[bc]"

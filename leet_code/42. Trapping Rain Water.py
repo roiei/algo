@@ -1,6 +1,6 @@
 
 class Solution(object):
-    def trap(self, height):
+    def trap1(self, height):
         if not height:
             return 0
 
@@ -42,10 +42,40 @@ class Solution(object):
 
         return tot_trap_cnt
 
+    def trap(self, height: 'List[int]') -> int:
+        if not height:
+            return 0
+        fill = 0
+        n = len(height)
+        while True:
+            mcur = max(height)
+            if 0 == mcur:
+                break
+            line = [i for i in range(n) if mcur == height[i]]
+            for i in range(len(line)-1):
+                fill += line[i+1] - line[i] - 1
+            height = [h-1 if h == mcur else h for h in height]
+        return fill
 
-height = [0,1,0,2,1,0,1,3,2,1,2,1]
+    def trap(self, height: 'List[int]') -> int:
+        if not height:
+            return 0
+        
+
+        left = height.pop(0)
+        n = len(height)
+        right = 0
+
+        for i in range(n):
+            if left > height[i]:
+                right = height[i]
+                if i == n - 1:
+                    min(left, right)
+                continue
+
+
+
+
 height = [2, 0, 2] # 2
 
-sol = Solution()
-ret = sol.trap(height)
-print(ret)
+print(6 == Solution().trap([0,1,0,2,1,0,1,3,2,1,2,1]))

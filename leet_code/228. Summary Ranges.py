@@ -19,7 +19,7 @@ class Solution:
                 j+= 1
 
             res.append([start, end])
-            i+= end-start + 1
+            i+= end - start + 1
 
         ret = []
         for r in res:
@@ -28,6 +28,29 @@ class Solution:
             else:
                 ret.append('{}->{}'.format(nums[r[0]], nums[r[1]]))
         return ret
+
+
+    def summaryRanges(self, nums: List[int]) -> List[str]:
+        if not nums:
+            return []
+        res = []
+        
+        def add_range(start, end, res):
+            if start == end:
+                res += '{}'.format(start),
+            else:
+                res += '{}->{}'.format(start, pre),
+                
+        pre = start = nums[0]
+        for i in range(1, len(nums)):
+            if pre + 1 < nums[i]:
+                add_range(start, pre, res)
+                start = nums[i]
+            pre = nums[i]
+        
+        add_range(start, pre, res)        
+        return res
+
 
 nums = [0,1,2,4,5,7]
 nums = [0,2,3,4,6,8,9]

@@ -1,18 +1,18 @@
 
-class Solution(object):
-    def frequencySort(self, s):
+class Solution:
+    def frequencySort(self, s: str) -> str:
+        if not str:
+            return ''
         adict = {}
-        for i in range(len(s)):
-            if s[i] not in adict:
-                adict[s[i]] = 1
+        for ch in s:
+            if ch not in adict:
+                adict[ch] = 1
             else:
-                adict[s[i]]+= 1
+                adict[ch] += 1
+        res_tuple = sorted(adict.items(), key=lambda p:p[1], reverse=True)
+        return ''.join([rt[0]*rt[1] for rt in res_tuple])
 
-        adict = sorted(adict.items(), key=lambda param : param[1], reverse=True)
-        output = ''
-        for i in range(len(adict)):
-            output += adict[i][0]*adict[i][1]
-        return output
+
 
 
 sol = Solution()

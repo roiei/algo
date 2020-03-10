@@ -1,3 +1,5 @@
+
+
 class Solution:
     wnd_size = 0
     n = 0
@@ -9,10 +11,8 @@ class Solution:
         if self.n >= self.wnd_size:
             self.vals.pop(0)
             self.n -= 1
-
         self.vals.append(val)
         self.n += 1
-
         return sum(self.vals) / self.n
         
 

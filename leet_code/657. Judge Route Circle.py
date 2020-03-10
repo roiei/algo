@@ -1,18 +1,24 @@
-def judge_route_circle(seq):
-    iy = ix = sy = sx = 0
-    move = {
-        'U' : [-1, 0],
-        'D' : [1, 0],
-        'L' : [0, -1],
-        'R' : [0, 1]
-    }
-    for s in seq:
-        sy += move[s][0]
-        sx += move[s][1]
+import time
 
-    if sy == iy and sx == ix:
-        return True
-    return False
 
-print(judge_route_circle("UD"))
-print(judge_route_circle("LL"))
+class Solution:
+    def __init__(self):
+        self.dirs = {}
+        self.dirs['U'] = [ 1,  0]
+        self.dirs['D'] = [-1,  0]
+        self.dirs['L'] = [ 0, -1]
+        self.dirs['R'] = [ 0,  1]
+
+    def judgeCircle(self, moves: str) -> bool:
+        ix = iy = sx = sy = 0
+        for m in moves:
+            sy += self.dirs[m][0]
+            sx += self.dirs[m][1]
+        return True if iy == sy and ix == sx else False
+
+
+stime = time.time()
+r = Solution().judgeCircle('UD')
+print(r)
+print('elapse time: {} sec'.format(time.time() - stime))
+

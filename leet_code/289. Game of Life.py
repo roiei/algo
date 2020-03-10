@@ -1,57 +1,25 @@
+import copy
+
 class Solution:
     def gameOfLife(self, board: 'List[List[int]]') -> None:
         height = len(board)
         width = len(board[0])
+        dirs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]]
         next_board = [[0 for i in range(width)] for j in range(height)]
-        for i in range(height):
-            for j in range(width):
-                next_board[i][j] = board[i][j]
+        next_board = copy.deepcopy(board)
 
         for y in range(height):
             for x in range(width):
                 cnt_live = 0
                 cnt_dead = 0
-                if y > 0 and x > 0:
-                    if 1 == board[y-1][x-1]:
-                        cnt_live += 1
-                    else:
-                        cnt_dead += 1
-                if y > 0:
-                    if 1 == board[y-1][x]:
-                        cnt_live += 1
-                    else:
-                        cnt_dead += 1
-                if y > 0 and x < width-1:
-                    if 1 == board[y-1][x+1]:
-                        cnt_live += 1
-                    else:
-                        cnt_dead += 1
-                if x < width-1:
-                    if 1 == board[y][x+1]:
-                        cnt_live += 1
-                    else:
-                        cnt_dead += 1
-                if y < height-1 and x < width-1:
-                    if 1 == board[y+1][x+1]:
-                        cnt_live += 1
-                    else:
-                        cnt_dead += 1
-                if y < height-1:
-                    if 1 == board[y+1][x]:
-                        cnt_live += 1
-                    else:
-                        cnt_dead += 1
-                if y < height-1 and x > 0:
-                    if 1 == board[y+1][x-1]:
-                        cnt_live += 1
-                    else:
-                        cnt_dead += 1
-                if x > 0:
-                    if 1 == board[y][x-1]:
-                        cnt_live += 1
-                    else:
-                        cnt_dead += 1
-
+                for dir in dirs:
+                    ny = y + dir[0]
+                    nx = x + dir[1]
+                    if 0 <= ny < height and 0 <= nx < width:
+                        if 1 == board[ny][nx]:
+                            cnt_live += 1
+                        else:
+                            cnt_dead += 1
                 if 0 == board[y][x]:
                     if 3 == cnt_live:
                         next_board[y][x] = 1
@@ -60,8 +28,7 @@ class Solution:
                         next_board[y][x] = 0
 
         for i in range(height):
-            for j in range(width):
-                board[i][j] = next_board[i][j]
+            board[i] = next_board[i][:]  # in-place !!!
 
 in_game = [
   [0,1,0],

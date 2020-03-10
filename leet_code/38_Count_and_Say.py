@@ -1,28 +1,28 @@
 class Solution:
     def countAndSay(self, n: int) -> str:
-        tbl = {}
-        tbl[1] = '1'
-        tbl[2] = '11'
-        cur = '11'
-        for i in range(3, 30+1):
-            out = ''
-            idx = 0
-            while len(cur) > idx:
-                count = 0
-                while len(cur) > idx+1:
-                    if cur[idx] != cur[idx+1]:
+        cur = '1'
+
+        for i in range(1, n):
+            next = ''
+            j = 0
+
+            while j < len(cur):
+                same_cnt = 1     # at least 1
+
+                while j < len(cur) - 1:
+                    if cur[j] != cur[j + 1]:
                         break
-                    count += 1
-                    idx += 1
-                out += str(count+1)
-                out += cur[idx]
-                idx += 1
-            if 0 == idx:
-                out = cur[idx]
-            tbl[i] = out[::]
-            cur = tbl[i]
-        
-        return tbl[n]
+                    same_cnt += 1
+                    j += 1
+
+                next += str(same_cnt)
+                next += cur[j]
+                j += 1
+
+            cur = next
+
+        return cur
+
 
 sol = Solution()
 print(sol.countAndSay(1))

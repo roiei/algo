@@ -1,3 +1,9 @@
+import time
+from util.util_list import *
+from util.util_tree import *
+import copy
+import collections
+
 
 class Solution:
     def totalFruit(self, tree: 'List[int]') -> 'int':
@@ -22,12 +28,36 @@ class Solution:
         print(lengths)
         return max(lengths)
 
-tree = [1, 2, 1]
-tree = [1,2,3,2,2]
-tree = [3,3,3,1,2,1,1,2,3,3,4]
 
-print(tree.count(1))
+    def totalFruit(self, tree: [int]) -> int:
+        wnd = []
+        mcnt = cnt = 0
+        pre = -1
 
-sol = Solution()
-print(sol.totalFruit(tree))
+        idx = collections.defaultdict(int)
+        
+        for i, t in enumerate(tree):
+            if t not in wnd:
+                if len(wnd) == 2:
+                    wnd = [pre]
+                    cnt = i - idx[pre]
+                wnd += t,
 
+            if pre != t:
+                idx[t] = i
+
+            cnt += 1
+            mcnt = max(mcnt, cnt)
+            pre = t
+        
+        return mcnt
+
+
+
+stime = time.time()
+print(3 == Solution().totalFruit([1, 2, 1]))
+print(3 == Solution().totalFruit([0,1,2,2]))
+print(4 == Solution().totalFruit([1,2,3,2,2]))
+print(5 == Solution().totalFruit([3,3,3,1,2,1,1,2,3,3,4]))
+print(5 == Solution().totalFruit([1,0,1,4,1,4,1,2,3]))
+print('elapse time: {} sec'.format(time.time() - stime))

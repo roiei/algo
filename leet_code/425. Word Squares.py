@@ -44,9 +44,14 @@ class Solution:
         word_len = len(words[0])
         combs = []
         self.get_combs(words, n, 0, word_len, 0, [], combs)
+        print(combs)
         for i in range(len(combs)):
             perms = []
             self.get_perms(combs[i], n-1, 0, [], [], perms)
+            #print(perms)
+            # for i in perms:
+            #     print(i)
+            # print()
             square_idxs = self.check_square(perms, word_len)
             if None != square_idxs:
                 for idx in range(len(square_idxs)):

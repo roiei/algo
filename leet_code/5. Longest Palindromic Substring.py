@@ -27,7 +27,7 @@ class Solution:
 
         return True if True == is_palin_l or True == is_palin_r else False, palin
 
-    def longestPalindrome(self, s: str) -> str:
+    def longestPalindrome_(self, s: str) -> str:
         if not s:
             return ""
         self.cache.clear()
@@ -75,13 +75,105 @@ class Solution:
         return ''
 
 
+    def longestPalindrome(self, s: str) -> str:
+        if '' == s:
+            return ''
+
+        n = len(s)
+        l = 0
+        r = n-1
+        
+        rs = s[::-1]
+        toggle = True
+        q = [(l, r)]
+        mem = {}
+        
+        while q:
+            l, r = q.pop(0)
+            if (l, r) in mem:
+                continue
+            if rs[n-r-1:n-l] == s[l:r+1]:
+                return s[l:r+1]
+
+            if l <= r:
+                q += (l+1, r),
+                q += (l, r-1),
+            
+            mem[(l, r)] = True
+
+        return ''
+
+    def longestPalindrome(self, s: str) -> str:
+        i = 0;
+        n = len(s)
+        palin = ''
+        plen = 0
+
+        while i < n:
+            l = i
+            r = i
+
+            if r < n - 1 and s[r] == s[r+1]:
+                r += 1
+
+            while l > 0 and r < n-1 and s[l] == s[r]:
+                l -= 1
+                r += 1
+
+            length = len(s[l:r+1])
+            if length > plen:
+                palin = s[l:r+1]
+                plen = length
+
+            # while l >= 0 and r < n and s[l] == s[r]:
+            #     l -= 1
+            #     r += 1
+
+            # length = len(s[l+1:r])
+            # if length > plen:
+            #     palin = s[l+1:r]
+            #     plen = length
+
+            i += 1
+        return palin
+
+    def longestPalindrome(self, s: str) -> str:
+        i = 0;
+        n = len(s)
+        palin = ''
+        plen = 0
+
+        while i < n:
+            l = i
+            r = i
+
+            while r + 1 < n and s[r] == s[r + 1]:
+                r += 1
+            while l >= 0 and r < n and s[l] == s[r]:
+                l -= 1
+                r += 1
+
+            length = len(s[l+1:r])
+            if length > plen:
+                palin = s[l+1:r]
+                plen = length
+
+            i += 1
+        return palin
+
+
+#print(Solution().longestPalindrome("ccd"))
+#print(Solution().longestPalindrome("abb"))
+print(Solution().longestPalindrome("eabccb"))
+
+
 sol = Solution()
-ret = sol.longestPalindrome_stack("babad")
-print(ret)
+# ret = sol.longestPalindrome_stack("babad")
+# print(ret)
 
 
-ret = sol.longestPalindrome_stack("nypdmqqgauepeyfvwcdpbmmaxfwxmmtswfuwldtvqcisywalfnvovuordczxlyzqmslxilpnenbuwbcpebneovitwkkswsijajnkwkfbxnulmwotgrmpklntfyjavccbrgwqynryeoswmhsqzcwnudkuvfkikjxjkjpghsytjfkpvkjpvblamdeegeohospporbtorkbuggbawgodhxpscfksjbirxvjyjapwwushmnqsxktnslvonlwvuseinrmwvfqjgzpkwcqfzfdbbmcngmsoeegudwjvldqmaomwbqvijesnpxiqvtfeiqebrfjhtvjdwkopyfzaslewdjnkmalvfinbuouwcgnfecjtdzwycxrynxepbcsroyzrsgiiuaszvatwyuxinwhni")
-print(ret)
+# ret = sol.longestPalindrome_stack("nypdmqqgauepeyfvwcdpbmmaxfwxmmtswfuwldtvqcisywalfnvovuordczxlyzqmslxilpnenbuwbcpebneovitwkkswsijajnkwkfbxnulmwotgrmpklntfyjavccbrgwqynryeoswmhsqzcwnudkuvfkikjxjkjpghsytjfkpvkjpvblamdeegeohospporbtorkbuggbawgodhxpscfksjbirxvjyjapwwushmnqsxktnslvonlwvuseinrmwvfqjgzpkwcqfzfdbbmcngmsoeegudwjvldqmaomwbqvijesnpxiqvtfeiqebrfjhtvjdwkopyfzaslewdjnkmalvfinbuouwcgnfecjtdzwycxrynxepbcsroyzrsgiiuaszvatwyuxinwhni")
+# print(ret)
 
-ret = sol.longestPalindrome("flsuqzhtcahnyickkgtfnlyzwjuiwqiexthpzvcweqzeqpmqwkydhsfipcdrsjkefehhesubkirhalgnevjugfohwnlhbjfewiunlgmomxkafuuokesvfmcnvseixkkzekuinmcbmttzgsqeqbrtlwyqgiquyylaswlgfflrezaxtjobltcnpjsaslyviviosxorjsfncqirsjpkgajkfpoxxmvsyynbbovieoothpjgncfwcvpkvjcmrcuoronrfjcppbisqbzkgpnycqljpjlgeciaqrnqyxzedzkqpqsszovkgtcgxqgkflpmrikksaupukdvkzbltvefitdegnlmzeirotrfeaueqpzppnsjpspgomyezrlxsqlfcjrkglyvzvqakhtvfmeootbtbwfhqucbnuwznigoyatvkocqmbtqghybwrhmyvvuchjpvjckiryvjfxabezchynfxnpqaeampvaapgmvoylyutymdhvhqfmrlmzkhuhupizqiujpwzarnszrexpvgdmtoxvjygjpmiadzdcxtggwamkbwrkeplesupagievwsaaletcuxtpsxmbmeztcylsjxvhzrqizdmgjfyftpzpgxateopwvynljzffszkzzqgofdlwyknqfruhdkvmvrrjpijcjomnrjjubfccaypkpfokohvkqndptciqqiscvmpozlyyrwobeuazsawtimnawquogrohcrnmexiwvjxgwhmtpykqlcfacuadyhaotmmxevqwarppknoxthsmrrknu")
-print(ret)
+# ret = sol.longestPalindrome("flsuqzhtcahnyickkgtfnlyzwjuiwqiexthpzvcweqzeqpmqwkydhsfipcdrsjkefehhesubkirhalgnevjugfohwnlhbjfewiunlgmomxkafuuokesvfmcnvseixkkzekuinmcbmttzgsqeqbrtlwyqgiquyylaswlgfflrezaxtjobltcnpjsaslyviviosxorjsfncqirsjpkgajkfpoxxmvsyynbbovieoothpjgncfwcvpkvjcmrcuoronrfjcppbisqbzkgpnycqljpjlgeciaqrnqyxzedzkqpqsszovkgtcgxqgkflpmrikksaupukdvkzbltvefitdegnlmzeirotrfeaueqpzppnsjpspgomyezrlxsqlfcjrkglyvzvqakhtvfmeootbtbwfhqucbnuwznigoyatvkocqmbtqghybwrhmyvvuchjpvjckiryvjfxabezchynfxnpqaeampvaapgmvoylyutymdhvhqfmrlmzkhuhupizqiujpwzarnszrexpvgdmtoxvjygjpmiadzdcxtggwamkbwrkeplesupagievwsaaletcuxtpsxmbmeztcylsjxvhzrqizdmgjfyftpzpgxateopwvynljzffszkzzqgofdlwyknqfruhdkvmvrrjpijcjomnrjjubfccaypkpfokohvkqndptciqqiscvmpozlyyrwobeuazsawtimnawquogrohcrnmexiwvjxgwhmtpykqlcfacuadyhaotmmxevqwarppknoxthsmrrknu")
+# print(ret)

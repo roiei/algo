@@ -1,61 +1,51 @@
 class Solution:
-    cnt = 0
-    times = []
-    def perm_dup(self, time, n, depth, trace):
-        if depth == n:
-            first = int(trace[0])
-            second = int(trace[1])
-            if 0 <= first <= 2 and (not (first == 2 and (0 <= second <= 3))):
-                self.times.append(trace[::])
-                self.cnt += 1
-            return
-
-        for i in range(n):
-            trace.append(time[i])
-            self.perm_dup(time, n, depth+1, trace)
-            trace.pop()
-
-    def next_time(self, time: str) -> int:
-        time = [i for i in time if i != ':']
-        self.perm_dup(time, len(time), 0, [])
-        return self.get_closest(time)
-
-    def convert_min(self, time):
-        minite = int(time[0])*10*60 + int(time[1])*60 + int(time[2])*10 + int(time[3])
-        return minite
-
-    def convert_strhour(self, vals):
-        hours = vals//60
-        minute = vals%60
-        return '{:02}:{:02}'.format(hours, minute)
-
-    def get_closest(self, base):
-        b = self.convert_min(base)
-        pos_diffs = []
-        neg_diffs = []
-        for t in self.times:
-            diff = self.convert_min(t) - b
-            if diff < 0:
-                neg_diffs.append(diff)
-            else:
-                if diff != 0:
-                    pos_diffs.append(diff)
+    """
+    @param time: the given time
+    @return: the next closest time
+    """
+    def nextClosestTime(self, time):
+        time = time.split(':')
+        nums = []
+        for t in time:
+            for ch in t:
+                nums += int(ch),
         
-        neg_diffs.sort(reverse=True)
-        pos_diffs.sort()
+        anchor = nums[0]*10*60 + nums[1]*60 + nums[2]*10 + nums[3]
+        
+        def dfs(nums, n, k, trace, res):
+            if k == 0:
+                hour = int(''.join([str(trace[0]), str(trace[1])]))
+                minute = int(''.join([str(trace[2]), str(trace[3])]))
 
-        closest = pos_diffs[0]
-        if not pos_diffs:
-            closest = neg_diffs[-1]
+                if 0 <= hour <= 24:
+                    if not (hour == 24 and minute > 0):
+                        if minute < 60:
+                            res += trace,
+                return
+        
+            for i in range(n):
+                dfs(nums, n, k - 1, trace + [nums[i]], res)
+            
+        res = []
+        dfs(nums, len(nums), len(nums), [], res)
 
-        return self.convert_strhour(b + closest)
+        time = []
+        for r in res:
+            time += r[0]*10*60 + r[1]*60 + r[2]*10 + r[3],
 
-    def print_times(self):
-        for t in self.times:
-            print(t)
+        time.sort()
 
-time = "17:31"
+        time += 24*60 + time[0],
+        
+        for t in time:
+            if t > anchor:
+                if t >= 24*60:
+                    t -= 24*60
+                res = '{:02}:{:02}'.format(t//60, t%60)
+                return res
+        return ''
 
-sol = Solution()
-ret = sol.next_time(time)
-print(ret)
+
+#print('17:33' == Solution().nextClosestTime("17:31"))
+#print("22:22" == Solution().nextClosestTime("23:59"))
+print("00:00" == Solution().nextClosestTime("09:59"))

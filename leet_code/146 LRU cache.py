@@ -17,11 +17,11 @@ class LRUCache(object):
         if key not in self.data and self.n == self.capacity:
             self.data.pop(self.lru[-1])
             self.lru.pop()
-            self.n-= 1
+            self.n -= 1
 
         if key in self.data:
             self.lru.pop(self.lru.index(key))
-            self.n-= 1
+            self.n -= 1
 
         self.data[key] = value
         self.lru[0:0] = [key]
