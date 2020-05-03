@@ -1,6 +1,6 @@
 import time
-from util_list import *
-from util_tree import *
+from util.util_list import *
+from util.util_tree import *
 import copy
 import collections
 
@@ -71,9 +71,75 @@ class Solution:
         return res
 
 
+    def fullJustify(self, words: [str], maxWidth: int) -> [str]:
+        def make_line(line, filled_word):
+            spaces = maxWidth - filled_word
+            num_word = len(line) - 1
+            str_line = ''
+
+            if num_word > 1:
+                space_between = spaces // num_word
+                pad = spaces - space_between*num_word
+
+                num_word = len(line)
+
+                while line:
+                    str_line += line.pop(0)
+                    if line:
+                        str_line += space_between*' '
+                        if pad:
+                            str_line += ' '
+                            pad -= 1
+            else:
+                while line:
+                    str_line += line.pop(0)
+                    if line:
+                        str_line += spaces*' '
+
+                str_line += (maxWidth - len(str_line))*' '
+                
+            return str_line
+            
+        
+        filled_word = filled = 0
+        line, lines = [], []
+        
+        for word in words:
+            if filled + len(word) > maxWidth:
+                str_line = make_line(line, filled_word)
+                lines += str_line,
+                filled_word = filled = 0
+                line = []
+                
+            filled += len(word) + 1
+            filled_word += len(word)
+            line += word,
+        
+        if filled_word > 0:
+            str_line = ''
+            while line:
+                str_line += line.pop(0)
+                if line:
+                    str_line += ' '
+
+            str_line += (maxWidth - len(str_line))*' '
+            lines += str_line,
+        
+        return lines
+            
+
+
+
 stime = time.time()
-print(Solution().fullJustify(["ask","not","what","your","country","can","do","for","you","ask","what","you","can","do","for","your","country"], 16))
-#print(Solution().fullJustify(["Science","is","what","we","understand","well","enough","to","explain","to","a","computer.","Art","is","everything","else","we","do"], 20))
+#print(["This    is    an", "example  of text", "justification.  "] == Solution().fullJustify(["This", "is", "an", "example", "of", "text", "justification."], 16))
+#print(["What   must   be","acknowledgment  ","shall be        "] == Solution().fullJustify(["What","must","be","acknowledgment","shall","be"], 16))
+#print(Solution().fullJustify(["ask","not","what","your","country","can","do","for","you","ask","what","you","can","do","for","your","country"], 16))
+print(["Science  is  what we","understand      well","enough to explain to","a  computer.  Art is","everything  else  we","do                  "] == Solution().fullJustify(["Science","is","what","we","understand","well","enough","to","explain","to","a","computer.","Art","is","everything","else","we","do"], 20))
 #print(Solution().fullJustify(["What","must","be","acknowledgment","shall","be"], 16))
 #print(Solution().fullJustify(["This", "is", "an", "example", "of", "text", "justification."], 16))
 print('elapse time: {} sec'.format(time.time() - stime))
+
+
+['Science  is  what we', 'understand      well', 'enough   to  explain', 'to  a  computer. Art', 'is  everything  else', 'we do               ']
+
+["Science  is  what we","understand      well","enough to explain to","a  computer.  Art is","everything  else  we","do                  "]

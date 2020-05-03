@@ -20,7 +20,7 @@ class Trie:
         self.root = TrieNode(None)
     
     def add(self, word):
-        if self.search(word):
+        if self.search(node=self.root, word=word):
             return
 
         node = self.root
@@ -31,25 +31,12 @@ class Trie:
             node = node.child[ch]
         
         node.eow = True
-    
-    def sub_search(self, word, node):
+            
+    def search(self, node, word):
         for i, ch in enumerate(word):
-            if ch not in node.child and ch != '.':
+            if not node.child:
                 return False
 
-            if ch == '.':
-                for k in node.child.keys():
-                    if self.sub_search(word[i + 1:], node.child[k]):
-                        return True
-            else:
-                node = node.child[ch]
-        
-        return True if node.eow else False
-            
-    def search(self, word):
-        node = self.root
-        
-        for i, ch in enumerate(word):
             if ch not in node.child and ch != '.':
                 return False
             
@@ -57,9 +44,14 @@ class Trie:
                 if not node.child:
                     return False
 
+                res = []
                 for k in node.child.keys():
-                    if self.sub_search(word[i + 1:], node.child[k]):
-                        return True
+                    res += self.search(node.child[k], word[i + 1:]),
+
+                if any(res):
+                    return True
+                else:
+                    return False  # !
             else:
                 node = node.child[ch]
         
@@ -74,18 +66,33 @@ class WordDictionary:
         self.trie.add(word)
 
     def search(self, word: str) -> bool:
-        return self.trie.search(word)
+        print('\n+search')
+        return self.trie.search(node=self.trie.root, word=word)
 
 
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
 # obj.addWord(word)
 # param_2 = obj.search(word)
-        
-ins = zip(["WordDictionary","addWord","addWord","search","search","search","search","search","search"], [[],["a"],["a"],["."],["a"],["aa"],["a"],[".a"],["a."]], [None,None,None,True,True,False,True,False,False])
+
+
+#case = zip(["WordDictionary","addWord","addWord","search","search","search","search","search","search"], [[],["a"],["a"],["."],["a"],["aa"],["a"],[".a"],["a."]], [None,None,None,True,True,False,True,False,False])
+
+
+#case = zip(["WordDictionary","addWord","addWord","search","search","search","search","search","search"], [[],["a"],["a"],["."],["a"],["aa"],["a"],[".a"],["a."]], [None,None,None,True,True,False,True,False,False])
+
+#case = zip(["WordDictionary","addWord","addWord","search",], ['',"a","a",".a"], [None,None,None,False])
+
+#case = zip(["WordDictionary","addWord","addWord","addWord","addWord","search","search","addWord","search","search","search","search","search","search"], ["","at","and","an","add","a",".at","bat",".at","an.","a.d.","b.","a.d","."], [None,None,None,None,None,False,False,None,True,True,False,False,True,False])
+
+case = zip(["WordDictionary","addWord","addWord","addWord","addWord","search","search","addWord","search","search","search","search","search","search"], ["","at","and","an","add",
+    "a",".at","bat",".at","an.","a.d.","b.","a.d","."], [None,None,None,None,None,False,False,None,True,True,False,False,True,False])
+
+
+
 
 wd = None
-for op, param, expected in ins:
+for op, param, expected in case:
     if op == 'WordDictionary':
         wd = WordDictionary()
     elif op == 'addWord':

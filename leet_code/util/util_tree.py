@@ -20,12 +20,12 @@ def deserialize(data):
     while q and idx < len(data):
         cur = q.pop(0)
         cur.left = TreeNode(data[idx]) if data[idx] != None else None
-        idx+= 1
+        idx += 1
         if cur.left:
             q.append(cur.left)
         if idx < len(data):
             cur.right = TreeNode(data[idx]) if data[idx] != None else None
-            idx+= 1
+            idx += 1
             if cur.right:
                 q.append(cur.right)
     return node
@@ -49,3 +49,19 @@ def traverse_level(node):
         q = nq
         ts += t,
     return ts
+
+
+def tree_is_same(node1, node2):
+    def dfs(node1, node2):
+        if not node1 and not node2:
+            return True
+
+        if (not node1 and node2) or (node1 and not node2):
+            return False
+
+        if node1.val != node2.val:
+            return False
+
+        return dfs(node1.left, node2.left) and dfs(node1.right, node2.right)
+
+    return dfs(node1, node2)
