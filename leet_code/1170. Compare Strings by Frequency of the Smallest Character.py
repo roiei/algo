@@ -15,17 +15,15 @@ class Solution:
             return freq[0][1]
     
         res = []
-        
         word_mxs = []
+        
         for word in words:
             word_mxs += f(word),
         
         word_mxs.sort()
         
         for query in queries:
-            cnt = 0
             query = f(query)
-            
             idx = bisect.bisect_left(word_mxs, query)
             
             while idx < len(word_mxs):
