@@ -1,8 +1,28 @@
+import time
+
+
 class Solution:
     def moveZeroes(self, nums: 'List[int]') -> None:
         num_zeros = nums.count(0)
         for i in range(num_zeros):
             nums.append(nums.pop(nums.index(0)))
+
+    def moveZeroes(self, nums: [int]) -> None:
+        n = len(nums)
+        l = 0
+        zeros = 0
+        
+        for i, num in enumerate(nums):
+            if num == 0:
+                zeros += 1
+            
+            nums[l] = num
+            
+            if num != 0:
+                l += 1
+
+        for i in range(n - zeros, n):
+            nums[i] = 0
         
 
 stime = time.time()

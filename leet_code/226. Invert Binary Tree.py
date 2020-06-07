@@ -1,3 +1,10 @@
+import time
+from util.util_list import *
+from util.util_tree import *
+import copy
+import heapq
+import bisect
+import collections
 
 
 class Solution:
@@ -41,5 +48,42 @@ class Solution:
                     q += [cur.right]
         return rh
 
-print(Solution().invertTree(deserialize('[1, 2]')))
-#print(Solution().invertTree(deserialize('[4,2,7,1,3,6,9]')))
+
+class Solution:
+    def invertTree(self, root: TreeNode) -> TreeNode:
+        def dfs(node):
+            if not node.left and not node.right:
+                return node
+            
+            if not node:
+                return
+            
+            node.left = dfs(node.right)
+            node.right = dfs(node.left)
+            
+            return node
+    
+        return dfs(root)
+
+
+    def invertTree(self, root: TreeNode) -> TreeNode:
+        def dfs(node):
+            if not node:
+                return 
+            
+            node.left, node.right = node.right, node.left
+            
+            if node.left:
+                dfs(node.left)
+                
+            if node.right:
+                dfs(node.right)
+            
+            return node
+    
+        return dfs(root)
+
+
+#print(serialize(Solution().invertTree(deserialize('[1, 2]'))))
+res = Solution().invertTree(deserialize('[4,2,7,1,3,6,9]'))
+print(tree_is_same(deserialize('[4,7,2,9,6,3,1]'), res))

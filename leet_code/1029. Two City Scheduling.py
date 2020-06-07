@@ -30,7 +30,7 @@ class Solution:
         print(mcost)
         return mcost
 
-    def twoCitySchedCost_ref(self, costs: [[int]]) -> int:
+    def twoCitySchedCost(self, costs: [[int]]) -> int:
         print(costs)
         costs.sort(key=lambda x:x[0]-x[1])
         N = len(costs)//2
