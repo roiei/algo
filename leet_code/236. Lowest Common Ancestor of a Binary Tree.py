@@ -46,12 +46,40 @@ class Solution:
         idx = find_val(ptrace, qtrace)
         if -1 != idx:
             lca = ptrace[idx]
-        return TreeNode(lca)
+        return TreeNode(lca).val
+
+
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        res = None
+        
+        def dfs(node):
+            nonlocal res
+
+            ret = False
+            if not node:
+                return ret
+            
+            if node.val == p.val or node.val == q.val:
+                ret = True
+            
+            lr = dfs(node.left)
+            rr = dfs(node.right)
+
+            if (((lr or ret) and rr) or (lr and (rr or ret))) and not res:
+                res = node
+            
+            ret = ret or lr or rr
+            return ret
+        
+        dfs(root)
+        return res.val
+        
             
 
 stime = time.time()
-#print(Solution().lowestCommonAncestor(deserialize('[3,5,1,6,2,0,8,null,null,7,4]'), TreeNode(5), TreeNode(1))) # 3
-print(Solution().lowestCommonAncestor(deserialize('[3,5,1,6,2,0,8,null,null,7,4]'), TreeNode(5), TreeNode(4))) # 5
+
+print(3 == Solution().lowestCommonAncestor(deserialize('[3,5,1,6,2,0,8,null,null,7,4]'), TreeNode(5), TreeNode(1))) # 3
+print(5 == Solution().lowestCommonAncestor(deserialize('[3,5,1,6,2,0,8,null,null,7,4]'), TreeNode(5), TreeNode(4))) # 5
 #print(Solution().lowestCommonAncestor(deserialize('[1,2,3,null,4]'), TreeNode(4), TreeNode(3))) # 1
 #print(Solution().lowestCommonAncestor(deserialize('[-1,0,3,-2,4,null,null,8]'), TreeNode(8), TreeNode(4)))  # 0
 print('elapse time: {} sec'.format(time.time() - stime))

@@ -28,6 +28,30 @@ class Solution:
             if True == found:
                 return True
         return False
+
+    def searchMatrix(self, matrix, target):
+        if not matrix:
+            return False
+
+        def search(nums, num):
+            l = 0
+            r = len(nums) - 1
+
+            while l <= r:
+                m = (l + r)//2
+                if nums[m] == num:
+                    return True
+                if nums[m] > num:
+                    r = m - 1
+                else:
+                    l = m + 1
+
+            return False
+
+        for line in matrix:
+            if search(line, target):
+                return True
+        return False
             
             
 stime = time.time()
