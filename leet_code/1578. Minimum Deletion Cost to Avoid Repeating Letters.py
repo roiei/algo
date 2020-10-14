@@ -117,6 +117,34 @@ class Solution:
 
                                         mx는 현재 값으로 계속 갱신
 
+    5   4   8
+    a   a   a  이 경우, 
+    -----
+        5와 4에서는 4를 취해야 함
+        pre mx가 5였을 시, 4 보다 크기에 5 값 유지
+
+        즉, pre_mx는 현재 이전의 값 중 mx
+
+
+    5   8
+    a   a
+    -----
+        값을 5와 8에서 min을 취해야 함
+
+
+    tot = mx = 0
+    for i in range(len(s)):
+        if i > 0 and s[i] != s[i - 1]:
+            mx = 0
+
+        tot += min(mx, cost[i])
+        mx = max(mx, cost[i])
+
+    return tot
+
+
+
+
 
 stime = time.time()
 print(3 == Solution().minCost(s = "abaac", cost = [1,2,3,4,5]))
