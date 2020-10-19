@@ -2,6 +2,7 @@
 import time
 from util.util_list import *
 from util.util_tree import *
+import bisect
 import copy
 import collections
 
@@ -32,7 +33,18 @@ class Solution:
 
         res += -1,
         return res
-            
+
+    def replaceElements(self, arr: [int]) -> [int]:
+        sarr = []
+        res = []
+
+        for i in range(len(arr) - 1, -1, -1):
+            idx = bisect.bisect_left(sarr, arr[i])
+            val = -1 if idx == 0 and not sarr else sarr[-1]
+            res.insert(0, val)
+            sarr.insert(idx, arr[i])
+
+        return res
 
 
 stime = time.time()
