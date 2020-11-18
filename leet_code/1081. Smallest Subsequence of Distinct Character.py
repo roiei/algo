@@ -39,23 +39,39 @@ class Solution:
             #     c -> ...
             # "adbc"
 
+    def smallestSubsequence(self, text: str) -> str:
+        s = text
+        kind = sorted(list(set(s)))
+        s = list(s)
+        res = ''
 
+        while kind:
+            ch = kind.pop(0)
+            print(ch)
+            idx = s.index(ch)
+            
+            not_find = False
+            for i in range(idx):
+                if s[i] not in s[i + 1:]:
+                    not_find = True
+                    break
+            
+            if not not_find:
+                res += ch
+                s = s[idx + 1:]
 
+                while s and ch in s:
+                    s.remove(ch)
 
+                kind = sorted(list(set(s)))
 
+            print(res)
+            print()
 
-
-
-
-
-
-
-
-
-
-
+        return res
 
 
 stime = time.time()
+print("abc" == Solution().smallestSubsequence("bcabc"))
 print("adbc" == Solution().smallestSubsequence("cdadabcc"))
 print('elapse time: {} sec'.format(time.time() - stime))

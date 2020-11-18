@@ -1,5 +1,5 @@
 import time
-from util_list import *
+from util.util_list import *
 
 
 class Solution:
@@ -21,9 +21,21 @@ class Solution:
                 return i
         return -1
 
+    def strStr(self, haystack: str, needle: str) -> int:
+        m = len(haystack)
+        n = len(needle)
+        i = j = 0
+
+        for i in range(m - n + 1):
+            if haystack[i:i + n] == needle:
+                return i
+
+        return -1
+
 
 stime = time.time()
-print(Solution().strStr("hello", 'll'))
-print(Solution().strStr("mississippi", 'a'))
-print(Solution().strStr("mississippi", 'pi'))
+print(0 == Solution().strStr("", ''))
+# print(Solution().strStr("hello", 'll'))
+# print(Solution().strStr("mississippi", 'a'))
+# print(Solution().strStr("mississippi", 'pi'))
 print('elapse time: {} sec'.format(time.time() - stime))

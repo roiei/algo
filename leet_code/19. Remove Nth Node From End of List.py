@@ -1,6 +1,6 @@
 import time
-from util_list import *
-from util_tree import *
+from util.util_list import *
+from util.util_tree import *
 import copy
 import collections
 
@@ -35,8 +35,30 @@ class Solution:
             head = head.next
         return head
 
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        nodes = []
+        cur = head
+
+        while cur:
+            nodes += cur,
+            cur = cur.next
+
+        if len(nodes) == 1 and n == 1:
+            return None
+
+        if len(nodes) == n:
+            return nodes[-(n - 1)]
+
+        if n == 1:
+            nodes[-(n + 1)].next = None
+        elif len(nodes) > n:
+            nodes[-(n + 1)].next = nodes[-(n - 1)]
+
+        return head
+
 
 stime = time.time()
 #print(Solution().removeNthFromEnd(create_linked_list('1->2->3->4->5'), 2))
-print(Solution().removeNthFromEnd(create_linked_list('1'), 1))
+#print(list_traverse(Solution().removeNthFromEnd(create_linked_list('1'), 1)))
+print(list_traverse(Solution().removeNthFromEnd(create_linked_list('1->2'), 1)))
 print('elapse time: {} sec'.format(time.time() - stime))

@@ -44,3 +44,48 @@ class Solution:
         elif res < -1*(float('inf') + 1):
             res = -1*(float('inf') + 1)
         return res
+
+    def myAtoi(self, s: str) -> int:
+        nums = []
+        for ch in s:
+            if ch.isalpha() or ch == '.':
+                break
+            if ch == ' ' and (nums and (nums[-1].isdigit() or \
+                nums[-1] == '-' or nums[-1] == '+')):
+                break
+            if ch == '-' or ch == '+':
+                if nums and nums[-1].isdigit():
+                    break
+                nums += ch,
+            if ch.isdigit():
+                nums += ch,
+        
+        sign = 1
+        if nums and (nums[0] == '-' or nums[0] == '+'):
+            if nums[0] == '-':
+                sign = -1
+            nums.pop(0)
+        
+        if nums and (nums[0] == '-' or nums[0] == '+'):
+            return 0
+
+        weight = 1
+        res = 0
+
+        while nums:
+            num = nums.pop()
+            res += weight*int(num)
+            weight *= 10
+            
+           
+        res = sign*res
+        
+        if res > (2**31 - 1):
+            res = 2**31 - 1
+        if res < -2**31:
+            res = -2**31
+    
+        return res
+
+#print(0 == Solution().myAtoi("+-12"))
+print(0 == Solution().myAtoi("00000-42a1234"))
