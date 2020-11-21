@@ -3,17 +3,23 @@
 
 def merge(a, b, c, offa, na, offb, nb, offc):
     i = j = k = 0
+
     while k < na + nb:
         if j < nb and i < na:
             if a[offa + i] > b[offb + j]:
-                c[offc + k] = b[offb + j]; k += 1; j += 1
+                c[offc + k] = b[offb + j];
+                j += 1
             else:
-                c[offc + k] = a[offa + i]; k += 1; i += 1
+                c[offc + k] = a[offa + i];
+                i += 1
         else:
             if j >= nb:
-                c[offc + k] = a[offa + i]; k += 1; i += 1
+                c[offc + k] = a[offa + i]
+                i += 1
             else:
-                c[offc + k] = b[offb + j]; k += 1; j += 1
+                c[offc + k] = b[offb + j]
+                j += 1
+        k += 1
 
 def sort_merge_my(a, n):
     b = [0 for i in range(n)]

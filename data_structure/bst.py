@@ -138,6 +138,7 @@ class Tree:
         node = self.find(key)
         if None == node:
             return
+
         cur = node
         if None != cur.left:    # if left exists, go to left and go to right leaf
             cur = cur.left
@@ -150,13 +151,15 @@ class Tree:
             while None != cur.left:
                 cur = cur.left
         else:
-            cur = node
+            cur = node  # <-- None?
 
-        # what about root?
-        if node.parent.right == node:
-            node.parent.right = cur
+        if node != self.root:
+            if node.parent.right == node:
+                node.parent.right = cur
+            else:
+                node.parent.left = cur
         else:
-            node.parent.left = cur
+            self.root = cur
 
         # unlink
         if None != cur:
