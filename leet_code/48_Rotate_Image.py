@@ -15,6 +15,21 @@ class Solution:
                 matrix[y][x] = rotated[y][x]
         return None
 
+    def rotate(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: void Do not return anything, modify matrix in-place instead.
+        """
+        rows = len(matrix)
+        cols = len(matrix[0])
+
+        for y in range(rows):
+            for x in range(y, cols):
+                matrix[y][x], matrix[x][y] = matrix[x][y], matrix[y][x]
+
+        for y in range(rows):
+            matrix[y].reverse()
+
 
 matrix = [
   [1,2,3],

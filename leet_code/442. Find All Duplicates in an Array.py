@@ -21,18 +21,14 @@ class Solution:
 
     def findDuplicates(self, nums: [int]) -> [int]:
         res = []
-        print(nums)
+        
         for i in range(len(nums)):
-
             index = abs(nums[i]) - 1
             
             if nums[index] < 0:
                 res += abs(nums[i]),
-                print('res = ', res)
             else:
                 nums[index] = -(nums[index])
-
-            print(nums)
 
         return res
 

@@ -29,8 +29,7 @@ class Solution:
                 ret.append('{}->{}'.format(nums[r[0]], nums[r[1]]))
         return ret
 
-
-    def summaryRanges(self, nums: List[int]) -> List[str]:
+    def summaryRanges(self, nums: [int]) -> [str]:
         if not nums:
             return []
         res = []
@@ -51,11 +50,29 @@ class Solution:
         add_range(start, pre, res)        
         return res
 
+    def summaryRanges(self, nums: [int]) -> [str]:
+        if not nums:
+            return None
 
-nums = [0,1,2,4,5,7]
-nums = [0,2,3,4,6,8,9]
+        n = len(nums)
+        start = end = nums[0]
+        res = []
 
-sol = Solution()
-ret = sol.summaryRanges(nums)
-print(ret)
+        def get_range(start, end):
+            return '{}'.format(start) if start == end else '{}->{}'.format(start, end)
+
+        for i in range(1, n):
+            if nums[i - 1] + 1 == nums[i]:
+                end = nums[i]
+                continue
+            else:
+                res += get_range(start, end),
+                start = end = nums[i]
+
+        res += get_range(start, end),
+        return res
+
+
+print(['0->2', '4->5', '7'] == Solution().summaryRanges([0,1,2,4,5,7]))
+print(['0', '2->4', '6', '8->9'] == Solution().summaryRanges([0,2,3,4,6,8,9]))
 

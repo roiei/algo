@@ -1,6 +1,4 @@
 import time
-from util.util_list import *
-from util.util_tree import *
 import copy
 import collections
 
@@ -38,7 +36,25 @@ class Solution:
         
         return res
 
+    def numsSameConsecDiff(self, N, K):
+        def dfs(depth, seq, res):
+            if depth == N:
+                if len(seq) > 1 and seq[0] == 0:
+                    return
+                res.add(int(''.join(map(str, seq))))
+                return
+
+            for i in range(10):
+                if not seq or (seq and abs(i - seq[depth - 1]) == K):
+                    dfs(depth + 1, seq + [i], res)
+
+        res = set()
+        dfs(0, [], res)
+        print(list(res))
+        return list(res)
+
 
 stime = time.time()
-print(Solution().numsSameConsecDiff(1, 0))
+print([181,292,707,818,929] == Solution().numsSameConsecDiff(N = 3, K = 7))
+#print(Solution().numsSameConsecDiff(1, 0))
 print('elapse time: {} sec'.format(time.time() - stime))

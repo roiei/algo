@@ -53,6 +53,64 @@ class Solution:
             return False
         mem = {}
         return dfs(0, half//2)
+
+    def canPartition(self, nums: [int]) -> bool:
+        part = sum(nums)//2
+        if part*2 != sum(nums):
+            return False
+        
+        n = len(nums)
+        
+        def dfs(start, inc):
+            if (start, inc) in mem:
+                return mem[(start, inc)]
+            
+            if inc > part:
+                return False
+
+            if start == n:
+                return inc == part
+            
+            for i in range(start, n):
+                if dfs(i + 1, inc + nums[i]):
+                    return True
+        
+            mem[(start, inc)] = False
+            return False
+        
+        mem = {}
+        return dfs(0, 0)
+
+
+    def canPartition(self, nums: [int]) -> bool:
+        part = sum(nums)//2
+        if sum(nums) != part*2:
+            return False
+
+        n = len(nums)
+
+        def dfs(start, inc):
+            if (start, inc) in mem:
+                return mem[(start, inc)]
+
+            if start == n:
+                return inc == part
+
+            if inc > part:
+                return False
+
+            for i in range(start, n):
+                if dfs(i + 1, inc + nums[i]):
+                    return True
+
+            mem[(start, inc)] = False
+            return False
+
+        mem = {}
+        return dfs(0, 0)
+
+
+        
             
             
 stime = time.time()

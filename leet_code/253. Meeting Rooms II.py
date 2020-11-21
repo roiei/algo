@@ -1,39 +1,47 @@
-import time
-from util.util_list import *
-from util.util_tree import *
-import copy
 import collections
 
 
-"""
-Definition of Interval.
 class Interval(object):
     def __init__(self, start, end):
         self.start = start
         self.end = end
-"""
+
 
 class Solution:
     """
     @param intervals: an array of meeting time intervals
-    @return: the minimum number of conference rooms required
+    @return: if a person could attend all meetings
     """
-    def minMeetingRooms(self, intervals):
-        times = collections.defaultdict(int)
-        for interval in intervals:
-            times[interval.start] += 1
-            times[interval.end] -= 1
-        
-        times = sorted(times.items(), key=lambda p: p[0])
-        cur = 0
-        mx = 0
-        for time, num in times:
-            cur += num
-            mx = max(mx, cur)
-        
-        return mx
-            
+    def canAttendMeetings(self, intervals):
+        #intervals.sort(key=lambda p: (p.start, p.end))
+        if not intervals:
+            return True
 
-stime = time.time()
-print(2 == Solution().minMeetingRooms([Interval(0, 30), Interval(5, 10), Interval(15, 20)]))
-print('elapse time: {} sec'.format(time.time() - stime))
+        intervals.sort(key=lambda p: (p.start, p.end))
+        mx = 0
+        pos = collections.defaultdict(int)
+        for interval in intervals:
+            pos[interval.start] += 1
+            pos[interval.end] -= 1
+
+        pos = sorted(pos.items())
+
+        cnt = 0
+        for pos, unit in pos:
+            cnt += unit
+            mx = max(mx, cnt)
+
+        return mx
+
+
+def get_intervals(arr):
+    ret = []
+    for start, end in arr:
+        ret += Interval(start, end),
+    return ret
+
+
+#print(2 == Solution().canAttendMeetings(get_intervals([(0,30),(5,10),(15,20)])))
+#print(1 == Solution().canAttendMeetings(get_intervals([(2, 7)])))
+print(3 == Solution().canAttendMeetings(get_intervals([(6,15),(13,20),(6,17)])))
+

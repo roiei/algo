@@ -40,13 +40,30 @@ class Solution:
             s_str = s_str[1:]
         return c_seq
 
+    def longestCommonPrefix(self, strs: 'List[str]') -> 'str':
+        if not strs:
+            return ''
 
-strs = ["dog","racecar","car"] # ''
-strs = [""]
-strs = ["flow", "ofl", "iflg"] # fl
-strs = ["flower","flow","flight"]   # 'f1'
-#strs = ["aa","ab"] # a
-strs = ["aa","aa"]
+        cmm = ''
+        n = min(len(str) for str in strs)
 
-sol = Solution()
-print(sol.longestCommonPrefix(strs))
+        for i in range(n):
+            same = True
+            for j in range(len(strs) - 1):
+                if strs[j][i] != strs[j + 1][i]:
+                    same = False
+                    break
+
+            if not same:
+                break
+
+            cmm += strs[0][i]
+
+        return cmm
+            
+
+
+
+print('' == Solution().longestCommonPrefix(["dog","racecar","car"]))
+print('fl' == Solution().longestCommonPrefix(["flower","flow","flight"]))
+print('a' == Solution().longestCommonPrefix(["aa","ab"]))
