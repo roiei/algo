@@ -59,7 +59,6 @@ class Solution(object):
 
 
     def canFinish(self, numCourses: int, prerequisites: [[int]]) -> bool:
-        
         g = collections.defaultdict(list)
         
         for src, dst in prerequisites:
@@ -106,8 +105,34 @@ class Solution(object):
 
         return len(visit) == numCourses
 
+    def canFinish(self, numCourses, prerequisites):
+        g = collections.defaultdict(list)
+        indegree = collections.defaultdict(int)
 
-#print(True == Solution().canFinish(2, [[1,0]]))
+        for src, sink in prerequisites:
+            g[src] += sink,
+            indegree[src] = indegree[src]
+            indegree[sink] += 1
+        
+        q = [i for i in range(numCourses) if indegree[i] == 0]
+        visited = set(q[:])
+        
+        while q:
+            u = q.pop(0)
+            
+            for v in g[u]:
+                if v in visited:
+                    continue
+
+                indegree[v] -= 1
+                if indegree[v] == 0:
+                    q += v,
+                    visited.add(v)
+
+        return len(visited) == numCourses
+
+
+print(True == Solution().canFinish(2, [[1,0]]))
 # print(False == Solution().canFinish(4, [[0,1],[3,1],[1,3],[3,2]]))
 # print(False == Solution().canFinish(4, [[0,1],[2,3],[1,2],[3,0]]))
-print(False == Solution().canFinish(2, [[0,1],[1,0]]))
+#print(False == Solution().canFinish(2, [[0,1],[1,0]]))

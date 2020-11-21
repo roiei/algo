@@ -23,27 +23,24 @@ class Solution:
 
 
     def largestDivisibleSubset2(self, nums):
+        if not nums:
+            return []
+
         nums.sort()
-
         dp = collections.defaultdict(list)
-        n = len(nums)
-
         for num in nums:
             dp[num] += num,
         
-        for i in range(n):
-            for j in range(i + 1, n):
-                if not nums[j]%nums[i] and len(dp[nums[j]]) <= len(dp[nums[i]]) + 1:
-                    dp[nums[j]] = [nums[j]] + dp[nums[i]]
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                if 0 != nums[j]%nums[i]:
+                    continue
+                
+                if len(dp[nums[i]]) + 1 >= len(dp[nums[j]]):
+                    dp[nums[j]] = dp[nums[i]] + [nums[j]]
         
-        mx = None
-        ml = 0
-        for val in dp.values():
-            if ml < len(val):
-                ml = len(val)
-                mx = val
-
-        return mx
+        dp = sorted(dp.items(), key=lambda p: len(p[1]), reverse=True)
+        return dp[0][1]
 
 
 stime = time.time()

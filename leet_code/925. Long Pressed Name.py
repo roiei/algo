@@ -45,6 +45,40 @@ class Solution:
 
         return i == len(typed)
         
+    def isLongPressedName(self, name: str, typed: str) -> bool:
+        m = len(name)
+        n = len(typed)
+        i = j = 0
+
+        name = list(name)
+        pre = name.pop(0)
+        cnt = 1
+        chunks = []
+
+        for ch in name:
+            if ch == pre:
+                cnt += 1
+            else:
+                chunks += (pre, cnt),
+                cnt = 1
+                pre = ch
+
+        chunks += (pre, cnt),
+
+        j = 0
+        for ch, cnt in chunks:
+            while cnt and j < len(typed) and typed[j] == ch:
+                j += 1
+                cnt -= 1
+
+            while j < len(typed) and typed[j] == ch:
+                j += 1
+
+            if cnt:
+                return False
+
+        return j == len(typed)
+
 
 stime = time.time()
 print(True == Solution().isLongPressedName(name = "alex", typed = "aaleex"))

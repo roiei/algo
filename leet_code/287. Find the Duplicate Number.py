@@ -33,17 +33,18 @@ class Solution:
         return None
 
     def findDuplicate(self, nums):
-        l = 1
+        l = 0
         r = len(nums) - 1
         
-        while l < r:
+        while l <= r:
             m = (l + r)//2
+            
             if sum(num <= m for num in nums) > m:
-                l, r = l, m
+                r = m - 1
             else:
-                l, r = m + 1, r
+                l = m + 1
         
-        return r
+        return l
 
 
 stime = time.time()

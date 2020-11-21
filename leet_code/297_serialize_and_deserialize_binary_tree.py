@@ -76,7 +76,6 @@ class Codec:
             return None
     
         data = data[1:len(data)-1].split(',')
-        vals = [data[i] for i in range(len(data))]
         
         root = TreeNode(vals.pop(0))
         q = [root]

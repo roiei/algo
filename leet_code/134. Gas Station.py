@@ -44,6 +44,23 @@ class Solution:
                 
         return -1 if tot < 0 else mn_idx
 
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        n = len(gas)
+        
+        for i in range(n):
+            gas_cost = list(zip(gas[i:] + gas[:i], cost[i:] + cost[:i]))
+            inc = 0
+            for g, c in gas_cost:
+                inc += g
+                inc -= c
+                
+                if inc < 0:
+                    break
+            else:
+                return i
+        
+        return -1
+
 
 stime = time.time()
 print(3 == Solution().canCompleteCircuit(gas  = [1,2,3,4,5], cost = [3,4,5,1,2]))

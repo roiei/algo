@@ -23,3 +23,18 @@ class Solution:
                 nums[cnt] = nums[i]
                 cnt+= 1
         return cnt
+
+    def removeElement(self, nums, val):
+        idx = 0
+        n = len(nums)
+
+        for i in range(n):
+            if nums[i] != val:
+                nums[idx] = nums[i]
+                idx += 1
+
+        return idx
+
+
+
+print(2 == Solution().removeElement(nums = [3,2,2,3], val = 3))

@@ -31,6 +31,35 @@ class Solution:
                 t[i-1].next = t[i]
         
         return root
+
+    def connect(self, root: 'Node') -> 'Node':
+        if not root:
+            return None
+
+        q = [root]
+        levels = []
+        
+        while q:
+            nq = []
+            nodes = []
+            
+            while q:
+                node = q.pop(0)
+                nodes += node,
+                if node.left:
+                    nq += node.left,
+                if node.right:
+                    nq += node.right,
+                
+            levels += nodes,
+            q = nq
+        
+        for nodes in levels:
+            for i in range(len(nodes) - 1):
+                nodes[i].next = nodes[i + 1]
+            nodes[-1].next = None
+        
+        return root
             
 
 stime = time.time()

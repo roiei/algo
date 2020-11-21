@@ -29,6 +29,28 @@ class Solution:
             i += 1
         return -1
 
+    def pivotIndex(self, nums: List[int]) -> int:
+        if not nums:
+            return -1
+
+        pivot = 0
+        left = 0
+        right = sum(nums[pivot + 1:])
+        n = len(nums)
+        
+        while pivot < n:
+            if left == right:
+                return pivot
+
+            left += nums[pivot]
+            if pivot + 1 < n:
+                right -= nums[pivot + 1]
+        
+            pivot += 1
+        
+        return -1
+
+
 stime = time.time()
 sol = Solution()
 

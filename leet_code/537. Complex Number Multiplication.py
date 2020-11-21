@@ -30,3 +30,4 @@ class Solution:
 stime = time.time()
 print("0+2i" == Solution().complexNumberMultiply("1+1i", "1+1i"))
 print('elapse time: {} sec'.format(time.time() - stime))
+

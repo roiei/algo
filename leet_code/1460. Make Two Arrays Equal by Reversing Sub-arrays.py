@@ -10,7 +10,8 @@ import collections
 
 class Solution:
     def canBeEqual(self, target: [int], arr: [int]) -> bool:
-        
+        return sorted(target) == sorted(arr)
+
 
 
 stime = time.time()

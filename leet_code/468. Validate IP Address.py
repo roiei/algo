@@ -8,49 +8,43 @@ import collections
 
 class Solution:
     def validIPAddress(self, IP: str) -> str:
-        grps = []
-        idx = IP.find('.')
+        chunks = []
         ip_type = 'IPv4'
+        num_chunks = 4
         
-        if idx != -1:
-            grps = IP.split('.')
-            if len(grps) != 4:
-                return 'Neither'
+        if IP.find('.') != -1:
+            chunks = IP.split('.')
         else:
-            grps = IP.split(':')
-            if len(grps) != 8:
-                return 'Neither'
+            chunks = IP.split(':')
+            num_chunks = 8
             ip_type = 'IPv6'
+
+        if num_chunks != len(chunks):
+            return 'Neither'
         
         if ip_type == 'IPv4':
-            for chunk in grps:
+            for chunk in chunks:
                 if not chunk:
                     return 'Neither'
-                
-                if not chunk.isnumeric():
+
+                try:
+                    num = int(chunk)
+                except ValueError:
+                    return 'Neither'
+
+                if str(num) != chunk:
                     return 'Neither'
                 
-                if len(chunk) > 1 and chunk[0] == '0':
-                    return 'Neither'
-                    
-                if chunk and chunk[0] == '-':
-                    return 'Neither'
-                
-                num = int(chunk)
                 if not (0 <= num <= 255):
                     return 'Neither'
-                
         else:
-            for chunk in grps:
+            for chunk in chunks:
                 if not chunk:
                     return 'Neither'
                 
-                for ch in chunk:
-                    if not ('0' <= ch <= '9' or 'a' <= ch <= 'f' or 'A' <= ch <= 'F'):
+                for ch in chunk.lower():
+                    if not ('0' <= ch <= '9' or 'a' <= ch <= 'f'):
                         return 'Neither'
-                
-                if int(chunk, 16) < 0:
-                    return 'Neither'
                 
                 if len(chunk) > 4:
                     return 'Neither'

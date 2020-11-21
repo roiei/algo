@@ -3,6 +3,10 @@ import time
 
 class Solution:
     def moveZeroes(self, nums: 'List[int]') -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+
         num_zeros = nums.count(0)
         for i in range(num_zeros):
             nums.append(nums.pop(nums.index(0)))
@@ -22,6 +26,18 @@ class Solution:
                 l += 1
 
         for i in range(n - zeros, n):
+            nums[i] = 0
+
+    def moveZeroes(self, nums: [int]) -> None:
+        n = len(nums)
+        widx = 0
+        
+        for i in range(n):
+            if nums[i] != 0:
+                nums[widx] = nums[i]
+                widx += 1
+        
+        for i in range(widx, n):
             nums[i] = 0
         
 

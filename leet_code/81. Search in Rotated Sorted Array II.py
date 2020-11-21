@@ -58,9 +58,58 @@ class Solution:
         else:
             return True if -1 != self.binary_search(nums, n, target) else False
 
+    def search(self, nums: [int], target: int) -> bool:
+        if not nums:
+            return False
+
+        def search(nums, target):
+            l = 0
+            r = len(nums) - 1
+            
+            while l <= r:
+                m = (l + r)//2
+                if nums[m] == target:
+                    return m
+                if nums[m] > target:
+                    r = m - 1
+                else:
+                    l = m + 1
+            return -1
+
+        def dfs(l, r):
+            if l > r:
+                return -1
+
+            m = (l + r)//2
+            if m - 1 >= 0 and nums[m - 1] > nums[m]:
+                return m
+            elif m + 1 <= r and nums[m] > nums[m + 1]:
+                return m + 1
+
+            lidx = dfs(l, m - 1)
+            if -1 != lidx:
+                return lidx
+            ridx = dfs(m + 1, r)
+            if -1 != ridx:
+                return ridx
+            return -1
+        
+        pivot_idx = dfs(0, len(nums) - 1)
+        if -1 == pivot_idx:
+            return True if -1 != search(nums, target) else False
+        
+        idx = search(nums[:pivot_idx], target)
+        if -1 != idx:
+            return True
+        idx = search(nums[pivot_idx:], target)
+        if -1 != idx:
+            return True
+        return False
+
 
 stime = time.time()
-print(Solution().search([2,5,6,0,0,1,2], 0))
-print(Solution().search([2,5,6,0,0,1,2], 3))
+#print(Solution().search([2,5,6,0,0,1,2], 0))
+#print(Solution().search([2,5,6,0,0,1,2], 3))
+print(Solution().search([3, 1], 1))
 print('elapse time: {} sec'.format(time.time() - stime))
 
