@@ -2,7 +2,6 @@
 
 Hi, I'm Roy.
 I updated some instructive codes here because I just want to share my codes written throughout studying various kins of algorithms and data structures.
-I'll be very happy if you update some codes about algorithm and data structure.
 
 
 A. data structure
