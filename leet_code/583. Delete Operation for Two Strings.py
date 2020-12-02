@@ -42,12 +42,34 @@ class Solution:
         len_lcs = lcs(word1, 0, m, word2, 0, n)
         return (n-len_lcs)+(m-len_lcs)
 
+    def minDistance2(self, word1: str, word2: str) -> int:
+        """
+              s   e   a
+           0  0   0   0
+        e  0  0   1   1
+        a  0  0   1   2
+        t  0  0   1   2
+
+        not possible for the case of "food", "money"
+        """
+        m = len(word1)
+        n = len(word2)
+        dp = [[0]*(n + 1) for _ in range(m + 1)]
+
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
+                if word1[i - 1] == word2[j - 1]:
+                    dp[i][j] += 1
+
+        return (m - dp[-1][-1]) + (n - dp[-1][-1])
 
 
 stime = time.time()
-print(Solution().minDistance("sea", "eat"))
+print(2 == Solution().minDistance("sea", "eat"))
 print(4 == Solution().minDistance("sea", "ate"))
-print(Solution().minDistance("sea", "soa"))
+print(2 == Solution().minDistance("sea", "soa"))
 print(1 == Solution().minDistance("a", "ab"))
-print(Solution().minDistance("ab", "a"))
+print(1 == Solution().minDistance("ab", "a"))
+print(7 == Solution().minDistance("food", "money"))
 print('elapse time: {} sec'.format(time.time() - stime))

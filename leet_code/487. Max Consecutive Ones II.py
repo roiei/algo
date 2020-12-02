@@ -56,6 +56,49 @@ class Solution:
             mx = max(mx, len(seq))
 
         return mx
+    
+    # 1,0,1,0,1
+    # 1
+    # -> wnd = [1]
+    
+    # 0
+    # [1] + [0] -> wnd = [1, 0]
+
+    # 1
+    # -> wnd = [1, 0, 1]
+
+    # 0
+    # drop until '0' in wnd
+    # -> wnd = [1] + [0] = [1, 0]
+
+    # 1
+    # -> wnd = [1, 0, 1]
+
+
+    def findMaxConsecutiveOnes(self, nums):
+        wnd = []
+        n = len(nums)
+        mx = 0
+        i = 0
+
+        while i < n:
+            if nums[i] == 0:
+                idx = 0
+                found = False
+                while idx < len(wnd):
+                    if wnd[idx] == 0:
+                        found = True
+                        break
+                    idx += 1
+
+                if found:
+                    wnd = wnd[idx + 1:]
+
+            wnd += nums[i],
+            mx = max(mx, len(wnd))
+            i += 1
+
+        return mx
 
 
 stime = time.time()

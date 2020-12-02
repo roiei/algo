@@ -25,9 +25,31 @@ class Solution:
             return dp[node]
         return dfs(root)
 
+    def rob(self, root: TreeNode) -> int:
+        def dfs(node):
+            if not node:
+                return 0
+
+            if node in mem:
+                return mem[node]
+
+            val = node.val
+            if node.left:
+                val += dfs(node.left.left) + dfs(node.left.right)
+            if node.right:
+                val += dfs(node.right.left) + dfs(node.right.right)
+
+            val = max(val, dfs(node.left) + dfs(node.right))
+            mem[node] = val
+            return val
+
+        mem = {}
+        return dfs(root)
+
+
 
 stime = time.time()
-print(Solution().rob(deserialize('[3,4,7,1,3,null,1,2,7,null,3]')))
+print(23 == Solution().rob(deserialize('[3,4,7,1,3,null,1,2,7,null,3]')))
 #print(Solution().rob(deserialize('[3,2,3,null,3,null,1]')))
 #print(Solution().rob(deserialize('[4,1,null,2,null,3]')))
 print('elapse time: {} sec'.format(time.time() - stime))

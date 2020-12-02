@@ -91,6 +91,8 @@ class Solution:
     def lengthOfLIS(self, nums: [int]) -> int:
         if not nums:
             return 0
+
+        print(nums)
         
         def search(nums, target):
             l = 0

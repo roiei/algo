@@ -28,9 +28,21 @@ class Solution:
             dp[i] = min(temp) + 1
 
         return dp[n]
+       
+    def numSquares(self, n):
+        dp = [float('inf')]*(n + 1)
+        dp[0] = 0
+        
+        nums = [i**2 for i in range(1, int(n**0.5)+1)]
 
+        for num in nums[::-1]: # [9, 4, 1]
+            for i in range(num, n + 1):
+                dp[i] = min(dp[i], dp[i - num] + 1)
+        
+        return dp[-1]
 
 
 stime = time.time()
-print(3 == Solution().numSquares(12))
+#print(3 == Solution().numSquares(12))
+print(2 == Solution().numSquares(13))
 print('elapse time: {} sec'.format(time.time() - stime))
