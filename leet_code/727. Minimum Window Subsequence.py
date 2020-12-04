@@ -87,7 +87,37 @@ class Solution(object):
             i += 1
         return s[sx:ex + 1] if mn != float('inf') else ''
 
+    def minWindow(self, s, t):
+        if not s or not t:
+            return ''
+         
+        dp = [[0]*(len(t) + 1) for _ in range(len(s) + 1)]
+        for i in range(len(t) + 1):
+            dp[0][i] = -1
 
+        for i in range(1, len(s) + 1):
+            dp[i][0] = i
+        
+        mn = float('inf')
+        start_pos = -1
+        
+    
+        for i in range(1, len(s) + 1):
+            for j in range(1, len(t) + 1):
+                if s[i - 1] == t[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1]
+                else:
+                    dp[i][j] = dp[i - 1][j]
+             
+            if dp[i][len(t)] != -1:
+                length = i - dp[i][len(t)]
+                if length < mn:
+                    start_pos = dp[i][len(t)]
+                    mn = length
+        
+        if start_pos == -1:
+            return ''
+        return s[start_pos:start_pos + mn]
 
 
 

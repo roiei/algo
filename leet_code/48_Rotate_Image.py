@@ -27,6 +27,9 @@ class Solution:
             for x in range(y, cols):
                 matrix[y][x], matrix[x][y] = matrix[x][y], matrix[y][x]
 
+        for y in range(len(matrix)):
+            print(matrix[y])
+
         for y in range(rows):
             matrix[y].reverse()
 

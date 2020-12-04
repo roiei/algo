@@ -1,8 +1,5 @@
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
+from util.util_list import *
+
 
 class Solution:
     def hasCycle(self, head):
@@ -21,14 +18,18 @@ class Solution:
             cur = cur.next
 
         return cycle
+
+    def hasCycle(self, head: ListNode) -> bool:
+        visited = set()
+        while head:
+            if head in visited:
+                return True
+            visited.add(head)
+            head = head.next
         
-head = ListNode(3)
-head.next = ListNode(2)
-head.next.next = ListNode(0)
-head.next.next.next = ListNode(-4)
+        return False
+
+
+head = create_linked_list_from_nums([3,2,0,-4])
 head.next.next.next.next = head.next
-
-
-sol = Solution()
-ret = sol.hasCycle(head)
-print(ret)
+print(True == Solution().hasCycle(head))

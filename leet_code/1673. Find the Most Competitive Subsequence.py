@@ -1,4 +1,3 @@
-
 import time
 from util.util_list import *
 from util.util_tree import *
@@ -7,49 +6,26 @@ import collections
 import heapq
 
 
+
+# Input: nums = [3,5,2,6], k = 2
+# Output: [2,6]
+
+
 class Solution:
     def mostCompetitive(self, nums: [int], k: int) -> [int]:
-        def dfs(start, sel):
-            if len(sel) == k:
-                return sel
-            
-            mn = [float('inf'), float('inf')]
-            for i in range(start, len(nums)):
-                res = dfs(i + 1, sel + [nums[i]])
-                mn = min(mn, res)
-            
-            return mn
-    
-        return dfs(0, [])
-    
-    def mostCompetitive(self, nums: [int], k: int) -> [int]:
-        n = len(nums)
-        q = []
-        
+        stk = []
         for i, num in enumerate(nums):
-            heapq.heappush(q, (num, i))
+            while stk and stk[-1] > num and len(nums) - 1 - i + len(stk) >= k:
+                stk.pop()
 
-        print(q)
-        
-        tot, pi = heapq.heappop(q)
-        res = [tot]
-        k -= 1
-        
-        while k:
-            print(q, k, res)
-            cnum, cidx = heapq.heappop(q)
-            if pi > cidx:
-                continue
-            k -= 1
-            pi = cidx
-            res += cnum,
-        
-        return res
-            
-        
+            stk += num,
+
+        return stk[:k]
+
+
+
 
 stime = time.time()
-#print([2,6] == Solution().mostCompetitive([3,5,2,6], k = 2))
-print(Solution().mostCompetitive([71,18,52,29,55,73,24,42,66,8,80,2], 
-3))
+print([2,6] == Solution().mostCompetitive([3,5,2,6], k = 2))
+print([2,3,3,4] == Solution().mostCompetitive(nums = [2,4,3,3,5,4,9,6], k = 4))
 print('elapse time: {} sec'.format(time.time() - stime))

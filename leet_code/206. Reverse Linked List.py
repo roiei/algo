@@ -40,5 +40,25 @@ class Solution:
         node.next = None
         return res[0]
 
+    def reverseList(self, head: ListNode) -> ListNode:
+        if not head:
+            return 
+
+        def dfs(node, res):
+            if not node:
+                return None
+        
+            if not node.next:
+                res[0] = node
+            
+            dfs(node.next, res)
+            if node.next:
+                node.next.next = node
+        
+        res = [None]
+        dfs(head, res)
+        head.next = None
+        return res[0]
+
 
 print(list_traverse(Solution().reverseList(create_linked_list('1->2->3->4->5'))))

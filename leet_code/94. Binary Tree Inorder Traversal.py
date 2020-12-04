@@ -18,6 +18,25 @@ class Solution:
         self.traversal_inorder(root, t)
         return t
 
+    def inorderTraversal(self, root: TreeNode):
+        cur = root
+        stk = []
+        res = []
+        
+        while True:
+            while cur:
+                stk += cur,
+                cur = cur.left
+            
+            if not stk:
+                break
+            
+            p = stk.pop()
+            res += p.val,
+            cur = p.right
+        
+        return res
+
 
 stime = time.time()
 print(Solution().inorderTraversal('[1,null,2,3]'))

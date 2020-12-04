@@ -26,4 +26,5 @@ class Solution:
 
 stime = time.time()
 print(False == Solution().validPalindrome('abc'))
+print(True == Solution().validPalindrome('abca'))
 print('elapse time: {} sec'.format(time.time() - stime))

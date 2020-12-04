@@ -6,18 +6,18 @@ import collections
 
 
 class Solution:
-    def get_val(self, depth, N, K, val):
-        if depth == N:
-            return val
-        half = 2**((N-depth)-1)
-        if K <= half:
-            return self.get_val(depth+1, N, K, 0 if val == 0 else 1)
-        else:
-            return self.get_val(depth+1, N, K-half, 1 if val == 0 else 0)
-
-
     def kthGrammar(self, N: int, K: int) -> int:
-        return self.get_val(1, N, K, 0)
+        def dfs(depth, K, val):
+            if depth == N:
+                return val
+
+            half = 2**((N - depth) - 1)
+            if K <= half:
+                return dfs(depth + 1, K, 0 if val == 0 else 1)
+            else:
+                return dfs(depth + 1, K - half, 1 if val == 0 else 0)
+
+        return dfs(1, K, 0)
 
 
     def kthGrammar(self, N: int, K: int) -> int:
@@ -50,6 +50,29 @@ class Solution:
             word = dfs('0', 0)
 
         return word[K - 1]
+
+    def kthGrammar(self, N: int, K: int) -> int:
+        """
+        0
+        01
+        0110
+        01101001
+        
+        index:
+        12345678
+        
+        0 -> 01
+        1 -> 10
+        each N is a recursion layer; in each layer, K being odd or even decides wether to toggle 
+        
+        """
+        if N == K == 1:
+            return 0
+
+        if K&1: 
+            return self.kthGrammar(N - 1, (K + 1)>>1)
+        else: 
+            return self.kthGrammar(N - 1, (K + 1)>>1)^1
 
 
 stime = time.time()

@@ -1,4 +1,6 @@
 import time
+from util.util_tree import *
+
 
 class TreeNode:
     def __init__(self, x):
@@ -51,16 +53,45 @@ class Solution:
                 return False
         return True
 
+    def isSymmetric(self, root: TreeNode) -> bool:
+        q = [root]
 
-root = TreeNode(1)
-root.left = TreeNode(2)
-root.right = TreeNode(2)
-root.left.left = TreeNode(3)
-root.left.right = TreeNode(4)
-root.right.left = TreeNode(4)
-root.right.right = TreeNode(3)
+        while q:
+            nq = []
+            line = []
+
+            while q:
+                node = q.pop(0)
+                if not node:
+                    line += None,
+                else:
+                    line += node.val,
+                    nq += node.left,
+                    nq += node.right,
+
+            if line != line[::-1]:
+                return False
+
+            q = nq
+
+        return True
+
+
 
 stime = time.time()
-sol = Solution()
-print(sol.isSymmetric(root))
+print(True == Solution().isSymmetric(deserialize('[1,2,2,3,4,4,3]')))
+print(False == Solution().isSymmetric(deserialize('[1,2,2,null,3,null,3]')))
+print(False == Solution().isSymmetric(deserialize('[1,2,2,2,null,2]')))
+#      1
+#    /   \
+#   2     2
+#  /     /
+# 2     2
+#
+#
+#  1
+# 2 2
+# 2 null 2 null
+# null null null null
+
 print('elapse time: {} sec'.format(time.time() - stime))

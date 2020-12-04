@@ -7,7 +7,7 @@ import collections
 
 
 class Solution:
-    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+    def wordBreak(self, s: str, wordDict: [str]) -> [str]:
         if not s or not wordDict:
             return []
         
@@ -33,8 +33,31 @@ class Solution:
         memo = {}
         ret = recur(s, wordDict)
         return ret
+    
+    def wordBreak(self, s: str, wordDict: [str]) -> [str]:
+        def dfs(s):
+            if s in mem:
+                return mem[s]
+
+            if not s:
+                return ['']
+            res = []
+            
+            for i in range(len(s) + 1):
+                if s[:i] in wordDict:
+                    for item in dfs(s[i:]):
+                        if not item:
+                            res += s[:i],
+                        else:
+                            res += s[:i] + ' ' + item,
+
+            mem[s] = res
+            return res
         
+        mem = {}
+        return dfs(s)
+
 
 stime = time.time()
-print(["cats and dog","cat sand dog"] == Solution().removeZeroSumSublists("catsanddog", ["cat", "cats", "and", "sand", "dog"]))
+print(["cats and dog","cat sand dog"] == Solution().wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"]))
 print('elapse time: {} sec'.format(time.time() - stime))

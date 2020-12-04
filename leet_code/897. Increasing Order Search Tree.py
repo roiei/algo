@@ -37,6 +37,29 @@ class Solution:
         add_node(root, t)
         return root
 
+    def increasingBST(self, root: TreeNode) -> TreeNode:
+        def traverse(node):
+            res = []
+            if node.left:
+                res += traverse(node.left)
+            res += [node.val]
+            if node.right:
+                res += traverse(node.right)
+                
+            return res
+    
+        seq = traverse(root)
+        
+        def dfs(seq):
+            if not seq:
+                return None
+            
+            node = TreeNode(seq.pop(0))
+            node.right = dfs(seq)
+            return node
+    
+        return dfs(seq)
+
 
 stime = time.time()
 print(Solution().increasingBST(deserialize('[5,3,6,2,4,null,8,1,null,null,null,7,9]')))

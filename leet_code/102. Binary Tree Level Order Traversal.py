@@ -27,3 +27,25 @@ class Solution:
                     q.append(node.right)
         return traces
 
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        lines = []
+        q = [root]
+        
+        while q:
+            nq = []
+            line = []
+            
+            while q:
+                node = q.pop(0)
+                if not node:
+                    continue
+                
+                line += node.val,
+                nq += node.left,
+                nq += node.right,
+            
+            q = nq
+            if line:
+                lines += line,
+        
+        return lines

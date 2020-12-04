@@ -110,7 +110,30 @@ class Solution:
         return dfs(0, 0)
 
 
-        
+    def canPartition(self, nums: [int]) -> bool:
+        half = sum(nums)//2
+        if half*2 != sum(nums):
+            return False
+
+        def dfs(inc, start):
+            if (start, inc) in mem:
+                return mem[(start, inc)]
+
+            if inc > half:
+                return False
+
+            if inc == half:
+                return True
+
+            for i in range(start, len(nums)):
+                if True == dfs(inc + nums[i], i + 1):
+                    return True
+
+            mem[(start, inc)] = False
+            return False
+
+        mem = {}
+        return dfs(0, 0)
             
             
 stime = time.time()

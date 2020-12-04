@@ -11,6 +11,16 @@ class Solution:
             power += 1
         return True if n == cur else False
 
+    def isPowerOfThree(self, n: int) -> bool:
+        degree = 0
+        val = 1
+
+        while val < n:
+            val = 3**degree
+            degree += 1
+
+        return val == n
+
 
 stime = time.time()
 r = Solution().isPowerOfThree(27)

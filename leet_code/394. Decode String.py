@@ -26,12 +26,44 @@ class Solution:
         dstr, l = dfs(s, 0, len(s))
         return dstr
 
+    def decodeString(self, s: str) -> str:
+        n = len(s)
 
-sequence = "3[a]2[bc]"
-sequence = '3[a2[c]]'
-sequence = "2[abc]3[cd]ef"
-sequence = "3[a]2[b4[F]c]"
+        def dfs(i):
+            substr = ''
+            num = ''
 
-sol = Solution()
-ret = sol.decodeString(sequence)
-print(ret)
+            while i < n:
+                while i < n and s[i].isalpha():
+                    substr += s[i]
+                    i += 1
+
+                while i < n and s[i].isdigit():
+                    num += s[i]
+                    i += 1
+
+                if i < n and s[i] == '[':
+                    i, res = dfs(i + 1)
+                    num = int(num) if num else 1
+                    substr += num*res
+                    num = ''
+                elif i < n and s[i] == ']':
+                    break
+
+            return i + 1, substr
+
+        i, res = dfs(0)
+        return res
+
+
+# [a] : just return the letter(s)
+# [a2[c]] : 
+#       [c] : just return the letter(s)
+#       multiply 2 
+#       a + ...
+
+
+print("aaabcbc" == Solution().decodeString("3[a]2[bc]"))
+print("accaccacc" == Solution().decodeString("3[a2[c]]"))
+print("abcabccdcdcdef" == Solution().decodeString("2[abc]3[cd]ef"))
+print("abccdcdcdxyz" == Solution().decodeString("abc3[cd]xyz"))

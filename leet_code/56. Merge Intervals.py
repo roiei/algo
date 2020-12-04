@@ -34,3 +34,27 @@ class Solution:
                 out.append(intervals[i])
 
         return out
+
+    def merge(self, intervals):
+        intervals.sort()
+        res = [intervals.pop(0)]
+
+        while intervals:
+            cur = intervals.pop(0)
+
+            if res[-1][1] >= cur[0] and res[-1][0] <= cur[1]:
+                res[-1][0] = min(res[-1][0], cur[0])
+                res[-1][1] = max(res[-1][1], cur[1])
+            else:
+                res += cur,
+
+        return res
+
+
+"""
+
+"""
+#print([[1,6],[8,10],[15,18]] == Solution().merge([[1,3],[2,6],[8,10],[15,18]]))
+#print([[1,5]] == Solution().merge([[1,4],[4,5]]))
+print([[1,10]] == Solution().merge([[2,3],[4,5],[6,7],[8,9],[1,10]]))
+

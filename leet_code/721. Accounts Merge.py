@@ -104,8 +104,121 @@ class Solution:
             #print(r)
         return res
 
+    def accountsMerge(self, accounts: [[str]]) -> [[str]]:
+        """
+            timeout 45/49
+        """
+        tbl = []
+        
+        for acc in accounts:
+            mails = set()
+            names = set()
+            
+            for item in acc:
+                if -1 != item.find('@'):
+                    mails.add(item)
+                else:
+                    names.add(item)
+                
+            tbl += [mails, names],
+
+        for i in range(len(tbl)):
+            found = False
+            for j in range(i + 1, len(tbl)):
+                if tbl[i][0]&tbl[j][0]:
+                    tbl[j][0] = tbl[j][0]|tbl[i][0]
+                    tbl[j][1] = tbl[j][1]|tbl[i][1]
+                    found = True
+            
+            if found:
+                tbl[i] = None
+        
+        res = []
+        for item in tbl:
+            if not item:
+                continue
+            res += list(item[1]) + sorted(item[0]),
+        return res
+
+    def accountsMerge(self, accounts):
+        em_to_name = {}
+        graph = collections.defaultdict(set)
+        for acc in accounts:
+            name = acc[0]
+            for email in acc[1:]:
+                graph[acc[1]].add(email)
+                graph[email].add(acc[1])
+                em_to_name[email] = name
+
+        print(graph)
+
+        seen = set()
+        ans = []
+        for email in graph:
+            if email not in seen:
+                seen.add(email)
+                stack = [email]
+                component = []
+
+                while stack:
+                    node = stack.pop()
+                    component.append(node)
+
+                    for nei in graph[node]:
+                        if nei not in seen:
+                            seen.add(nei)
+                            stack.append(nei)
+
+                ans.append([em_to_name[email]] + sorted(component))
+        return ans
+
+    def accountsMerge(self, accounts):
+        g = collections.defaultdict(set)
+        names = collections.defaultdict(str)
+
+        for acc in accounts:
+            for i in range(1, len(acc)):  # 1 for only email case
+                g[acc[1]].add(acc[i])
+                g[acc[i]].add(acc[1])
+                names[acc[1]] = acc[0]
+
+        visited = set()
+        res = []
+
+        for email in g:
+            if email in visited:
+                continue
+
+            q = [email]
+            visited.add(email)
+            linked_emails = [email]
+
+            while q:
+                u_email = q.pop(0)
+
+                for v_email in g[u_email]:
+                    if v_email in visited:
+                        continue
+
+                    visited.add(v_email)
+                    linked_emails += v_email,
+                    q += v_email,
+
+            res += [names[email]] + sorted(linked_emails),
+
+        return res
+
 
 stime = time.time()
-(Solution().accountsMerge([['A', 'Aa@mail.com', 'ab@mail.com'],
-   ['A', 'aaa@mail.com'], ['A', 'Aa@mail.com'], ['B', 'b@mail.com']]))
+# print(
+#     [
+#     ["John", 'john00@mail.com', 'john_newyork@mail.com', 'johnsmith@mail.com'],
+#     ["John", "johnnybravo@mail.com"],
+#     ["Mary", "mary@mail.com"]] == 
+#     Solution().accountsMerge([["John", "johnsmith@mail.com", "john00@mail.com"], ["John", "johnnybravo@mail.com"], ["John", "johnsmith@mail.com", "john_newyork@mail.com"], ["Mary", "mary@mail.com"]]))
+
+
+print(
+    [["Alex","Alex0@m.co","Alex4@m.co","Alex5@m.co"],["Ethan","Ethan0@m.co","Ethan3@m.co"],["Gabe","Gabe0@m.co","Gabe2@m.co","Gabe3@m.co","Gabe4@m.co"],["Kevin","Kevin2@m.co","Kevin4@m.co"]] == 
+    Solution().accountsMerge([["Alex","Alex5@m.co","Alex4@m.co","Alex0@m.co"],["Ethan","Ethan3@m.co","Ethan3@m.co","Ethan0@m.co"],["Kevin","Kevin4@m.co","Kevin2@m.co","Kevin2@m.co"],["Gabe","Gabe0@m.co","Gabe3@m.co","Gabe2@m.co"],["Gabe","Gabe3@m.co","Gabe4@m.co","Gabe2@m.co"]]))
 print('elapse time: {} sec'.format(time.time() - stime))

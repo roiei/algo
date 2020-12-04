@@ -38,18 +38,44 @@ class Solution(object):
             offsety += 1
         return trace
 
+    def spiralOrder(self, matrix: [[int]]) -> [int]:
+        if not matrix:
+            return None
 
-matrix = [
- [ 1, 2, 3 ],
- [ 4, 5, 6 ],
- [ 7, 8, 9 ]
-]
+        rows = len(matrix)
+        cols = len(matrix[0])
+        
+        q = [(0, 0)]
+        visited = {(0, 0)}
+        res = [matrix[0][0]]
+        visited_start = set()
+        
+        while q:
+            y, x = q.pop(0)
+            visited_start.add((y, x))
+            ny = y
+            nx = x        
+            
+            for oy, ox in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                while (0 <= ny + oy < rows and 0 <= nx + ox < cols):
+                    if (ny + oy, nx + ox) in visited:
+                        break
 
-matrix = [[2, 3]]
-matrix = [[7],[9],[6]]
+                    ny += oy
+                    nx += ox
+
+                    visited.add((ny, nx))
+                    res += matrix[ny][nx],
+
+            if (ny, nx) not in visited_start:
+                q += (ny, nx),
+
+        return res
+
 
 stime = time.time()
-ret = Solution().spiralOrder(matrix)
-print(ret)
+print([1,2,3,6,9,8,7,4,5] == Solution().spiralOrder([[1,2,3],[4,5,6],[7,8,9]]))
+print([2, 3] == Solution().spiralOrder([[2, 3]]))
+print([7, 9, 6] == Solution().spiralOrder([[7],[9],[6]]))
 print('elapse time: {} sec'.format(time.time() - stime))
 

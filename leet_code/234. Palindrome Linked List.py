@@ -1,3 +1,6 @@
+import time
+from util.util_list import *
+
 
 class Solution:
     def isPalindrome(self, head: ListNode) -> bool:
@@ -13,3 +16,10 @@ class Solution:
             return True
         return False
 
+    def isPalindrome(self, head: ListNode) -> bool:
+
+
+stime = time.time()
+print(False == Solution().reverseList(create_linked_list('1->2')))
+print(True == Solution().reverseList(create_linked_list('1->2->2->1')))
+print('elapse time: {} sec'.format(time.time() - stime))

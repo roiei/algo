@@ -30,6 +30,34 @@ class Solution:
             check(board, n, 0)
         return num
 
+    def totalNQueens(self, n: int) -> int:
+        board = [0]*n
+        
+        def dfs(board, depth):
+            for pre in range(depth):
+                if board[depth] == board[pre] or \
+                    depth - pre == abs(board[depth] - board[pre]):
+                    return 0
+            
+            if depth == n - 1:
+                return 1
+            
+            depth += 1
+            cnt = 0
+            
+            for i in range(n):
+                board[depth] = i
+                cnt += dfs(board, depth)
+            
+            return cnt
+            
+        cnt = 0
+        for i in range(n):
+            board[0] = i
+            cnt += dfs(board, 0)
+        
+        return cnt
+
 
 stime = time.time()
 print(Solution().solveNQueens(4))

@@ -32,7 +32,6 @@ class Solution:
         used = [False]*n
         return dfs(0, 0, k, used)
 
-
     def canPartitionKSubsets(self, nums, k):
         if not nums or not k or 0 != sum(nums)%k:
             return False
@@ -58,7 +57,6 @@ class Solution:
 
         used = [False]*len(nums)
         return dfs(nums, len(nums), k, 0, used, sum(nums)//k, 0)
-
 
     def canPartitionKSubsets(self, nums, k):
         if not nums or not k or 0 != sum(nums)%k:
@@ -90,6 +88,66 @@ class Solution:
             return False
             
         return dfs(nums, 0, n, part, k, [])
+
+    def canPartitionKSubsets(self, nums, k):
+        if not nums or not k or 0 != sum(nums)%k:
+            return False
+        
+        part = sum(nums)//k
+            
+        def dfs(inc, k, start, skip):
+            if inc == part:
+                inc = 0
+                start = 0
+                k -= 1
+            
+            if inc > part:
+                return False
+                
+            if k == 0:
+                return True
+        
+            for i in range(start, n):
+                if i in skip:
+                    continue
+                skip += i,
+                if dfs(inc + nums[i], k, i + 1, skip):
+                    return True
+                skip.pop()
+            
+            return False
+    
+        n = len(nums)
+        return dfs(0, k, 0, [])
+
+    def canPartitionKSubsets(self, nums, k):
+        part = sum(nums)//k
+        if part*k != sum(nums):
+            return False
+    
+        def dfs(inc, sel, k):
+            if inc > part:
+                return False
+        
+            if inc == part:
+                k -= 1
+                inc = 0
+
+            if k == 0:
+                return True
+            
+            for i in range(start, len(nums)):
+                if i in sel:
+                    continue
+                    
+                sel += i,
+                if dfs(inc + nums[i], sel, k):
+                    return True
+                sel.pop()
+            
+            return False
+    
+        return dfs(0, [], k)
 
 
 stime = time.time()

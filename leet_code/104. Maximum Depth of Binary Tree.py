@@ -15,3 +15,12 @@ class Solution:
         traverse(root, 1)
         return max_depth
 
+    def maxDepth(self, root: TreeNode) -> int:
+        def dfs(node, depth):
+            if not node:
+                return depth
+            depth += 1
+            return max(dfs(node.left, depth), dfs(node.right, depth))
+    
+        return dfs(root, 0)
+

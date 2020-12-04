@@ -45,3 +45,4 @@ class Solution:
         return self.seq
     
 
+print(Solution().combine(3, 2))

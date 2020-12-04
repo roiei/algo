@@ -16,10 +16,8 @@ class Solution:
             return 1
         
         count, N = 1, 1
-
         
-        
-        while N%K > 0:
+        while N%K != 0:
             N = (N%K)*10 + 1
             print(N)
             count += 1

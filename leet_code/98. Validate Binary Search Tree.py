@@ -38,6 +38,22 @@ class Solution:
         res += check(root.right, [(root.val, 'R')]),
         return all(res)
 
+    def isValidBST(self, root: TreeNode) -> bool:
+        if not root:
+            return True
+        
+        def dfs(node, l, r):
+            if not node:
+                return True
+        
+            if not (l < node.val < r):
+                return False
+            
+            return dfs(node.left, l, min(node.val, r)) and \
+                dfs(node.right, max(node.val, l), r)
+        
+        return dfs(root, float('-inf'), float('inf'))
+
 
 stime = time.time()
 print(Solution().isValidBST(deserialize('[5,1,4,null,null,3,6]')))

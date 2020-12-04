@@ -29,6 +29,29 @@ class Solution:
             med = (merged[n//2] + merged[n//2 - 1])/2
         return med
 
+    def findMedianSortedArrays(self, nums1: 'List[int]', nums2: 'List[int]') -> 'float':
+        i = j = 0
+        nums = []
+        
+        while i < len(nums1) or j < len(nums2):
+            if i < len(nums1) and j < len(nums2):
+                if nums1[i] < nums2[j]:
+                    nums += nums1[i],
+                    i += 1
+                else:
+                    nums += nums2[j],
+                    j += 1
+            elif i < len(nums1) and j == len(nums2):
+                nums += nums1[i],
+                i += 1
+            elif i == len(nums1) and j < len(nums2):
+                nums += nums2[j],
+                j += 1
+        
+        if len(nums)%2 == 0:
+            return float(nums[len(nums)//2] + nums[len(nums)//2 - 1])/2
+        return float(nums[len(nums)//2])
+
 
 # nums1 = [1, 3]
 # nums2 = [2]
