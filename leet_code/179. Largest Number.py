@@ -91,6 +91,43 @@ class Solution:
 
         return ''.join(res)
 
+    def largestNumber(self, nums: [int]) -> str:
+        if not any(nums):
+            return "0"
+        
+        def compare(x, y):
+            a = x + y
+            b = y + x
+            if a > b:
+                return 1
+            elif a < b:
+                return -1
+            return 0
+
+        def search(val, nums):
+            l = 0
+            r = len(nums) - 1
+
+            while l <= r:
+                m = (l + r)//2
+                ret = compare(val, nums[m])
+                if ret == 0:
+                    return m
+                if ret > 0:
+                    l = m + 1
+                else:
+                    r = m - 1
+
+            return l
+
+        nums = [str(i) for i in nums]
+        res = []
+        for num in nums:
+            idx = search(num, res)
+            res.insert(idx, num)
+
+        return ''.join(res[::-1])
+
 
 # a = 8247
 # b = 824
@@ -106,8 +143,8 @@ class Solution:
 # 비교 시 더 짧은 경우 나의 마지막에 나와 같은 값을 적용 한 것과 더 긴 것의 가장 맨 앞 자리를 비교
 
 stime = time.time()
-
 print("9609938824824769735703560743981399" == Solution().largestNumber([824,938,1399,5607,6973,5703,9609,4398,8247]))
+print("9534330" == Solution().largestNumber([3,30,34,5,9]))
 #print("0" == Solution().largestNumber([0,0]))
 #print("0" == Solution().largestNumber([0,0]))
 #print("210" == Solution().largestNumber([10,2]))

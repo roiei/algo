@@ -22,9 +22,6 @@ class Solution:
         
         return len(tasks) + req_slots
 
-
-
-
     def leastInterval2(self, tasks: [str], n: int) -> int:
         c = collections.Counter(tasks)
         vals = sorted(c.values(), reverse = True)
@@ -37,6 +34,23 @@ class Solution:
             max_idle_slots -= min(max_val, val)
 
         return max_idle_slots + len(tasks) if max_idle_slots > 0 else len(tasks)
+
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        freq = collections.Counter(tasks)
+        freq = sorted(freq.items(), key=lambda p: p[1], reverse=True)
+        
+        mx_num = freq[0][1] - 1
+        freq = [(task, num) if num <= mx_num else (task, num - 1) for task, num in freq]
+        
+        num_pad = mx_num*n
+        
+        for i in range(1, len(freq)):
+            num_pad -= freq[i][1]
+        
+        if num_pad < 0:
+            num_pad = 0
+        
+        return len(tasks) + num_pad
         
 
 stime = time.time()

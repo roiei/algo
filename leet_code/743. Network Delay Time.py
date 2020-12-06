@@ -4,6 +4,7 @@ from util.util_tree import *
 import copy
 import heapq
 import collections
+from typing import List
 
 
 class Solution:
@@ -35,6 +36,30 @@ class Solution:
             return -1
 
         return -1 if mweight == 0 else mweight
+
+    def networkDelayTime(self, times: List[List[int]], N: int, K: int) -> int:
+        g = collections.defaultdict(dict)
+        for u, v, w in times:
+            g[u][v] = w
+        
+        q = [(0, K)]
+        visited = set()
+        mn = 0
+        
+        while q:
+            inc, u = heapq.heappop(q)
+            if u not in visited:
+                mn = inc
+            
+            visited.add(u)
+            
+            for v, w in g[u].items():
+                if v in visited:
+                    continue
+                
+                heapq.heappush(q, (inc + w, v))
+        
+        return mn if len(visited) == N else -1
 
 
 stime = time.time()

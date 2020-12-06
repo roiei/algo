@@ -58,8 +58,8 @@ class Solution:
             if not node:
                 return
             
-            node.left = dfs(node.right)
-            node.right = dfs(node.left)
+            node.left = dfs(node.right)  # WRONG: left is already changed !
+            node.right = dfs(node.left)  # HERE: left is the right !
             
             return node
     
@@ -83,7 +83,18 @@ class Solution:
     
         return dfs(root)
 
+    def invertTree(self, root: TreeNode) -> TreeNode:
+        def dfs(node):
+            if not node:
+                return None
+
+            node.left, node.right = \
+                dfs(node.right), dfs(node.left)
+
+            return node
+    
+        return dfs(root)
+
 
 #print(serialize(Solution().invertTree(deserialize('[1, 2]'))))
-res = Solution().invertTree(deserialize('[4,2,7,1,3,6,9]'))
-print(tree_is_same(deserialize('[4,7,2,9,6,3,1]'), res))
+print(tree_is_same(deserialize('[4,7,2,9,6,3,1]'), Solution().invertTree(deserialize('[4,2,7,1,3,6,9]'))))

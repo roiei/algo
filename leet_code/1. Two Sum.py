@@ -66,18 +66,12 @@ class Solution:
         snums = [(num, i) for i, num in enumerate(nums)]
         snums.sort(key=lambda p:p[0], reverse=False)
         
-        print(snums)
-        
         for i, num in enumerate(snums):
             m = search(snums, i + 1, target - num[0])
-            print('target = {}, val = {}, m = {}'.format(target, num[0], m))
             if -1 != m:
                 return [snums[i][1], snums[m][1]]
         
         return [-1, -1]
-
-
-
 
 
 stime = time.time()

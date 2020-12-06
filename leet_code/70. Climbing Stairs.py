@@ -33,17 +33,16 @@ class Solution:
                     dp[i] += dp[i-j]
         return dp[-1]
 
-    #  n = 3
-    #
-    #  0  1  2  3
-    #  1  1  2  3
-
     def climbStairs(self, n: int) -> int:
-        dp = [0]*(n + 2)
-        dp[1] = 1
-
-        for i in range(2, n + 2):
-            dp[i] += dp[i - 2], dp[i - 1]
+        dp = [0]*(n + 1)
+        dp[0] = 1
+        
+        for i in range(1, n + 1):
+            for step in [1, 2]:
+                if i - step >= 0:
+                    dp[i] += dp[i - step]
+        
+        return dp[-1]
 
 
 stime = time.time()

@@ -6,10 +6,6 @@ import collections
 import heapq
 
 
-
-# not completed yet
-# failed @ 14th TC
-
 class Solution:
     def search(self, nums: [int], target: int) -> int:
         if not nums:
@@ -25,7 +21,7 @@ class Solution:
                 m += l
             else:
                 m = l
-            #print('l = {}, r = {}, m = {}'.format(l, r, m))
+
             if r == l:
                 if nums[l] == tgt:
                     is_found = True
@@ -57,16 +53,19 @@ class Solution:
         def find_pivot(nums, l, r):
             if l >= r:
                 return -1
+
             m = (l + r)//2
-            if m > 0 and nums[m-1] > nums[m]:
-                return m-1
-            if nums[m] > nums[m+1]:
+            if m > 0 and nums[m - 1] > nums[m]:
+                return m - 1
+
+            if nums[m] > nums[m + 1]:
                 return m
         
-            ret = find_pivot(nums, l, m-1)
+            ret = find_pivot(nums, l, m - 1)
             if -1 != ret:
                 return ret
-            return find_pivot(nums, m+1, r)
+
+            return find_pivot(nums, m + 1, r)
     
         def search(nums, l, r, target):
             while l <= r:
@@ -79,14 +78,15 @@ class Solution:
                     r = m - 1
             return -1
     
-        idx = find_pivot(nums, 0, len(nums)-1)
+        idx = find_pivot(nums, 0, len(nums) - 1)
         if -1 == idx:
-            return search(nums, 0, len(nums)-1, target)
+            return search(nums, 0, len(nums) - 1, target)
         else:
             ret = search(nums, 0, idx, target)
             if -1 != ret:
                 return ret
-            ret = search(nums, idx+1, len(nums)-1, target)
+
+            ret = search(nums, idx + 1, len(nums) - 1, target)
             return ret
 
 

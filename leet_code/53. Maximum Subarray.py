@@ -1,6 +1,7 @@
 
 import time
 
+
 class Solution:
     def maxSubArray(self, nums: 'List[int]') -> int:
         tot = 0
@@ -11,6 +12,16 @@ class Solution:
             if tot <= num:
                 tot = num
         return max(res)
+
+    def maxSubArray(self, nums: List[int]) -> int:
+        cur_mx = mx = float('-inf')
+        
+        for num in nums:
+            cur_mx = max(num, cur_mx + num)
+            mx = max(mx, cur_mx)
+        
+        return mx
+
 
 stime = time.time()
 sol = Solution()

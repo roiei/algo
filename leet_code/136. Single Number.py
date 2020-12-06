@@ -9,5 +9,5 @@ class Solution:
 
 
 stime = time.time()
-print(Solution().singleNumber([2,2,1]))
-print(Solution().singleNumber([4,1,2,1,2]))
+print(1 == Solution().singleNumber([2,2,1]))
+print(4 == Solution().singleNumber([4,1,2,1,2]))

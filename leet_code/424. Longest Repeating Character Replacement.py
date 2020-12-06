@@ -56,19 +56,37 @@ class Solution:
     def characterReplacement(self, s, k):
         if not s:
             return 0
+        
+        r = l = 0
+        freq = collections.Counter()
+        
+        for r, ch in enumerate(s):
+            freq[ch] += 1
+            mx = freq.most_common(1)[0][1]
 
-        count = collections.defaultdict(int)
-        mx = i = j = 0
+            if r - l + 1 - mx > k:
+                freq[s[l]] -= 1
+                l += 1
+                
+        return r - l + 1
 
-        for i in range(len(s)):
-            count[s[i]] += 1
-            mx = max(mx, count[s[i]])
+    def characterReplacement(self, s, k):
+        if not s:
+            return 0
 
-            if i + 1 - j - mx > k:
-                count[s[j]] -= 1
-                j += 1
-
-        return i + 1 - j
+        freq = collections.defaultdict(int)
+        mx = 0
+        l = 0
+        
+        for r, ch in enumerate(s):
+            freq[ch] += 1
+            mx = max(mx, freq[ch])
+            
+            while r - l + 1 - mx > k:
+                freq[s[l]] -= 1
+                l += 1
+            
+        return r - l + 1
 
 
 stime = time.time()

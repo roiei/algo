@@ -23,8 +23,6 @@ class Solution:
         return stk[:k]
 
 
-
-
 stime = time.time()
 print([2,6] == Solution().mostCompetitive([3,5,2,6], k = 2))
 print([2,3,3,4] == Solution().mostCompetitive(nums = [2,4,3,3,5,4,9,6], k = 4))

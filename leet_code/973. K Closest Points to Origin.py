@@ -2,6 +2,8 @@
 import math
 import heapq
 import time
+from typing import List
+
 
 class Solution:
     cache = {}
@@ -40,10 +42,11 @@ class Solution:
     def kClosest(self, points: 'List[List[int]]', K: int) -> 'List[List[int]]':
         if not points:
             return 0
+
         n = len(points)
-        print(n)
         if n < K:
             return 0
+
         self.cache.clear()
         dist_coord = [] # [[dist, [x, y]], ...]
 
@@ -71,6 +74,19 @@ class Solution:
             res.append(item[1])
         return res
 
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        if not points:
+            return None
+        
+        dists = []
+        
+        for y, x in points:
+            dists += (y**2 + x**2, y, x),
+        
+        dists.sort(key=lambda p:p[0], reverse=False)
+        
+        return [(y, x) for d, y, x in dists[:K]]
+
 
 points = [[3,3],[5,-1],[-2,4]] # [[3,3],[-2,4]]
 K = 2
@@ -88,7 +104,7 @@ K = 3468
 stime = time.time()
 sol = Solution()
 ret = sol.kClosest1(points, K)
-print('2: {} sec'.format(time.time() - stime))
+print('1: {} sec'.format(time.time() - stime))
 #print(ret)
 print()
 
@@ -102,5 +118,5 @@ K = 3468
 stime = time.time()
 sol = Solution()
 ret = sol.kClosest(points, K)
-print('1: {} sec'.format(time.time() - stime))
+print('2: {} sec'.format(time.time() - stime))
 #print(ret)

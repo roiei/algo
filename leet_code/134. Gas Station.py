@@ -3,6 +3,7 @@ from util.util_list import *
 from util.util_tree import *
 import copy
 import collections
+from typing import List
 
 
 class Solution:
@@ -60,6 +61,22 @@ class Solution:
                 return i
         
         return -1
+
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        tot = 0
+        mx = float('-inf')
+        idx = -1
+
+        for i, gc in enumerate(zip(gas, cost)):
+            g, c = gc
+            diff = g - c
+            tot += diff
+
+            if tot > mx:
+                mx = tot
+                idx = (i - 1)%len(gas)
+
+        return idx if tot >= 0 else -1
 
 
 stime = time.time()

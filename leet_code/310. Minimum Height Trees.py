@@ -53,6 +53,7 @@ class Solution:
         while leaves:
             nleaves = []
             res = []
+
             for i in leaves:
                 res += i,
                 for j in graph[i]:
@@ -66,6 +67,6 @@ class Solution:
 
 
 stime = time.time()
-print(Solution().findMinHeightTrees(4, [[1, 0], [1, 2], [1, 3]]))
+print([1] == Solution().findMinHeightTrees(4, [[1, 0], [1, 2], [1, 3]]))
 print('elapse time: {} sec'.format(time.time() - stime))
 

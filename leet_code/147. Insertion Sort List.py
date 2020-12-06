@@ -19,22 +19,27 @@ class Solution:
         while None != target:
             cur_pre = cur = head
             found = False
+
             while cur != target:
                 if cur.val > target.val:
                     found = True
                     break
                 cur_pre = cur
                 cur = cur.next
+
             if True == found:
                 if cur_pre != cur:
                     cur_pre.next = target
                 else:
                     head = target
+                    
                 target_pre.next = target.next
                 target.next = cur
                 target = target_pre
+
             target_pre = target
             target = target.next
+
         return head
 
 

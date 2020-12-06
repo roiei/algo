@@ -1,5 +1,9 @@
+import time
+from typing import List
+
+
 class Solution:
-    def validUtf8(self, data: 'List[int]') -> 'bool':
+    def validUtf8(self, data: List[int]) -> bool:
         nums = data
         while nums:
             num = nums.pop(0)
@@ -33,11 +37,37 @@ class Solution:
 
         return True
 
+    def validUtf8(self, data: List[int]) -> bool:
+        if not data:
+            return False
 
-data = [197, 130, 1]
-data = [240, 162, 138, 147, 17]
-data = [248, 130, 130, 130]
+        while data:
+            num = data.pop(0)
+            num = '{:08b}'.format(num)
+            ones = 0
+            for i in range(5):
+                if '0' == num[i]:
+                    break
+                ones += 1
+            
+            if not ((2 <= ones <= 4) or ones == 0):
+                return False
+            
+            ones -= 1
+            while ones > 0 and data:
+                num = data.pop(0)
+                num = '{:08b}'.format(num)
+                if not (num[0] == '1' and num[1] == '0'):
+                    return False
+                ones -= 1
+                
+            if ones > 0:
+                return False
 
-sol = Solution()
-ret = sol.validUtf8(data)
-print(ret)
+        return True
+
+
+stime = time.time()
+print(True == Solution().validUtf8([197, 130, 1]))
+print(False == Solution().validUtf8([235, 140, 4]))
+print('elapse time: {} sec'.format(time.time() - stime))

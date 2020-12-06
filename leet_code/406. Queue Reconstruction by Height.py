@@ -1,4 +1,6 @@
 import time
+from typing import List
+import heapq
 
 
 class Solution:
@@ -28,9 +30,7 @@ class Solution:
                 queue.append(p)
         return queue
 
-
     def reconstructQueue(self, people: [[int]]) -> [[int]]:
-        
         people.sort(key=lambda p:p[1])
         res = [people.pop(0), (-1, -1)]
 
@@ -50,11 +50,40 @@ class Solution:
         res.pop()
         return res
 
+    def reconstructQueue(self, people: List[List[int]]) -> List[List[int]]:
+        q = []
+        for hi, ki in people:
+            heapq.heappush(q, (-hi, ki))
 
-inputs = [[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
+        seq = []
+        while q:
+            hi, ki = heapq.heappop(q)
+            seq.insert(ki, (-hi, ki))
+
+        return seq
+
+    def reconstructQueue(self, people: [[int]]) -> [[int]]:
+        people.sort(key=lambda p: p[1], reverse=False)
+        seq = []
+
+        for hi, ki in people:
+            i = 0
+            temp_ki = ki
+
+            while seq and i < len(seq):
+                if seq[i][0] < hi:
+                    i += 1
+                elif temp_ki:
+                    temp_ki -= 1
+                    i += 1
+                else:
+                    break
+
+            seq.insert(i, [hi, ki])
+
+        return seq
+
 
 stime = time.time()
-sol = Solution()
-ret = sol.reconstructQueue(inputs)
+print([[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]] == Solution().reconstructQueue([[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]))
 print('elapse time: {} sec'.format(time.time() - stime))
-print(ret)

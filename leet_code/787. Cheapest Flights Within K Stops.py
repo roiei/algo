@@ -100,7 +100,6 @@ class Solution:
             tot_cost, u, k = heapq.heappop(q)
 
             if u == dst:
-                print(tot_cost)
                 return tot_cost
             
             if k == 0:
