@@ -58,3 +58,14 @@ def list_get_nums(node):
         res += node.val,
         node = node.next
     return res
+
+
+def list_is_same_list(l1, l2):
+    while l1 and l2:
+        if l1.val != l2.val:
+            return False
+        l1 = l1.next
+        l2 = l2.next
+
+    return l1 == None and l2 == None
+

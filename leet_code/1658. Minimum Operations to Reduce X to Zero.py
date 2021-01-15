@@ -3,6 +3,7 @@ from util.util_list import *
 from util.util_tree import *
 import copy
 import collections
+from typing import List
 
 
 """
@@ -27,6 +28,9 @@ class Solution:
             cur_l, cur_r, cur_x, cur_cnt = q.pop(0)
             if cur_x == 0:
                 return cur_cnt
+
+            if cur_x < 0:
+                continue
 
             if cur_l <= cur_r:
                 q += (cur_l + 1, cur_r, cur_x - nums[cur_l], cur_cnt + 1),
@@ -93,14 +97,36 @@ class Solution:
         return n-n_target if n_target != -1 else -1
 
 
+    def minOperations(self, nums: List[int], x: int) -> int:
+        int ans=INT_MAX;
+        int minOperations(vector<int>& nums, int x) {
+            int total=0,n=nums.size();
+            for(int num : nums)total+=num;
+            int need=total-x,cur=0,longest=0;
+            if(need==0)return n;
+            int l=0,r=0;
+            while(l<n && r<n){
+                if(cur<need){
+                    cur+=nums[r++];
+                }else if(cur>need){
+                    cur-=nums[l++];
+                }else{
+                    longest=max(longest,r-l);
+                    cur-=nums[l++];
+                }
+            }
+            if(cur==need)longest=max(longest,r-l);
+            if(longest==0)return -1;
+            return n-longest;
+        }
+
+
  
 
 stime = time.time()
 #print(2 == Solution().minOperations(nums = [1,1,4,2,3], x = 5))
-    # 1, 2, 6
-    # 1  2  3
-    # 3 -> 2  -> (2) + 1 = 3
-    # 5 -> 0  -> 2
+    # 1  1  4  2  3
+    # 
 
 #print(-1 == Solution().minOperations(nums = [5,6,7,8,9], x = 4))
 #print(5 == Solution().minOperations(nums = [3,2,20,1,1,3], x = 10))

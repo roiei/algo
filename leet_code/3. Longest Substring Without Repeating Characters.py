@@ -47,5 +47,21 @@ class Solution:
         
         return mx
 
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        l = r = 0
+        wnd = []
+        mx = 0
+
+        while r < len(s):
+            while wnd and s[r] in wnd:
+                wnd.pop(0)
+                l += 1
+
+            wnd += s[r],
+            mx = max(mx, len(wnd))
+            r += 1
+
+        return mx
+
 
 print(7 == Solution().lengthOfLongestSubstring("bpfbhmipx"))

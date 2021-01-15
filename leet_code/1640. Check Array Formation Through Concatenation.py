@@ -87,4 +87,5 @@ class Solution:
 stime = time.time()
 print(True == Solution().canFormArray(arr = [91,4,64,78], pieces = [[78],[4,64],[91]]))
 print(True == Solution().canFormArray(arr = [85], pieces = [[85]]))
+print(False == Solution().canFormArray([49,18,16], [[16,18,49]]))
 print('elapse time: {} sec'.format(time.time() - stime))
