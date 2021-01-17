@@ -1,26 +1,30 @@
 import time
-from util_list import *
+from util.util_list import *
+from typing import List
 
 
 class Solution:
     def removeDuplicates(self, nums: 'List[int]') -> int:
         if not nums:
             return 0
-        uidx = 0
-        dup = 1
-        i = 1
-        while i < len(nums):
-            if nums[uidx] == nums[i] and dup > 0:
-                uidx += 1
-                nums[uidx] = nums[i]
-                dup -= 1
-                continue
-            if nums[uidx] != nums[i] or 1 == dup:
-                uidx += 1
-                nums[uidx] = nums[i]
-                dup = 1
-            i += 1
-        return uidx + 1
+        l = 0
+        dup = 0
+        r = 1
+
+        while r < len(nums):
+            if nums[l] == nums[r]:
+                if dup < 1:
+                    l += 1
+                    nums[l] = nums[r]
+                    dup += 1
+            elif nums[l] != nums[r]:
+                l += 1
+                nums[l] = nums[r]
+                dup = 0
+
+            r += 1
+
+        return l + 1
 
 
 stime = time.time()

@@ -35,7 +35,7 @@ stime = time.time()
 #print(2 == Solution().numDecodings('12')) # 2
 #print(3 == Solution().numDecodings('226')) # 3
 #print(1 == Solution().numDecodings('101')) # 1
-#print(2 == Solution().numDecodings('611')) # 2
+print(2 == Solution().numDecodings('611')) # 2
 #print(0 == Solution().numDecodings('0')) # 0
 #print(0 == Solution().numDecodings('01')) # 0
 print(52488 == Solution().numDecodings('226226226226226226226226262626')) # 52488

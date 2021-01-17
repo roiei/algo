@@ -73,11 +73,34 @@ class Solution:
         
         dfs(root)
         return res.val
+
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        def dfs(node):
+            nonlocal common
+
+            if not node:
+                return None
         
-            
+            ret = False
+            if node == p or node == q:
+                ret = True
+                print('True')
+                
+            lr = dfs(node.left)
+            rr = dfs(node.right)
+
+            if ((lr or ret) and rr) or (lr and (rr or ret)) and not common:
+                common = node
+        
+            ret = ret or lr or rr
+            return ret
+    
+        common = None
+        dfs(root)
+        return common.val if common else None
+        
 
 stime = time.time()
-
 print(3 == Solution().lowestCommonAncestor(deserialize('[3,5,1,6,2,0,8,null,null,7,4]'), TreeNode(5), TreeNode(1))) # 3
 print(5 == Solution().lowestCommonAncestor(deserialize('[3,5,1,6,2,0,8,null,null,7,4]'), TreeNode(5), TreeNode(4))) # 5
 #print(Solution().lowestCommonAncestor(deserialize('[1,2,3,null,4]'), TreeNode(4), TreeNode(3))) # 1

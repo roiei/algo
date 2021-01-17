@@ -36,10 +36,7 @@ class Solution:
                 dfs(node.right, seq + [node.val])
         
         dfs(root, [])
-        print(cnt)
         return cnt
-        
-
                 
 
 

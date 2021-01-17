@@ -2,7 +2,11 @@ import time
 from util.util_list import *
 from util.util_tree import *
 import copy
+import heapq
 import collections
+import functools
+import bisect
+from typing import List
 
 
 class Solution:
@@ -26,18 +30,21 @@ class Solution:
     def isBalanced(self, root: TreeNode) -> bool:
         def dfs(node, depth):
             if not node:
-                return depth
+                return True, depth
 
-            ld = dfs(node.left, depth + 1)
-            rd = dfs(node.right, depth + 1)
+            lr, ld = dfs(node.left, depth + 1)
+            rr, rd = dfs(node.right, depth + 1)
+            if not lr or not rr:
+                return False, max(ld, rd)
+
             diff = abs(ld - rd)
             if 1 < diff:
-                return -1
+                return False, max(ld, rd)
 
-            return max(ld, rd)
+            return True, max(ld, rd)
 
-        res = dfs(root, 0)
-        return False if res == -1 else True if res <= 1 else False
+        ret, res = dfs(root, 0)
+        return ret or res <= 1
 
 
 stime = time.time()

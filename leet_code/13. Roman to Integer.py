@@ -41,6 +41,38 @@ class Solution:
 
         return num
 
+    def romanToInt(self, s: str) -> int:
+        kinds = {'M' : 1000, 'CM' : 900, 'D' : 500, 'CD' : 400, \
+                'C' : 100, 'XC' : 90, 'L' : 50, 'XL' : 40, \
+                'X' : 10, 'IX' : 9, 'V' : 5, 'IV' : 4}
+        
+        val = 0
+        i = 0
+        
+        while i < len(s):
+            if i + 1 < len(s) and s[i] + s[i + 1] in kinds:
+                ch = s[i] + s[i + 1]
+                i += 1
+                val += kinds[ch]
+            elif s[i] in kinds:
+                ch = s[i]
+                val += kinds[ch]
+            elif s[i] == 'I':
+                cnt = 1
+                while i + 1 < len(s):
+                    if s[i + 1] != 'I':
+                        break
+                    i += 1
+                    cnt += 1
+                
+                val += cnt
+            else:
+                break
+            
+            i += 1
+        
+        return val
+
 
 stime = time.time()
 #print(4 == Solution().romanToInt("IV"))

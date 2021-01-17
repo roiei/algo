@@ -48,6 +48,23 @@ class Solution:
             cur = cur.next
         return rnode
 
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        def get_num(l):
+            res = []
+            while l:
+                res += l.val,
+                l = l.next
+            return int(''.join(map(str, reversed(res))))
+        
+        nums = list(str(get_num(l1) + get_num(l2)))
+        rhead = res = ListNode(nums.pop())
+        while nums:
+            res.next = ListNode(nums.pop())
+            res = res.next
+        
+        res.next = None
+        return rhead
+
 
 l1 = ListNode(5)
 l2 = ListNode(5)

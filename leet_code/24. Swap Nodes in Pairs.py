@@ -47,6 +47,7 @@ class Solution:
             node.next = nodes.pop(0)
             node = node.next
         node.next = None
+        return head
         
 
 stime = time.time()

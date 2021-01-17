@@ -171,7 +171,7 @@ class Solution:
             while r + 1 < n and s[i] == s[r + 1]:
                 r += 1
 
-            while l - 1 >= 0 and  r + 1 < n and s[l - 1] == s[r + 1]:
+            while l - 1 >= 0 and r + 1 < n and s[l - 1] == s[r + 1]:
                 l -= 1
                 r += 1
 

@@ -97,7 +97,6 @@ class Solution:
             if not nums:
                 return 0
         
-            mcoin = 0
             mx = 0
             
             for i in range(len(nums)):
@@ -116,10 +115,53 @@ class Solution:
         
         return dfs(nums)
 
+    def maxCoins(self, nums: [int]) -> int:
+        
+        def dfs(nums, l, r, lv, rv):
+            if l > r:
+                return 0
 
+            if mem[l][r] != -1:
+                return mem[l][r]
+        
+            mx = 0
+            
+            for i in range(l, r + 1):
+                nlv = lv
+                nrv = rv
+                
+                if i - 1 >= l:
+                    nlv = nums[i - 1]
+                if i + 1 <= r:
+                    nrv = nums[i + 1]
+                
+                val = nlv*nums[i]*nrv
+                
+                mx = max(mx, val + \
+                    dfs(nums, l, i - 1, lv, nums[i]) + \
+                    dfs(nums, i + 1, r, nums[i], rv))
 
+            mem[l][r] = mx
+            return mx
+        
+        n = len(nums)
+        mem = [[-1]*n for _ in range(n)]
+        res = dfs(nums, 0, len(nums) - 1, 1, 1)
+        print(res)
+        return res
 
+    def maxCoins(self, nums):
+        A = [1] + nums + [1]
+        
+        @lru_cache(None)
+        def dfs(l, r):
+            mx = 0
+            for i in range(l + 1, r):
+                mx = max(mx, A[l]*A[i]*A[r] + dfs(l, i) + dfs(i, r))
 
+            return mx
+        
+        return dfs(0, len(A) - 1)
 
 
 #nums = [35,16,83,87,84,59,48,41,20,54]

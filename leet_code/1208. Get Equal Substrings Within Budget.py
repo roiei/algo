@@ -1,3 +1,10 @@
+import time
+from util.util_list import *
+from util.util_tree import *
+import copy
+import collections
+from typing import List
+import bisect
 
 
 class Solution:
@@ -16,12 +23,10 @@ class Solution:
             
             mx = max(mx, r + 1 - l)
             r += 1
-            
+
         return mx
 
-
     def equalSubstring(self, s: str, t: str, maxCost: int) -> int:
-        
         l = r = 0
         cost = 0
         mx = 0
@@ -42,9 +47,26 @@ class Solution:
         
         return mx
 
+    def equalSubstring(self, s: str, t: str, maxCost: int) -> int:
+        l = r = 0
+        inc = 0
+        mx = 0
 
-#print(3 == SolutionEqSubStr().equalSubstring("abcd", "bcdf", 3)) 
-#print(1 == SolutionEqSubStr().equalSubstring("abcd", "cdef", 3)) 
-print(2 == SolutionEqSubStr().equalSubstring("abcd", "bdef", 3))
-#print(2 == SolutionEqSubStr().equalSubstring("krrgw", "zjxss", 19)) 
-#print(4 == SolutionEqSubStr().equalSubstring("pxezla", "loewbi", 25)) 
+        while r < len(s):
+            inc += abs(ord(s[r]) - ord(t[r]))
+
+            while l < len(s) and inc > maxCost:
+                inc -= abs(ord(s[l]) - ord(t[l]))
+                l += 1
+
+            mx = max(mx, r - l + 1)
+            r += 1
+
+        return mx
+
+
+#print(3 == Solution().equalSubstring("abcd", "bcdf", 3)) 
+#print(1 == Solution().equalSubstring("abcd", "cdef", 3)) 
+print(2 == Solution().equalSubstring("abcd", "bdef", 3))
+#print(2 == Solution().equalSubstring("krrgw", "zjxss", 19)) 
+#print(4 == Solution().equalSubstring("pxezla", "loewbi", 25)) 

@@ -2,35 +2,37 @@ import time
 from util.util_list import *
 from util.util_tree import *
 import copy
+import heapq
 import collections
+import functools
+import bisect
+from typing import List
 
 
 class Solution:
-    def decodeAtIndex(self, S: str, K: int) -> str:
-        code = {}
-        modValues = []
-        length = 0
-        
-        for i in range(0, len(S)):
-            if S[i].isdigit():
-                modValues.insert(0, length)
-                length = length * int(S[i])
+    def decodeAtIndex(self, S, K):
+        size = 0
+        # Find size = length of decoded string
+        for c in S:
+            if c.isdigit():
+                size *= int(c)
             else:
-                code[length] = S[i]
-                length += 1
+                size += 1
 
-        K = K - 1
+        for c in reversed(S):
+            K %= size
+            if K == 0 and c.isalpha():
+                return c
 
-        for modValue in modValues:
-            if K in code:
-                return code[K]
+            if c.isdigit():
+                size /= int(c)
             else:
-                K = K % modValue
-
-        return code[K]
+                size -= 1
 
 
 stime = time.time()
 sol = Solution()
 print('o' == sol.decodeAtIndex("leet2code3", 10))
+# print('h' == sol.decodeAtIndex(S = "ha22", K = 5))
+# print('a' == sol.decodeAtIndex("a2345678999999999999999", K = 1))
 print('elapse time: {} sec'.format(time.time() - stime))

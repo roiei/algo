@@ -45,6 +45,23 @@ class Solution:
         
         return out
 
+    def letterCasePermutation(self, S: str) -> [str]:
+        def dfs(idx, seq, res):
+            if idx == n:
+                res += ''.join(seq),
+                return
+            
+            if S[idx].isalpha():
+                dfs(idx + 1, seq + [S[idx].lower()], res)
+                dfs(idx + 1, seq + [S[idx].upper()], res)
+            else:
+                dfs(idx + 1, seq + [S[idx]], res)
+            
+        res = []
+        n = len(S)
+        dfs(0, [], res)
+        return res
+
 
 stime = time.time()
 print(["rmr","rmR","rMr","rMR","Rmr","RmR","RMr","RMR"] == Solution().letterCasePermutation("RmR"))

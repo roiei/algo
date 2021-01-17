@@ -6,36 +6,22 @@ import collections
 
 
 class Solution:
-    def reachNumber(self, target):
-        target = abs(target)
-        cur = cnt = 0
-        unit = 1
-        while cur < target or 1 == abs(cur-target)%2:
-            cur+= unit
-            unit+= 1
-            cnt+= 1
-        return cnt
-
-
-    # timeout
     def reachNumber(self, target: int) -> int:
-        if target == 0:
-            return 0
+        target = abs(target)
+        step = 0
+        cur = 0
         
-        q = [(0, 1)]
-        visited = set()
+        while True:
+            if cur == target:
+                break
+            
+            if cur > target and (cur - target)%2 == 0:
+                break
+            
+            step += 1
+            cur += step
         
-        while q:
-            cur, step = q.pop(0)
-            for offset in [-1, 1]:
-                next = cur + offset*step
-                print('next = {:2}, cur = {:2}, step = {:2}'.format(next, cur, step))
-                if next == target:
-                    return step
-                q += (next, step + 1),
-                visited.add(next)
-        
-        return -1
+        return step
 
 
 stime = time.time()

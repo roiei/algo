@@ -6,6 +6,7 @@ import heapq
 import collections
 import functools
 import bisect
+from typing import List
 
 
 class Solution:
@@ -46,15 +47,18 @@ class Solution:
         A.sort()
         diff = A[-1] - A[0]
 
-        if K < diff:
-            for idx in range(len(A)-1):
-                mx = max(A[-1] - K, A[idx] + K)
-                mn = min(A[0] + K, A[idx+1] - K)
-                diff = min(diff, abs(mx - mn))
+        for idx in range(len(A)-1):
+            mx = max(A[-1] - K, A[idx] + K)
+            mn = min(A[0] + K, A[idx+1] - K)
+
+            print(mx, mn)
+            diff = min(diff, abs(mx - mn))
         return diff
 
 
 stime = time.time()
-print(3 == Solution().smallestRangeII(A = [1,3,6], K = 3))
+#print(3 == Solution().smallestRangeII(A = [1,3,6], K = 3))
+#print(1 == Solution().smallestRangeII(A = [7,8,8], K = 5))
+print(3 == Solution().smallestRangeII([2,7,2], 1))
 print('elapse time: {} sec'.format(time.time() - stime))
 

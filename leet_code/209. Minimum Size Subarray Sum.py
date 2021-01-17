@@ -1,9 +1,10 @@
-
 import time
 from util.util_list import *
 from util.util_tree import *
 import copy
 import collections
+import bisect
+from typing import List
 
 
 class Solution:
@@ -65,6 +66,24 @@ class Solution:
             r += 1
         
         return mn if mn != float('inf') else 0
+
+    def minSubArrayLen(self, s: int, nums: List[int]) -> int:
+        l = r = 0
+        inc = 0
+        mn = float('inf')
+
+        while r < len(nums):
+            inc += nums[r]
+
+            while inc >= s:
+                mn = min(mn, r - l + 1)
+                inc -= nums[l]
+                l += 1
+
+            r += 1
+
+        return 0 if mn == float('inf') else mn
+
 
 
 stime = time.time()

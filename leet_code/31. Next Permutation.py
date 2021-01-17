@@ -4,17 +4,15 @@ import time
 class Solution(object):
     def nextPermutation(self, nums):
         i = len(nums) - 1
-        while i > 0 and nums[i] <= nums[i-1]:
+        while i > 0 and nums[i] <= nums[i - 1]:
             i -= 1
 
-        if i == 0:
-            nums[:] = nums[::-1]
-        else:
-            for k in range(len(nums) - 1, i - 1, -1):
-                if nums[k] > nums[i-1]:
-                    break
-            nums[i-1], nums[k] = nums[k], nums[i-1]
-            nums[i:] = nums[i:][::-1]
+        for k in range(len(nums) - 1, i - 1, -1):
+            if nums[k] > nums[i - 1]:
+                break
+
+        nums[i - 1], nums[k] = nums[k], nums[i - 1]
+        nums[i:] = nums[i:][::-1]
 
         return nums
 

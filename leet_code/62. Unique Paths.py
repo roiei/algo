@@ -58,16 +58,19 @@ class Solution:
 
 
     def uniquePaths_es(self, m: int, n: int) -> int:
-        def bfs(y, x, n, m):
-            if y == n-1 and x == m-1:
+        def dfs(y, x, n, m):
+            if y == n - 1 and x == m - 1:
                 return 1
-            num = 0
+
+            cnt = 0
             if y < n:
-                num += bfs(y+1, x, n, m)
+                cnt += dfs(y + 1, x, n, m)
+
             if x < m:
-                num += bfs(y, x+1, n, m)
-            return num
-        return bfs(0, 0, n, m)
+                cnt += dfs(y, x + 1, n, m)
+            return cnt
+
+        return dfs(0, 0, n, m)
 
 
 stime = time.time()

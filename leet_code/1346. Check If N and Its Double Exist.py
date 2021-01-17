@@ -6,11 +6,11 @@ import heapq
 import copy
 import collections
 import operator
+from typing import List
 
 
 class Solution:
     def checkIfExist(self, arr: List[int]) -> bool:
-        
         for i in range(len(arr)):
             val = arr.pop(i)
             
@@ -19,6 +19,18 @@ class Solution:
             
             arr.insert(i, val)
         
+        return False
+
+    def checkIfExist(self, arr: List[int]) -> bool:
+        freq = collections.Counter(arr)
+
+        for num in arr:
+            dnum = num + num
+            if dnum in freq:
+                if (freq[dnum] == 2 and dnum == num) or \
+                (freq[dnum] == 1 and dnum != num):
+                    return True
+
         return False
 
             
