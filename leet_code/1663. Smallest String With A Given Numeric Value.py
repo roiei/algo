@@ -5,6 +5,7 @@ import copy
 import collections
 from functools import lru_cache
 import functools
+from typing import List
 
 
 class Solution:

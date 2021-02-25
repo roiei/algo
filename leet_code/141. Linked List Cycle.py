@@ -29,6 +29,21 @@ class Solution:
         
         return False
 
+    def hasCycle(self, head: ListNode) -> bool:
+        ptr1 = ptr2 = head
+        while ptr1:
+            ptr1 = ptr1.next
+            if ptr2 != None:
+                ptr2 = ptr2.next
+            if ptr2 != None:
+                ptr2 = ptr2.next
+            
+            if ptr1 != None and ptr2 != None and ptr1 == ptr2:
+                return True
+        
+        return False
+        
+
 
 head = create_linked_list_from_nums([3,2,0,-4])
 head.next.next.next.next = head.next

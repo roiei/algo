@@ -36,7 +36,8 @@ class Solution:
         """
             1. handle more higher priority first
             2. stk should be used for such a case
-                aabb -> aab -> ab -> ''
+                aabb
+                aab -> ab -> ''
         """
         prio = ['ab', 'ba'] if x > y else ['ba', 'ab']
         scores = [x, y] if x > y else [y, x]
