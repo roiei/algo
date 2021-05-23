@@ -44,7 +44,7 @@ class Solution:
                 
                 s1 = dfs(s[:i])
                 s2 = dfs(s[i + 1:])
-                return s1 if len(s1) > len(s2) else s2  
+                return s2 if len(s2) > len(s1) else s1  
 
             return s
 
