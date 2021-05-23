@@ -78,57 +78,43 @@
 
 
 class MyHashMap:
-    class Item:
-        def __init__(self, key, value):
-            self.state = 'EMPTY'
-            self.key = key
-            self.value = value
-
     def __init__(self):
-        """
-        Initialize your data structure here.
-        """
-        self.n = 1000000
-        self.tbl = [[] for i in range(self.n)]
-        self.hash_func = lambda val: val
-
-    def put(self, key: 'int', value: 'int') -> 'None':
-        """
-        value will always be non-negative.
-        """
-        idx = self.find(key)
-        if -1 != idx:
-            self.tbl[idx][0].key = key
-            self.tbl[idx][0].value = value
-            return
-        index = self.hash_func(key) % self.n
-        self.tbl[index].append(self.Item(key, value))
-        #print('put: tbl[{}] = ({}, {}, {})'.format(index, key, value, 'FILLED'))
-
-    def find(self, key) -> 'index:int':
-        start = index = self.hash_func(key) % self.n
-        if self.tbl[index]:
-            return index
+        self.n = 100
+        self.data = [[] for _ in range(self.n)]
+        self.hash_func = lambda p: p
+    
+    def search(self, key):
+        idx = self.hash_func(key)%self.n
+        for i, item in enumerate(self.data[idx]):
+            k, v = item
+            if k == key:
+                return i
         return -1
-
-    def get(self, key: 'int') -> 'int':
-        """
-        Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key
-        """
-        idx = self.find(key)
-        #print('get: find: {}'.format(idx))
-        if -1 == idx:
-            return -1
-        return self.tbl[idx][0].value
-
-    def remove(self, key: 'int') -> 'None':
-        """
-        Removes the mapping of the specified value key if this map contains a mapping for the key
-        """
-        idx = self.find(key)
-        if -1 == idx:
+        
+    def put(self, key: int, value: int) -> None:
+        idx = self.hash_func(key)%self.n
+        lidx = self.search(key)
+        if -1 == lidx:
+            self.data[idx] += (key, value),
             return
-        self.tbl[idx].pop(0)
+        
+        self.data[idx][lidx] = (key, value)
+
+    def get(self, key: int) -> int:
+        idx = self.hash_func(key)%self.n
+        lidx = self.search(key)
+        if -1 == lidx:
+            return -1
+        
+        return self.data[idx][lidx][1]
+
+    def remove(self, key: int) -> None:
+        idx = self.hash_func(key)%self.n
+        lidx = self.search(key)
+        if -1 == lidx:
+            return
+
+        self.data[idx].pop(lidx)
 
 
 hashMap = MyHashMap();

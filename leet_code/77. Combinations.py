@@ -43,6 +43,19 @@ class Solution:
                     self.comb(sub[::], k, 1, cur_seq[::])
                     sub.pop(0)
         return self.seq
+
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        def dfs(start, nums, res):
+            if len(nums) == k:
+                res += nums,
+                return
+            
+            for i in range(start, n):
+                dfs(i + 1, nums + [i + 1], res)
+        
+        res = []
+        dfs(0, [], res)
+        return res
     
 
 print(Solution().combine(3, 2))

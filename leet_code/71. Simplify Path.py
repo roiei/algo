@@ -46,6 +46,21 @@ class Solution:
             stk += val,
         return '/' + '/'.join(stk)
 
+    def simplifyPath(self, path: str) -> str:
+        paths = path.split('/')
+        stk = []
+
+        while paths:
+            path = paths.pop(0)
+            if path == '..':
+                if stk:
+                    stk.pop()
+            elif path != '.' and path != '':
+                stk += path,
+
+        return '/' + '/'.join(stk)
+
+
 
 stime = time.time()
 print('/home/foo' == Solution().simplifyPath("/home//foo/"))

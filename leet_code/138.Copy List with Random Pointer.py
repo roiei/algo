@@ -43,7 +43,40 @@ class Solution:
             node = node.next
 
         return dst_head
-            
+
+    def copyRandomList(self, head: 'Node') -> 'Node':
+        nodes = []
+        node = head
+        idxs = []
+
+        while node:
+            nodes += node,
+            node = node.next
+
+        node = head
+        while node:
+            if node.random is not None:
+                idxs += nodes.index(node.random),
+            else:
+                idxs += None,
+            node = node.next
+        
+        copies = []
+        for i in range(len(nodes)):
+            copies += Node(nodes[i].val, None, None),
+
+        for i in range(len(copies) - 1):
+            copies[i].next = copies[i + 1]
+            if None != idxs[i]:
+                copies[i].random = copies[idxs[i]]
+            else:
+                copies[i].random = None
+        
+        if idxs and None != idxs[-1]:
+            copies[-1].random = copies[idxs[-1]]
+        
+        return copies[0] if copies else None
+
             
 stime = time.time()
 print(3 == Solution().copyRandomList(create_linked_list_from_nums()))

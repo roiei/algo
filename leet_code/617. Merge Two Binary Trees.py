@@ -12,6 +12,7 @@ class Solution:
         def dfs(node1, node2):
             if not node1 or not node2:
                 return node1 if node1 else node2
+                
             node = TreeNode(node1.val + node2.val)
             node.left = dfs(node1.left, node2.left)
             node.right = dfs(node1.right, node2.right)

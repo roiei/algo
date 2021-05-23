@@ -17,6 +17,10 @@ class Solution:
         nums.sort(key=lambda p: p[1], reverse=False)
         return [i for i, val in nums[:k]]
 
+    def kWeakestRows(self, mat: List[List[int]], k: int) -> List[int]:
+        ranks = sorted([((line.count(1), i), i) for i, line in enumerate(mat)], key=lambda p: p[0])
+        return [rank for cnt, rank in ranks[:k]]
+
             
 stime = time.time()
 print([2,0,3] == Solution().kWeakestRows(mat = 

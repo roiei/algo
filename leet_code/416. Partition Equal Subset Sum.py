@@ -134,6 +134,11 @@ class Solution:
 
         mem = {}
         return dfs(0, 0)
+
+        # 4 3 2 1
+        #   3 2 1
+        #     2 1
+        #       1
             
             
 stime = time.time()

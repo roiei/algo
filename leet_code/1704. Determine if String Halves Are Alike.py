@@ -12,15 +12,17 @@ import bisect
 
 class Solution:
     def halvesAreAlike(self, s: str) -> bool:
-        half = len(s)//2
-        def get_num_vowels(str):
+        s = s.lower()
+        n = len(s)
+        
+        def count_vowels(s):
             cnt = 0
-            for ch in str:
+            for ch in s:
                 if ch in 'aeiou':
                     cnt += 1
             return cnt
-
-        return get_num_vowels(s[:half]) == get_num_vowels(s[half:])
+    
+        return count_vowels(s[:n//2]) == count_vowels(s[n//2:])
 
 
 stime = time.time()

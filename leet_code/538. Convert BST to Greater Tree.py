@@ -25,6 +25,21 @@ class Solution:
             node.val = inc
 
         return root
+
+    def convertBST(self, root: TreeNode) -> TreeNode:
+        def dfs(node, weight):
+            if not node:
+                return
+
+            dfs(node.right, weight)
+            weight[0] += node.val
+            node.val = weight[0]
+            dfs(node.left, weight)
+
+        weight = [0]
+        dfs(root, weight)
+
+        return root
         
 
 stime = time.time()
