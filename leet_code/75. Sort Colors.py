@@ -18,6 +18,9 @@ class Solution:
                 if nums[i] > nums[j]:
                     nums[i], nums[j] = nums[j], nums[i]
 
+    def sortColors(self, nums: List[int]) -> None:
+        nums.sort()
+
 
 stime = time.time()
 print([0,0,1,1,2,2] == Solution().sortColors([2,0,2,1,1,0]))

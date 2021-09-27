@@ -80,15 +80,34 @@ class Solution:
 
         return mx
 
+    def widthOfBinaryTree(self, root: TreeNode) -> int:
+        if not root:
+            return 0
 
+        depths = collections.defaultdict(list)
+        
+        def dfs(node, depth, pos):
+            if not node:
+                return
+        
+            depths[depth] += pos,
+            
+            dfs(node.left, depth + 1, pos*2 - 1)
+            dfs(node.right, depth + 1, pos*2)
+        
+        dfs(root, 0, 1)
 
+        mx = 0
+        for value in depths.values():
+            mx = max(mx, max(value) - min(value) + 1)
+
+        return mx
 
 
 stime = time.time()
-#print(4 == Solution().widthOfBinaryTree(deserialize('[1,3,2,5,3,null,9]')))
-#print(Solution().widthOfBinaryTree(deserialize('[1,3,2,5]')))
-print(Solution().widthOfBinaryTree(deserialize('[0]')))
-#print(Solution().widthOfBinaryTree(deserialize('[1,1,1,1,null,null,1,1,null,null,1]')))
-#print(Solution().widthOfBinaryTree(deserialize('[1,null,2]')))
-#print(Solution().openLock(["0201","0101","0102","1212","2002"], '0202'))
+# print(4 == Solution().widthOfBinaryTree(deserialize('[1,3,2,5,3,null,9]')))
+print(2 == Solution().widthOfBinaryTree(deserialize('[1,3,2,5]')))
+# print(1 == Solution().widthOfBinaryTree(deserialize('[0]')))
+# print(8 == Solution().widthOfBinaryTree(deserialize('[1,1,1,1,null,null,1,1,null,null,1]')))
+# print(1 == Solution().widthOfBinaryTree(deserialize('[1,null,2]')))
 print('elapse time: {} sec'.format(time.time() - stime))

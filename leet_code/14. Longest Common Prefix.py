@@ -1,3 +1,10 @@
+import time
+from util.util_list import *
+from util.util_tree import *
+import copy
+import collections
+import bisect
+from typing import List
 
 
 class Solution:
@@ -60,8 +67,28 @@ class Solution:
             cmm += strs[0][i]
 
         return cmm
-            
 
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        def find_common(s1, s2):
+            m = len(s1)
+            n = len(s2)
+            i = j = 0
+            cnt = 0
+
+            while i < m and j < n:
+                if s1[i] != s2[j]:
+                    break
+                i += 1
+                j += 1
+                cnt += 1
+
+            return s1[:cnt]
+
+        cmm = strs[0]
+        for i in range(1, len(strs)):
+            cmm = find_common(cmm, strs[i])
+
+        return cmm
 
 
 print('' == Solution().longestCommonPrefix(["dog","racecar","car"]))

@@ -6,6 +6,7 @@ import heapq
 import collections
 import functools
 import bisect
+from typing import List
 
 
 class Solution:
@@ -44,11 +45,6 @@ class Solution:
             if tuple(cells) in seen:
                 N %= seen[tuple(cells)] - N
         return cells
-
-
-
-
-
 
 
 stime = time.time()

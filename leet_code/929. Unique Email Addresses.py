@@ -29,6 +29,19 @@ class Solution:
 
         return len(accounts)
 
+    def numUniqueEmails(self, emails: [str]) -> int:
+        kinds = set()
+        for email in emails:
+            local, domain = email.split('@')
+            idx = local.find('+')
+            if -1 != idx:
+                local = local[:idx]
+            local = local.replace('.', '')
+            kinds.add(local + '@' + domain)
+
+        return len(kinds)
+
+
 stime = time.time()
 #print(2 == Solution().numUniqueEmails(["test.email+alex@leetcode.com","test.e.mail+bob.cathy@leetcode.com","testemail+david@lee.tcode.com"]))
 print(2 == Solution().numUniqueEmails(["test.email+alex@leetcode.com","test.email.leet+alex@code.com"]))

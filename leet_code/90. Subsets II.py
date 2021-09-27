@@ -24,3 +24,20 @@ class Solution:
                 out.append(r)
         return out
 
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        
+        def dfs(start, sel, num, limit, res):
+            if num == limit:
+                res.add(tuple(sorted(sel)))
+                return
+            
+            for i in range(start, n):
+                dfs(i + 1, sel + [nums[i]], num + 1, limit, res)
+        
+        res = set()
+        for i in range(n + 1):
+            dfs(0, [], 0, i, res)
+        
+        return res
+

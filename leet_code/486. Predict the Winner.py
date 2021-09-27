@@ -68,7 +68,8 @@ class Solution:
                     return nums[l]
                 else:
                     return -1*nums[l]
-            if my_turn == True:
+
+            if my_turn:
                 left = nums[l] + dfs(nums, l+1, r, not my_turn)
                 right = nums[r] + dfs(nums, l, r-1, not my_turn)
                 cur = max(left, right)
@@ -78,20 +79,42 @@ class Solution:
                 cur = min(left, right)
             mem[(l, r)] = cur
             return cur
+
         mem = {}
         ret = dfs(nums, 0, len(nums)-1, True)
         return True if ret >= 0 else False
 
+    def PredictTheWinner(self, nums: [int]) -> bool:
+        def dfs(l, r, turn):
+            if (l, r) in mem:
+                return mem[(l, r)]
+
+            if l > r:
+                return 0
+
+            if turn:
+                cur = max(dfs(l + 1, r, not turn) + nums[l], 
+                          dfs(l, r - 1, not turn) + nums[r])
+            else:
+                cur = min(dfs(l + 1, r, not turn) - nums[l], 
+                          dfs(l, r - 1, not turn) - nums[r])
+
+            mem[(l, r)] = cur
+            return cur
+
+        mem = {}
+        ret = dfs(0, len(nums) - 1, True)
+        return ret >= 0
 
 
 stime = time.time()
-#print(True == Solution().PredictTheWinner([1, 5, 8, 4]))
-# print(False == Solution().PredictTheWinner([1, 5, 2]))
-# print(False == Solution().PredictTheWinner_mod([1, 5, 2]))
-# print(True == Solution().PredictTheWinner([1, 5, 233, 7]))
-# print(True == Solution().PredictTheWinner([1,1]))
-# print(True == Solution().PredictTheWinner([0]))
-#print(True == Solution().PredictTheWinner([1,2,99]))
-print(True == Solution().PredictTheWinner_mod([1,2,99]))
+print(True == Solution().PredictTheWinner([1, 5, 8, 4]))
+print(False == Solution().PredictTheWinner([1, 5, 2]))
+print(False == Solution().PredictTheWinner([1, 5, 2]))
+print(True == Solution().PredictTheWinner([1, 5, 233, 7]))
+print(True == Solution().PredictTheWinner([1,1]))
+print(True == Solution().PredictTheWinner([0]))
+print(True == Solution().PredictTheWinner([1,2,99]))
+print(True == Solution().PredictTheWinner([1,2,99]))
 print(True == Solution().PredictTheWinner([1,2,99]))
 print('elapse time: {} sec'.format(time.time() - stime))

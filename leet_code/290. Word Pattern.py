@@ -34,6 +34,26 @@ class Solution:
                     return False
         return True
 
+    def wordPattern(self, pattern: str, s: str) -> bool:
+        if len(pattern) != len(s.split()):
+            return False
+
+        patts = {}
+        used = set()
+        
+        for patt, word in zip(list(pattern), s.split()):
+            if patt not in patts:
+                if word in used:
+                    return False
+                patts[patt] = word
+                used.add(word)
+                continue
+            
+            if patts[patt] != word:
+                return False
+        
+        return True
+
 
 stime = time.time()
 sol = Solution()

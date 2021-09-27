@@ -10,11 +10,6 @@ import bisect
 
 
 class Solution:
-    
-
-
-    
-
 
     def minCost(self, grid: [[int]]) -> int:
         rows = len(grid)

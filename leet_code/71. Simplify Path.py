@@ -60,6 +60,20 @@ class Solution:
 
         return '/' + '/'.join(stk)
 
+    def simplifyPath(self, path: str) -> str:
+        paths = [path for path in path.split('/') if path]
+        stk = []
+
+        for path in paths:
+            if '..' == path or '.' == path:
+                if '..' == path and stk:
+                    stk.pop()
+                continue
+
+            stk += path,
+
+        return '/' + '/'.join(stk)
+
 
 
 stime = time.time()

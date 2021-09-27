@@ -6,6 +6,7 @@ import heapq
 import copy
 import collections
 import operator
+from typing import List
 
 
 class Solution:

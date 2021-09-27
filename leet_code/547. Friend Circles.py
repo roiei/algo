@@ -4,6 +4,7 @@ from util.util_list import *
 from util.util_tree import *
 import copy
 import collections
+from typing import List
 
 
 class Solution:
@@ -23,6 +24,46 @@ class Solution:
                     if M[u][v] == 1 and v not in visited:
                         visited.add(v)
                         q += v,
+            cnt += 1
+        
+        return cnt
+
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        rows = len(isConnected)
+        cols = len(isConnected[0])
+        g = collections.defaultdict(list)
+        
+        for i in range(rows):
+            for j in range(cols):
+                if i == j:
+                    continue
+
+                if isConnected[i][j] == 0:
+                    continue
+                
+                g[i] += j,
+                g[j] += i,
+        
+        visited = set()
+        cnt = 0
+
+        for node in range(rows):
+            if node in visited:
+                continue
+
+            q = [node]
+            visited.add(node)
+            
+            while q:
+                u = q.pop(0)
+                
+                for v in g[u]:
+                    if v in visited:
+                        continue
+                    
+                    visited.add(v)
+                    q += v,
+            
             cnt += 1
         
         return cnt

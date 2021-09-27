@@ -42,7 +42,22 @@ class Solution:
             s[idx:idx + len(src)] = list(tgt)
 
         return ''.join(s)
-            
+
+    def findReplaceString(self, S: str, indexes: [int], sources: [str], targets: [str]):
+        s = list(S)
+
+        params = sorted(zip(indexes, sources, targets), key=lambda p: p[0], reverse=True)
+        for idx, src, tgt in params:
+            if ''.join(s[idx:idx + len(src)]) != src:
+                continue
+
+            s[idx:idx + len(src)] = list(tgt)
+
+        return ''.join(s)
+
+        
+
+
 
 stime = time.time()
 print('eeebffff' == Solution().findReplaceString('abcd', [0,2], ['a', 'cd'], ['eee', 'ffff']))

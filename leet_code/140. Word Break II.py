@@ -57,6 +57,27 @@ class Solution:
         mem = {}
         return dfs(s)
 
+    def wordBreak(self, s: str, wordDict: [str]) -> [str]:
+        def dfs(s):
+            if not s:
+                return ['']
+
+            res = []
+            for i in range(len(s) + 1):
+                if s[:i] not in wordDict:
+                    continue
+
+                for substr in dfs(s[i:]):
+                    res += s[:i],
+
+                    if substr:
+                        res[-1] += ' ' + substr
+
+            return res
+
+        res = dfs(s)
+        return res
+
 
 stime = time.time()
 print(["cats and dog","cat sand dog"] == Solution().wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"]))

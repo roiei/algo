@@ -22,6 +22,22 @@ class Solution:
                 else:
                     return False
         return True
+
+    def validPalindrome(self, s: str) -> bool:
+        def dfs(s, diff):
+            if s == s[::-1]:
+                return True
+        
+            if diff == 0:
+                return False
+            
+            res = False
+            if s[0] == s[-1]:
+                res |= dfs(s[1:-1], diff)
+            
+            return res or dfs(s[:-1], diff - 1) or dfs(s[1:], diff - 1)
+    
+        return dfs(s, 1)
             
 
 stime = time.time()

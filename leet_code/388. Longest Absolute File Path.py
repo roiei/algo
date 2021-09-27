@@ -15,13 +15,36 @@ class Solution:
         while s:        
             chunk = s.pop(0)
             lev = chunk.count('\t')
+
             while len(stk) > lev:
                 stk.pop()
+
             chunk = chunk.replace('\t', '')
             stk += chunk,
+
             if '.' in chunk:
                 mlen = max(mlen, len('/'.join(stk)))
         return mlen
+
+    def lengthLongestPath(self, input: str) -> int:
+        lines = input.split('\n')
+        
+        stk = []
+        mx = 0
+
+        for line in lines:
+            depth = line.count('\t')
+            
+            while stk and len(stk) > depth:
+                stk.pop()
+            
+            line = line.replace('\t', '')
+            stk += line,
+            
+            if '.' in line:
+                mx = max(mx, len('/'.join(stk)))
+        
+        return mx
 
 
 stime = time.time()

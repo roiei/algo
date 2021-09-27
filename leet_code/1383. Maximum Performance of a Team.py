@@ -1,4 +1,3 @@
-
 import time
 from util.util_list import *
 from util.util_tree import *
@@ -11,7 +10,6 @@ import bisect
 
 class Solution:
     def maxPerformance(self, n: int, speed: [int], efficiency: [int], k: int) -> int:
-
         mx = 0
 
         def dfs(depth, start, sel_spd, sel_eff):
@@ -32,12 +30,10 @@ class Solution:
         dfs(0, 0, [], [])
         return mx
 
-
     def maxPerformance(self, n: int, speed: [int], efficiency: [int], k: int) -> int:
         pq = []
         inc_spd = 0
         mx = 0
-
         ins = sorted(zip(efficiency, speed), reverse=True)
 
         while ins:
@@ -52,10 +48,6 @@ class Solution:
             mx = max(mx, inc_spd*eff)
 
         return mx%(10**9 + 7)
-
-
-
-
         
 
 stime = time.time()

@@ -69,8 +69,6 @@ class Solution:
         print('.')
         print('nums1 = {}\nnums2 = {}'.format(nums1, nums2))
 
-
-
         while nums1 or nums2:
             if nums1 > nums2:
                 ans.append(nums1.pop(0))
@@ -80,12 +78,53 @@ class Solution:
         print()
         return ans
 
+    def maxNumber(self, nums1, nums2, k):
+        m = len(nums1)
+        n = len(nums2)
+        res = []
+
+        def lds(nums, remain, k):
+            stk = []
+
+            for num in nums:
+                while stk and stk[-1] < num and remain > k:
+                    stk.pop()
+                    k += 1
+
+                if k:
+                    stk += num,
+                    k -= 1
+
+                remain -= 1
+
+            return stk
+
+        def merge(nums1, nums2):
+            res = []
+            while nums1 or nums2:
+                if nums1 > nums2:
+                    res += nums1.pop(0),
+                else:
+                    res += nums2.pop(0),
+            return res
+
+        mx = []
+        for i in range(k + 1):
+            j = k - i
+            if i > m or j > n:
+                continue
+
+            mx = max(mx, merge(lds(nums1, m, i), lds(nums2, n, j)))
+
+        return mx
+
+
 
 stime = time.time()
 #print([7,3,8,2,5,6,4,4,0,6,5,7,6,2,0] == Solution().maxNumber([2,5,6,4,4,0], [7,3,8,0,6,5,7,6,2], 15))
 #print([9,8,6,5,3] == Solution().maxNumber([9,1,2,5,8,3], [3,4,6,5], 5))
 #print([6,7,6,0,4] == Solution().maxNumber([6,7], [6,0,4], 5))
-print([9, 8, 6, 5, 3] == Solution().maxNumber([3, 4, 6, 5], [9, 1, 2, 5, 8, 3], 5)
+print([9, 8, 6, 5, 3] == Solution().maxNumber([3, 4, 6, 5], [9, 1, 2, 5, 8, 3], 5))
 print('elapse time: {} sec'.format(time.time() - stime))
 
 

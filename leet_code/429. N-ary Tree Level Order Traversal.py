@@ -1,3 +1,10 @@
+import time
+from util.util_list import *
+from util.util_tree import *
+import copy
+import collections
+import bisect
+from typing import List
 
 
 class Node:
@@ -22,4 +29,28 @@ class Solution:
             trace.append(t)
             q = nq
         return trace
+
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        res = []
+        q = [root]
+
+        while q:
+            nq = []
+            seq = []
+
+            while q:
+                node = q.pop(0)
+                if not node:
+                    continue
+
+                seq += node.val,
+
+                for child in node.children:
+                    nq += child,
+
+            q = nq
+            if seq:
+                res += seq,
+
+        return res
 

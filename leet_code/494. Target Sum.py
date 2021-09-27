@@ -23,7 +23,6 @@ class Solution:
         res = dfs(nums, 0, len(nums), 0)
         return res
 
-
     def findTargetSumWays(self, nums: [int], S: int) -> int:
         s = sum(nums)
         n, m = len(nums), 2*s + 1
@@ -39,6 +38,26 @@ class Solution:
                     dp[i+1][j+nums[i]] += dp[i][j]
                     dp[i+1][j-nums[i]] += dp[i][j]
         return dp[-1][s+S]
+
+    def findTargetSumWays(self, nums: [int], S: int) -> int:
+        def dfs(nums, l, r, inc):
+            if (l, r, inc) in mem:
+                return mem[(l, r, inc)]
+
+            if l > r:
+                if inc == S:
+                    return 1
+                return 0
+
+            cnt = dfs(nums, l + 1, r, inc + nums[l]) +
+                  dfs(nums, l + 1, r, inc - nums[l])
+
+            mem[(l, r, inc)] = cnt
+            return cnt
+
+        mem = {}
+        return dfs(nums, 0, len(nums) - 1, 0)
+
             
 
 stime = time.time()

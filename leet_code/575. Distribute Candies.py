@@ -11,3 +11,12 @@ class Solution:
                 k += 1
                 pre = candy
         return k if k <= n else n
+
+    def distributeCandies(self, candies) -> int:
+        avail = len(candies)//2
+        kind = len(set(candies))
+
+        if kind > avail:
+            kind = avail
+
+        return kind

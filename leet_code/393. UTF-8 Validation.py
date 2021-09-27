@@ -66,8 +66,40 @@ class Solution:
 
         return True
 
+    def validUtf8(self, data: List[int]) -> bool:
+        while data:
+            header = data.pop(0)
+            header = '{:08b}'.format(header)
+            ones = 0
+
+            for i in range(5):
+                if '1' != header[i]:
+                    break
+                ones += 1
+
+            if not ones:
+                continue
+
+            if not (2 <= ones <= 4):
+                return False
+
+            ones -= 1
+
+            while data and ones:
+                chunk = data.pop(0)
+                chunk = '{:08b}'.format(chunk)
+                if not chunk.startswith('10'):
+                    return False
+                ones -= 1
+
+            if ones > 0:
+                return False
+
+        return True
+
 
 stime = time.time()
-print(True == Solution().validUtf8([197, 130, 1]))
-print(False == Solution().validUtf8([235, 140, 4]))
+# print(True == Solution().validUtf8([197, 130, 1]))
+# print(False == Solution().validUtf8([235, 140, 4]))
+print(False == Solution().validUtf8([250,145,145,145,145]))
 print('elapse time: {} sec'.format(time.time() - stime))

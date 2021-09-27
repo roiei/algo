@@ -4,6 +4,7 @@ from util.util_list import *
 from util.util_tree import *
 import copy
 import collections
+from typing import List
 
 
 class Solution:
@@ -64,7 +65,6 @@ class Solution:
             res += sum((R[i] - L[i])&1 for i in range(N))//2 <= k,
         return res
 
-
     def canMakePaliQueries(self, s, queries):
         
         dp = [collections.Counter()]
@@ -79,7 +79,6 @@ class Solution:
             res += num_odd <= k,
         
         return res
-    
     
     def canMakePaliQueries(self, s, queries):
         N = 26
@@ -98,8 +97,20 @@ class Solution:
             res += num_odd//2 <= k,
         
         return res
-        
 
+    def canMakePaliQueries(self, s: str, queries: List[List[int]]) -> List[bool]:
+        dp = [collections.Counter()]
+        
+        for i in range(len(s)):
+            dp += dp[-1] + collections.Counter(s[i]),
+        
+        res = []
+        for l, r, k in queries:
+            req = dp[r + 1] - dp[l]
+            need = sum(v%2 for v in req.values())//2
+            res += need <= k,
+        
+        return res
 
 
 stime = time.time()

@@ -3,6 +3,7 @@ from util.util_list import *
 from util.util_tree import *
 import copy
 import collections
+from typing import List
 
 
 class Solution:
@@ -52,6 +53,28 @@ class Solution:
         
         return mcnt
 
+    def totalFruit(self, fruits: List[int]) -> int:
+        mx = 0
+        wnd = []
+        idxs = collections.defaultdict(int)
+        pre = -1
+        cnt = 0
+        
+        for i, fruit in enumerate(fruits):
+            if fruit not in wnd:
+                if len(wnd) == 2:
+                    wnd = [pre]
+                    cnt = i - idxs[pre]
+                wnd += fruit,
+            
+            if pre != fruit:
+                idxs[fruit] = i
+
+            pre = fruit
+            cnt += 1
+            mx = max(mx, cnt)
+        
+        return mx
 
 
 stime = time.time()

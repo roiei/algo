@@ -3,6 +3,7 @@ from util.util_list import *
 from util.util_tree import *
 import copy
 import collections
+from typing import List
 
 
 class Solution:
@@ -70,6 +71,29 @@ class Solution:
             m = search(snums, i + 1, target - num[0])
             if -1 != m:
                 return [snums[i][1], snums[m][1]]
+        
+        return [-1, -1]
+
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        nums = [(i, num) for i, num in enumerate(nums)]
+        nums.sort(key=lambda p: p[1])
+
+        def search(nums, l, r, val):
+            while l <= r:
+                m = (l + r)//2
+                if nums[m][1] == val:
+                    return m
+                if nums[m][1] > val:
+                    r = m - 1
+                else:
+                    l = m + 1
+            
+            return -1
+            
+        for i in range(len(nums)):
+            idx = search(nums, i + 1, len(nums) - 1, target - nums[i][1])
+            if idx != -1:
+                return [nums[i][0], nums[idx][0]]
         
         return [-1, -1]
 

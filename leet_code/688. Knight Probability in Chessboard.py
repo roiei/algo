@@ -1,5 +1,8 @@
 import time
-from util_list import *
+from util.util_list import *
+from util.util_tree import *
+import copy
+import collections
 
 
 class Solution:
@@ -23,8 +26,35 @@ class Solution:
         if 2 >= N:
             return 0
         self.mem = {}
-        self.dirs = [(1,2),(2,1),(2,-1),(1,-2),(-1,-2),(-2,-1),(-2,1),(-1,2)]
+        self.dirs = [(1,2), (2,1),(2,-1),(1,-2),(-1,-2),(-2,-1),(-2,1),(-1,2)]
         ret = self.jump(N, K, 0, r, c)
+        return ret
+
+    def knightProbability(self, n: int, k: int, row: int, column: int) -> float:
+        if 0 == k and n >= 1:
+            return 1
+
+        def dfs(k, r, c):
+            if (r, c, k) in mem:
+                return mem[(r, c, k)]
+
+            if k == 0:
+                return 1
+
+            cnt = 0
+            for oy, ox in [(1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1), (-2, 1), (-1, 2)]:
+                ny, nx = oy + r, ox + c
+                if not (0 <= ny < n and 0 <= nx < n):
+                    continue
+
+                cnt += dfs(k - 1, ny, nx)
+
+            res = (1/8)*cnt
+            mem[(r, c, k)] = res
+            return res
+
+        mem = {}
+        ret = dfs(k, row, column)
         return ret
 
 

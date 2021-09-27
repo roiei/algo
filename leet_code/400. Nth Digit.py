@@ -22,11 +22,11 @@ class Solution:
 
 
 stime = time.time()
-#print(3 == Solution().findNthDigit(3))
-#print(1 == Solution().findNthDigit(10))
-print(0 == Solution().findNthDigit(11))
-#print(2 == Solution().findNthDigit(15))
-#print(3 == Solution().findNthDigit(1000))
+print(3 == Solution().findNthDigit(3))
+# print(1 == Solution().findNthDigit(10))
+# print(0 == Solution().findNthDigit(11))
+# print(2 == Solution().findNthDigit(15))
+# print(3 == Solution().findNthDigit(1000))
 #print(7 == Solution().findNthDigit(10000))
 #print(1 == Solution().findNthDigit(190))
 print('elapse time: {} sec'.format(time.time() - stime))

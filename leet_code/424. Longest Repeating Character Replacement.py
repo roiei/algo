@@ -88,6 +88,27 @@ class Solution:
             
         return r - l + 1
 
+    def characterReplacement(self, s: str, k: int) -> int:
+        freq = collections.Counter()
+        l = 0
+        mlen = 0
+        
+        for r, ch in enumerate(s):
+            freq[ch] += 1
+            
+            mx = freq.most_common(1)[0][1]
+            while r - l + 1 - mx > k:
+                freq[s[l]] -= 1
+                if freq[s[l]] == 0:
+                    del freq[s[l]]
+                
+                mx = freq.most_common(1)[0][1]
+                l += 1
+            
+            mlen = max(mlen, r - l + 1)
+        
+        return mlen
+
 
 stime = time.time()
 print(4 == Solution().characterReplacement(s = "ABAB", k = 2))

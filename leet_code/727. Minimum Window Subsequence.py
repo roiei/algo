@@ -119,6 +119,41 @@ class Solution(object):
             return ''
         return s[start_pos:start_pos + mn]
 
+    def minWindow(self, s, t):
+        n = len(s)
+        si = ti = 0
+        mn = float('inf')
+        rsx = rex = 0
+        
+        while si < n:
+            ti = 0
+            sx = None
+            ex = None
+            
+            sj = si
+            while sj < n and ti < len(t):
+                if s[sj] == t[ti]:
+                    if sx == None:
+                        sx = sj
+                    ti += 1
+                    
+                sj += 1
+
+            if ti < len(t):
+                break
+
+            ex = sj - 1
+            
+            if ex != None and mn > ex - sx + 1:
+                mn = ex - sx + 1
+                rsx = sx
+                rex = ex
+            
+            si = sx + 1
+            
+        return s[rsx:rex + 1] if mn != float('inf') else ''
+
+
 
 
 stime = time.time()

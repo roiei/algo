@@ -30,15 +30,29 @@ class Solution:
 
     def moveZeroes(self, nums: [int]) -> None:
         n = len(nums)
-        widx = 0
+        cnt = 0
         
         for i in range(n):
             if nums[i] != 0:
-                nums[widx] = nums[i]
-                widx += 1
+                nums[cnt] = nums[i]
+                cnt += 1
         
-        for i in range(widx, n):
+        for i in range(cnt, n):
             nums[i] = 0
+
+    def moveZeroes(self, nums: List[int]) -> None:
+        zeros = nums.count(0)
+        cnt = 0
+        
+        for i, num in enumerate(nums):
+            if num == 0:
+                continue
+            
+            nums[cnt] = num
+            cnt += 1
+        
+        for i in range(zeros):
+            nums[len(nums) - zeros + i] = 0
         
 
 stime = time.time()

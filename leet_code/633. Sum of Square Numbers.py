@@ -1,6 +1,6 @@
 import time
-from util_list import *
-from util_tree import *
+from util.util_list import *
+from util.util_tree import *
 import copy
 import collections
 
@@ -13,6 +13,17 @@ class Solution:
             search = c - sroot*sroot
             if search in squares:
                 return True
+        return False
+
+    def judgeSquareSum(self, c: int) -> bool:
+        comp = set()
+        for num in range(int(c**(1/2)) + 1):
+            comp.add(num**2)
+
+        for num in comp:
+            if c - num in comp:
+                return True
+
         return False
 
 

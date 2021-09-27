@@ -30,10 +30,47 @@ class Solution:
     
         return dfs(s, 0, len(s))[0]
 
+    def reverseParentheses(self, s: str) -> str:
+        n = len(s)
+        i = 0
+        stk = []
+        
+        while i < n:
+            if s[i] == '(':
+                word = ''
+                i += 1
+                while i < n and s[i].isalpha():
+                    word += s[i]
+                    i += 1
+                stk += word,
+                continue
+
+            if s[i] == ')':
+                if stk:
+                    word = stk.pop()[::-1]
+                    if stk:
+                        stk[-1] += word
+                    else:
+                        stk += word,
+                i += 1
+                continue
+
+            word = ''
+            while i < n and s[i].isalpha():
+                word += s[i]
+                i += 1
+
+            if stk:
+                stk[-1] += word
+            else:
+                stk += word,
+
+        return stk[0]
+
 
 stime = time.time()
-print("dcba" == Solution().minAddToMakeValid("(abcd)"))
-print("iloveu" == Solution().minAddToMakeValid("(u(love)i)"))
-print("leetcode" == Solution().minAddToMakeValid("(ed(et(oc))el)"))
-print("apmnolkjihgfedcbq" == Solution().minAddToMakeValid("a(bcdefghijkl(mno)p)q"))
+print("dcba" == Solution().reverseParentheses("(abcd)"))
+print("iloveu" == Solution().reverseParentheses("(u(love)i)"))
+print("leetcode" == Solution().reverseParentheses("(ed(et(oc))el)"))
+print("apmnolkjihgfedcbq" == Solution().reverseParentheses("a(bcdefghijkl(mno)p)q"))
 print('elapse time: {} sec'.format(time.time() - stime))

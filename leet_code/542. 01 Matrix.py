@@ -130,6 +130,37 @@ class Solution(object):
 
         return matrix
 
+    def updateMatrix(self, matrix):
+        rows = len(mat)
+        cols = len(mat[0])
+        q = []
+        visited = set()
+
+        for y in range(rows):
+            for x in range(cols):
+                if 0 == mat[y][x]:
+                    q += (y, x, 0),
+                    visited.add((y, x))
+
+        while q:
+            y, x, dist = q.pop(0)
+
+            for oy, ox in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                ny = y + oy
+                nx = x + ox
+
+                if not (0 <= ny < rows and 0 <= nx < cols):
+                    continue
+                
+                if (ny, nx) not in visited or \
+                    ((ny, nx) in visited and mat[ny][nx] > dist + 1):
+                    visited.add((ny, nx))
+                    mat[ny][nx] = dist + 1
+                    q.append((ny, nx, dist + 1))
+
+        return mat
+
+
 
 stime = time.time()
 # res = Solution().updateMatrix([

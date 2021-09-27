@@ -31,11 +31,35 @@ class Solution:
         valid.sort(key=lambda p:p[1], reverse=False)
         return valid[0][0] if valid else ''
 
+    def shortestCompletingWord(self, licensePlate: str, words: [str]) -> str:
+        lp = ''.join(sorted([ch.lower() for ch in licensePlate if ch.isalpha()]))
+        m = len(lp)
+        res = []
+        mn = float('inf')
+
+        for word in words:
+            sword = ''.join(sorted([ch.lower() for ch in word]))
+            n = len(sword)
+            i = j = 0
+
+            while i < m and j < n:
+                if lp[i] == sword[j]:
+                    i += 1
+                j += 1
+
+            if i == m:
+                if mn > len(sword):
+                    res = [word]
+                    mn = len(word)
+                elif mn == len(sword):
+                    res += word,
+ 
+        return res[0] if res else ''
 
 
 stime = time.time()
-print("husband" == Solution().shortestCompletingWord("Ah71752", ["suggest","letter","of","husband","easy","education","drug","prevent","writer","old"]))
+#print("husband" == Solution().shortestCompletingWord("Ah71752", ["suggest","letter","of","husband","easy","education","drug","prevent","writer","old"]))
 #print(Solution().shortestCompletingWord("1s3 PSt", ["step","steps","stripe","stepple"]))
-#print(Solution().shortestCompletingWord("1s3 456", ["looks", "pest", "stew", "show"]))
+#print('pest' == Solution().shortestCompletingWord("1s3 456", ["looks", "pest", "stew", "show"]))
 #print(Solution().shortestCompletingWord("TE73696", ["ten","two","better","talk","suddenly","stand","protect","collection","about","southern"]))
 print('elapse time: {} sec'.format(time.time() - stime))

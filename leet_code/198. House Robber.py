@@ -3,6 +3,7 @@ from util.util_list import *
 from util.util_tree import *
 import copy
 import collections
+from typing import List
 
 
 class Solution(object):
@@ -43,6 +44,16 @@ class Solution(object):
             dp[i + 2] = max(nums[i] + dp[i], dp[i + 1])
         
         return dp[-1]
+
+    def rob(self, nums: List[int]) -> int:
+        mx = 0
+        nums = [0]*2 + nums
+
+        for i in range(2, len(nums)):
+            nums[i] = max(nums[i] + nums[i - 2], mx)
+            mx = max(mx, nums[i])
+
+        return mx
 
 
 stime = time.time()

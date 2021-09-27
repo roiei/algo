@@ -14,3 +14,16 @@ class Solution:
                 max_profit = max(max_profit, price - min_price)
             
         return max_profit
+
+    def maxProfit(self, prices: List[int]) -> int:
+        mn = float('inf')
+        mx = 0
+        
+        for price in prices:
+            if price < mn:
+                mn = price
+            
+            if price > mn:
+                mx = max(mx, price - mn)
+        
+        return mx

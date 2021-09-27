@@ -36,7 +36,25 @@ class Solution:
                 if s[i:j+1] == s[i:j+1][::-1]:
                     steps[i] += 1
         return sum(steps)
-        
+
+    def countSubstrings(self, s):
+        n = len(s)
+        cnt = 0
+
+        for i in range(len(s)):
+            l = r = i
+
+            pr = r
+            while r + 1 < n and s[r] == s[r + 1]:
+                r += 1
+
+            while l - 1 >= 0 and r + 1 < n and s[l - 1] == s[r + 1]:
+                l -= 1
+                r += 1
+
+            cnt += r - pr + 1
+
+        return cnt
 
 
 stime = time.time()

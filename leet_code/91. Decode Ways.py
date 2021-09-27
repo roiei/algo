@@ -31,6 +31,30 @@ class Solution:
         return dfs(0)
 
 
+    def numDecodings(self, s: str) -> int:
+        n = len(s)
+
+        def dfs(start):
+            if start == n:
+                return 1
+
+            if s[start] == '0':
+                return 0
+
+            cnt = 0
+            for i in range(start, min(n, start + 2)):
+                if not (1 <= int(s[start:i + 1]) <= 26):
+                    continue
+
+                cnt += dfs(i + 1)
+
+            return cnt
+
+        ret = dfs(0)
+        return ret
+
+
+
 stime = time.time()
 #print(2 == Solution().numDecodings('12')) # 2
 #print(3 == Solution().numDecodings('226')) # 3

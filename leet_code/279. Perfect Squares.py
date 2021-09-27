@@ -41,6 +41,22 @@ class Solution:
         
         return dp[-1]
 
+    def numSquares(self, n):
+        dp = [float('inf')]*(n + 1)
+        dp[0] = 0
+
+        nums = []
+        num = 1
+        while num**2 <= n:
+            nums += num**2,
+            num += 1
+
+        for num in nums:
+            for i in range(num, n + 1, 1):
+                dp[i] = min(dp[i - num] + 1, dp[i])
+
+        return dp[-1]
+
 
 stime = time.time()
 #print(3 == Solution().numSquares(12))

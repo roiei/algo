@@ -1,5 +1,5 @@
 import time
-from util_list import *
+from util.util_list import *
 
 
 class Solution:
@@ -23,6 +23,30 @@ class Solution:
         self.dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         ret = self.check(N, 0, m, n, i, j)
         return ret % (10 ** 9 + 7)
+
+    def findPaths(self, m: int, n: int, N: int, i: int, j: int) -> int:
+        def dfs(y, x, move):
+            if (y, x, move) in mem:
+                return mem[(y, x, move)]
+
+            if move == 0:
+                return 0
+
+            cnt = 0
+            for oy, ox in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                ny, nx = oy + y, ox + x
+                if not (0 <= ny < m and 0 <= nx < n):
+                    cnt += 1
+                    continue
+                
+                cnt += dfs(ny, nx, move - 1)
+
+            mem[(y, x, move)] = cnt
+            return cnt
+
+        mem = {}
+        ret = dfs(i, j, N)
+        return ret%(10**9 + 7)
 
 
 stime = time.time()

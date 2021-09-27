@@ -42,25 +42,42 @@ class Solution:
         len_lcs = lcs(word1, 0, m, word2, 0, n)
         return (n-len_lcs)+(m-len_lcs)
 
-    def minDistance2(self, word1: str, word2: str) -> int:
-        """
-              s   e   a
-           0  0   0   0
-        e  0  0   1   1
-        a  0  0   1   2
-        t  0  0   1   2
-
-        not possible for the case of "food", "money"
-        """
+    def minDistance(self, word1: str, word2: str) -> int:
         m = len(word1)
         n = len(word2)
+
+        def dfs(i, j):
+            if (i, j) in mem:
+                return mem[(i, j)]
+
+            if i == m or j == n:
+                return 0
+
+            res = 0
+            if word1[i] == word2[j]:
+                res = dfs(i + 1, j + 1) + 1
+            else:
+                res = max(dfs(i + 1, j), dfs(i, j + 1))
+
+            mem[(i, j)] = res
+            return res
+
+        mem = {}
+        len_common = dfs(0, 0)
+        return (m - len_common) + (n - len_common)
+
+    def minDistance(self, word1: str, word2: str) -> int:
+        m = len(word1)
+        n = len(word2)
+
         dp = [[0]*(n + 1) for _ in range(m + 1)]
 
         for i in range(1, m + 1):
             for j in range(1, n + 1):
-                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
                 if word1[i - 1] == word2[j - 1]:
-                    dp[i][j] += 1
+                    dp[i][j] = max(dp[i - 1][j - 1] + 1, dp[i - 1][j], dp[i][j - 1])
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
 
         return (m - dp[-1][-1]) + (n - dp[-1][-1])
 

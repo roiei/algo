@@ -39,7 +39,6 @@ class Solution(object):
 
         return max(pro_max)
 
-
     def maxProduct(self, nums: [int]) -> int:
         if not nums:
             return 0
@@ -57,10 +56,20 @@ class Solution(object):
             
         return max(res)
 
+    def maxProduct(self, nums: [int]) -> int:
+        mx = 0
+        cur = 1
+
+        for num in nums:
+            cur = max(cur*num, num)
+            mx = max(mx, cur)
+
+        print(mx)
+        return mx
 
 
 stime = time.time()
-#$print(Solution().maxProduct([2,3,-2,4]))
+#print(6 == Solution().maxProduct([2,3,-2,4]))
 print(108 == Solution().maxProduct_ref([-1,-2,-9,-6]))
 print()
 print(108 == Solution().maxProduct([-1,-2,-9,-6]))

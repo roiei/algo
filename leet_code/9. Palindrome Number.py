@@ -12,3 +12,7 @@ class Solution:
             if num[i] != num[n-1-i]:
                 return False
         return True
+
+    def isPalindrome(self, x: int) -> bool:
+        x = str(x)
+        return x == x[::-1]

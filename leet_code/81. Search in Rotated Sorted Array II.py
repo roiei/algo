@@ -106,6 +106,47 @@ class Solution:
             return True
         return False
 
+    def search(self, nums: List[int], target: int) -> bool:
+        def bisearch(nums, target):
+            l = 0
+            r = len(nums) - 1
+
+            while l <= r:
+                m = (l + r)//2
+                if nums[m] == target:
+                    return m
+                if nums[m] > target:
+                    r = m - 1
+                else:
+                    l = m + 1
+            return -1
+
+        def find_pivot(nums, l, r):
+            if l > r:
+                return -1
+
+            m = (l + r)//2
+            if m > 0 and nums[m - 1] > nums[m]:
+                return m - 1
+
+            if m + 1 <= r and nums[m] > nums[m + 1]:
+                return m
+
+            lidx = find_pivot(nums, l, m - 1)
+            ridx = find_pivot(nums, m + 1, r)
+            if -1 != lidx:
+                return lidx
+            if -1 != ridx:
+                return ridx
+            return -1
+
+        i = find_pivot(nums, 0, len(nums) - 1)
+
+        lidx = bisearch(nums[:i + 1], target)
+        ridx = bisearch(nums[i + 1:], target)
+        return -1 != lidx or -1 != ridx
+
+
 
 stime = time.time()
 #print(Solution().search([2,5,6,0,0,1,2], 0))

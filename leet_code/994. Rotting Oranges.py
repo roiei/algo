@@ -3,6 +3,7 @@ from util.util_list import *
 from util.util_tree import *
 import copy
 import collections
+from typing import List
 
 
 class Solution:
@@ -62,6 +63,50 @@ class Solution:
         if fcnt > 0:
             return -1
         return step
+
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        rows = len(grid)
+        cols = len(grid[0])
+        
+        dp = [[0]*cols for _ in range(rows)]
+        
+        q = []
+        visited = set()
+        for y in range(rows):
+            for x in range(cols):
+                if grid[y][x] == 2:
+                    q += (y, x, 0),
+                    dp[y][x] = float('inf')
+                    visited.add((y, x))
+                
+                if grid[y][x] == 0:
+                    dp[y][x] = float('inf')
+        
+        dist = 0
+        while q:
+            y, x, dist = q.pop(0)
+            
+            for ny, nx in [(y + 1, x), (y - 1, x), (y, x + 1), (y, x - 1)]:
+                if not (0 <= ny < rows and 0 <= nx < cols):
+                    continue
+                
+                if grid[ny][nx] == 0:
+                    continue
+                
+                if (ny, nx) not in visited or \
+                    ((ny, nx) in visited and dp[ny][nx] != float('inf') \
+                        and dp[ny][nx] > dist + 1):
+                    dp[ny][nx] = dist + 1
+                    q += (ny, nx, dist + 1),
+                    visited.add((ny, nx))
+                    grid[ny][nx] = 2
+
+        for y in range(rows):
+            for x in range(cols):
+                if grid[y][x] == 1:
+                    return -1
+        
+        return dist
 
 
 stime = time.time()

@@ -38,8 +38,22 @@ class Solution:
                     dp[i] += dp[i-num]
         return dp[-1]
 
+    def combinationSum4(self, nums, target):
+        nums.sort()
+        dp = [0]*(target + 1)
+        dp[0] = 1
+
+        for i in range(nums[0], target + 1):
+            for num in nums:
+                if i < num:
+                    break
+
+                dp[i] += dp[i - num]
+
+        return dp[-1]
+
 
 stime = time.time()
-print(Solution().combinationSum4([1, 2, 3], 4))
-print(Solution().combinationSum4([1, 2], 4))
+print(7 == Solution().combinationSum4([1, 2, 3], 4))
+print(5 == Solution().combinationSum4([1, 2], 4))
 print('elapse time: {} sec'.format(time.time() - stime))

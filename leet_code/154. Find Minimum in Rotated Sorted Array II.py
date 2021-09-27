@@ -1,5 +1,6 @@
 import time
 from util.util_list import *
+from typing import List
 
 
 class Solution:
@@ -57,6 +58,32 @@ class Solution:
         if -1 == idx:
             return nums[0]
         return min(nums[0], nums[idx+1])
+
+    def findMin(self, nums: [int]) -> int:
+        def find_pivot(nums, l, r):
+            if l > r:
+                return -1
+
+            m = (l + r)//2
+            if m > 0 and nums[m - 1] > nums[m]:
+                return m - 1
+
+            if m + 1 <= r and nums[m] > nums[m + 1]:
+                return m
+
+            lidx = find_pivot(nums, l, m - 1)
+            ridx = find_pivot(nums, m + 1, r)
+            if -1 != lidx:
+                return lidx
+            if -1 != ridx:
+                return ridx
+            return -1
+
+        i = find_pivot(nums, 0, len(nums) - 1)
+        if i == -1:
+            return nums[0]
+
+        return nums[i + 1]
 
 
 stime = time.time()

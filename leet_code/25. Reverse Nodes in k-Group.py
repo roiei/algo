@@ -39,6 +39,24 @@ class Solution:
                 break
         return head
 
+    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+        nodes = []
+        while head:
+            nodes += head,
+            head = head.next
+
+        for i in range(0, len(nodes) - k + 1, k):
+            nodes[i:i + k] = nodes[i:i + k][::-1]
+
+        cur = rhead = nodes[0]
+        for i in range(1, len(nodes)):
+            cur.next = nodes[i]
+            cur = cur.next
+        cur.next = None
+
+        return rhead
+
+
 
 stime = time.time()
 #print(Solution().reverseKGroup(create_linked_list('1->2->3->4->5'), 4))

@@ -1,8 +1,9 @@
 import time
-from util_list import *
-from util_tree import *
+from util.util_list import *
+from util.util_tree import *
 import copy
 import collections
+from typing import List
 
 
 class Solution:
@@ -36,7 +37,6 @@ class Solution:
 
         return res
 
-
     def solveNQueens(self, n: int) -> 'List[List[str]]':
         xpos = [-1]*n
         board = [['.']*n for _ in range(n)]
@@ -61,6 +61,30 @@ class Solution:
                     board[y][x] = '.'
         
         dfs(board, xpos, 0, n)
+        return res
+
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        board = [['.']*n for _ in range(n)]
+        pos = [-1]*n
+        res = []
+
+        def dfs(y, res):
+            if y == n:
+                res += [''.join(line) for line in board],
+                return
+
+            for x in range(n):
+                for py in range(y):
+                    if pos[py] == x or \
+                       y - py == abs(x - pos[py]):
+                       break
+                else:
+                    pos[y] = x
+                    board[y][x] = 'Q'
+                    dfs(y + 1, res)
+                    board[y][x] = '.'
+
+        dfs(0, res)
         return res
 
 

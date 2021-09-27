@@ -19,6 +19,21 @@ class Solution:
             toggle += 1
         return res
 
+    def reverseStr(self, s: str, k: int) -> str:
+        s = list(s)
+        toggle = True
+
+        for i in range(0, len(s), k):
+            if toggle:
+                s[i:i + k] = s[i:i + k][::-1]
+            else:
+                s[i:i + k] = s[i:i + k]
+
+            toggle = not toggle
+
+        return ''.join(s)
+
+
 
 stime = time.time()
 print("bacdfeg" == Solution().reverseStr("abcdefg", 2))

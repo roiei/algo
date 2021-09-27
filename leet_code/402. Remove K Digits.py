@@ -23,11 +23,32 @@ class Solution:
             res.pop(0)
         return '0' if not res else ''.join(res)
 
+    def removeKdigits(self, num: str, k: int) -> str:
+        stk = []
+        
+        for val in num:
+            while k and stk and stk[-1] > val:
+                stk.pop()
+                k -= 1
+            stk += val,
+        
+        while k and stk:
+            stk.pop()
+            k -= 1
+        
+        while stk and stk[0] == '0':
+            stk.pop(0)
+        
+        if not stk:
+            stk += '0',
+        
+        return ''.join(stk)
+
 
 
 stime = time.time()
 print('200' == Solution().removeKdigits("10200", k=1))
-# print('11' == Solution().removeKdigits("112", k=1))
+#print('11' == Solution().removeKdigits("112", k=1))
 # print('0' == Solution().removeKdigits("10", k=1))
 # print('1219' == Solution().removeKdigits("1432219", k=3))
 print('elapse time: {} sec'.format(time.time() - stime))

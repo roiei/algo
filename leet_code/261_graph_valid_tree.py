@@ -1,4 +1,5 @@
 import time
+import collections
 
 
 class Solution:
@@ -42,8 +43,43 @@ class Solution:
 
         return len(edges) == n - 1
 
+    def validTree(self, n, edges):
+        def is_exist(u, v):
+            visited = set()
+            visited.add(u)
+            q = [u]
+
+            while q:
+                cur = q.pop(0)
+
+                if cur == v:
+                    return True
+
+                for adj in g[u]:
+                    if adj in visited:
+                        continue
+
+                    q += adj,
+                    visited.add(adj)
+
+            return False
+
+        g = collections.defaultdict(list)
+        for u, v in edges:
+            if is_exist(u, v):
+                return False
+
+            g[u] += v,
+            g[v] += u,
+
+        return len(edges) == n - 1
+
 
 stime = time.time()
 #print(True == Solution().validTree(5, [[0, 1], [0, 2], [0, 3], [1, 4]]))
 print(False == Solution().validTree(5, [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]]))
+print(False == Solution().validTree(10, [[0,1],[5,6],[6,7],[9,0],[3,7],[4,8],[1,8],[5,2],[5,3]]))
+
+
+
 print('elapse time: {} sec'.format(time.time() - stime))

@@ -47,6 +47,22 @@ class Solution:
             if left_mxs[i - 1] <= right_mns[i]:
                 return i
 
+    def partitionDisjoint(self, nums: List[int]) -> int:
+        mns = []
+        mn = float('inf')
+        
+        for i in range(len(nums) - 1, -1, -1):
+            mn = min(mn, nums[i])
+            mns.insert(0, mn)
+        
+        mx = nums[0]
+        for i in range(1, len(nums)):
+            if mx <= mns[i]:
+                return i
+            mx = max(mx, nums[i])
+        
+        return i
+
 
 stime = time.time()
 print(3 == Solution().partitionDisjoint([5,0,3,8,6]))  # left = [5,0,3], right = [8,6]

@@ -7,6 +7,11 @@ class TreeNode:
         self.left = None
         self.right = None
 
+    def __eq__(self, other):
+        self_val = None if not self else self.val
+        other_val = None if not other else other.val
+        return self_val == other_val
+
 
 def deserialize(data):
     if None == data:

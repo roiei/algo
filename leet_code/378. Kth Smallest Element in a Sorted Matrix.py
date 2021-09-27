@@ -4,7 +4,7 @@ from util.util_tree import *
 import copy
 import collections
 import heapq
-
+from typing import List
 
 
 class Solution:
@@ -60,11 +60,31 @@ class Solution:
                 r = m
         return l
 
+    def kthSmallest(self, matrix: [[int]], k: int) -> int:
+        def count(matrix, target):
+            cnt = 0
+            for line in matrix:
+                cnt += len([val for val in line if val <= target])
+            return cnt
+
+        l = matrix[0][0]
+        r = matrix[-1][-1]
+
+        while l <= r:
+            m = (l + r)//2
+            cnt = count(matrix, m)
+            if cnt < k:
+                l = m + 1
+            else:
+                r = m - 1
+
+        return l
+
 
 stime = time.time()
 print(13 == Solution().kthSmallest([[1,5,9],[10,11,13],[12,13,15]], 8))
-#print(-5 == Solution().kthSmallest([[-5]], 1))
-#print(2 == Solution().kthSmallest([[1,2],[1,3]], 3))
+print(-5 == Solution().kthSmallest([[-5]], 1))
+print(2 == Solution().kthSmallest([[1,2],[1,3]], 3))
 print('elapse time: {} sec'.format(time.time() - stime))
 
 

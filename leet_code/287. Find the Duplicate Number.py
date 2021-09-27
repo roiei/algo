@@ -38,16 +38,20 @@ class Solution:
         
         while l <= r:
             m = (l + r)//2
+
+            print(sum(num <= m for num in nums), m)
             
             if sum(num <= m for num in nums) > m:
                 r = m - 1
             else:
                 l = m + 1
+
+            print('l, r = ', l, r)
         
         return l
 
 
 stime = time.time()
 print(2 == Solution().findDuplicate([1,3,4,2,2]))
-print(Solution().findDuplicate([1,2,3,4,5]))
+#print(Solution().findDuplicate([1,2,3,4,5]))
 print('elapse time: {} sec'.format(time.time() - stime))

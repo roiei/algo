@@ -6,6 +6,7 @@ import heapq
 import collections
 import functools
 import bisect
+from typing import List
 
 
 class Solution:
@@ -52,7 +53,6 @@ class Solution:
         print(cnt)
         return cnt
 
-
     def numSubmat(self, mat: [[int]]) -> int:
         rows = len(mat)
         cols = len(mat[0])
@@ -75,11 +75,9 @@ class Solution:
         return res
 
 
-
-
 stime = time.time()
-print(13 == Solution().numSubmat(mat = [[1,0,1], [1,1,0],[1,1,0]]))
-# print(7 == Solution().numSubmat([[0,1],[1,1],[1,0]]))
+#print(13 == Solution().numSubmat(mat = [[1,0,1], [1,1,0],[1,1,0]]))
+print(7 == Solution().numSubmat([[0,1],[1,1],[1,0]]))
 # print(24 == Solution().numSubmat([[0,1,1,0],[0,1,1,1],[1,1,1,0]]))
 print('elapse time: {} sec'.format(time.time() - stime))
 

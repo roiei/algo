@@ -43,6 +43,40 @@ class Solution:
                     nums.append(self.get_num_enemies(y, x, grid))
 
         return max(nums) if nums else 0
+
+    def maxKilledEnemies(self, grid):
+        if not grid:
+            return 0
+
+        rows = len(grid)
+        cols = len(grid[0])
+        mx = 0
+        
+        row_cnt = 0;
+        col_cnts = [0]*cols
+        
+        for i in range(rows):
+            for j in range(cols):
+                if j == 0 or grid[i][j-1] == 'W':
+                    row_cnt = 0;
+                    k = j
+                    while k < cols and grid[i][k] != 'W':
+                        if grid[i][k] == 'E':
+                            row_cnt += 1
+                        k += 1
+
+                if i == 0 or grid[i-1][j] == 'W':
+                    col_cnts[j] = 0
+                    k = i
+                    while k < rows and grid[k][j] != 'W':
+                        if grid[k][j] == 'E':
+                            col_cnts[j] += 1
+                        k += 1
+
+                if grid[i][j] == '0':
+                    mx = max(mx, row_cnt + col_cnts[j])
+
+        return mx
         
 
 grid = [
@@ -52,5 +86,5 @@ grid = [
 ] # 3
 
 sol = Solution()
-ret = sol.bomb(grid)
+ret = sol.maxKilledEnemies(grid)
 print(ret)

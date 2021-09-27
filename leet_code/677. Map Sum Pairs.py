@@ -8,12 +8,13 @@ import collections
 class TrieNode:
     def __init__(self, ch):
         self.ch = ch
-        self.eow = True
-        self.val = 0
         self.child = {}
+        self.eow = False
+        self.val = 0
 
 
 class MapSum:
+
     def __init__(self):
         """
         Initialize your data structure here.
@@ -22,32 +23,33 @@ class MapSum:
 
     def insert(self, key: str, val: int) -> None:
         cur = self.root
+
         for ch in key:
             if ch not in cur.child:
                 cur.child[ch] = TrieNode(ch)
+            
             cur = cur.child[ch]
-        
+
         cur.eow = True
         cur.val = val
         
-
     def sum(self, prefix: str) -> int:
-        cur = self.root
+        node = self.root
+
         for ch in prefix:
-            if ch not in cur.child:
+            if ch not in node.child:
                 return 0
-            cur = cur.child[ch]
-        
-        q = [cur]
-        cnt = 0
-        
+
+            node = node.child[ch]
+
+        tot = 0
+        q = [node]
         while q:
             node = q.pop(0)
-            if node.eow == True:
-                cnt += node.val
-            
-            for k, v in node.child.items():
-                q += v,
-        
-        return cnt
+            if node.eow:
+                tot += node.val
 
+            for child in node.child:
+                q += node.child[child],
+
+        return tot

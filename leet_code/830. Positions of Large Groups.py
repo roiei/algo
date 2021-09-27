@@ -18,6 +18,26 @@ class Solution:
             res.append([start, i])
         return res
 
+    def largeGroupPositions(self, S: str):
+        pre = -1
+        pre_pos = -1
+        cnt = 1
+        res = []
+
+        for i, ch in enumerate(S):
+            if pre != ch:
+                if cnt >= 3:
+                    res += [pre_pos, i - 1],
+                pre = ch
+                pre_pos = i
+                cnt = 1
+            else:
+                cnt += 1
+
+        if cnt >= 3:
+            res += [pre_pos, i],
+
+        return res
 
 
 stime = time.time()

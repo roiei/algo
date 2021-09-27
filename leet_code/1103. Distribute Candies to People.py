@@ -20,7 +20,7 @@ class Solution:
             idx = (idx + 1)%num_people
         
         return ans
-
+    
 
 stime = time.time()
 print([1,2,3,1] == Solution().distributeCandies(7, 4))

@@ -1,3 +1,11 @@
+import time
+from util.util_list import *
+from util.util_tree import *
+import copy
+import collections
+from typing import List
+
+
 class Solution(object):
     def check_coin(self, coins, amount, acc, depth):
         if acc > amount:
@@ -75,9 +83,7 @@ class Solution(object):
 
         mem = {}
         res = dfs(coins, 0, 0)
-        print(res)
         return res
-
 
     def coinChange(self, coins, amount):
         if not coins or 0 == amount:
@@ -92,6 +98,15 @@ class Solution(object):
                 dp[i] = min(dp[i], dp[i-coin]+1)
         return dp[-1] if float('inf') != dp[-1] else -1
 
+    def coinChange(self, coins, amount):
+        dp = [float('inf')]*(amount + 1)
+        dp[0] = 0
+
+        for coin in coins:
+            for i in range(coin, amount + 1, 1):
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+
+        return dp[-1] if float('inf') != dp[-1] else -1
 
 
 

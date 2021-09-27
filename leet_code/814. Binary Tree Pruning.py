@@ -3,6 +3,7 @@ from util.util_list import *
 from util.util_tree import *
 import copy
 import collections
+from typing import List
 
 
 class Solution:
@@ -25,7 +26,21 @@ class Solution:
                 and node.val == 0) else False
         dfs(root)
         return root
-        
+
+    def pruneTree(self, root: TreeNode) -> TreeNode:
+        def dfs(node):
+            if not node:
+                return None
+
+            node.left = dfs(node.left)
+            node.right = dfs(node.right)
+
+            if node.val != 1 and (not node.left and not node.right):
+                return None
+
+            return node
+
+        return dfs(root)
             
 
 stime = time.time()

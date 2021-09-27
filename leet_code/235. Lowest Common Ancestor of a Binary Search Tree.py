@@ -3,6 +3,7 @@ from util.util_list import *
 from util.util_tree import *
 import copy
 import collections
+from typing import List
 
 
 class Solution:
@@ -47,11 +48,32 @@ class Solution:
         if -1 != idx:
             lca = ptrace[idx]
         return TreeNode(lca)
-            
 
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        def dfs(node):
+            nonlocal common
+            if not node:
+                return set()
+
+            res = set(dfs(node.left) | dfs(node.right))
+
+            if node.val == p.val or node.val == q.val:
+                res.add(node.val)
+                
+            if len(res) == 2 and not common:
+                common = node.val
+
+            return res
+
+        common = None
+        dfs(root)
+        return TreeNode(common)
+
+            
 stime = time.time()
-#print(Solution().lowestCommonAncestor(deserialize('[3,5,1,6,2,0,8,null,null,7,4]'), TreeNode(5), TreeNode(1))) # 3
-print(Solution().lowestCommonAncestor(deserialize('[3,5,1,6,2,0,8,null,null,7,4]'), TreeNode(5), TreeNode(4))) # 5
-#print(Solution().lowestCommonAncestor(deserialize('[1,2,3,null,4]'), TreeNode(4), TreeNode(3))) # 1
-#print(Solution().lowestCommonAncestor(deserialize('[-1,0,3,-2,4,null,null,8]'), TreeNode(8), TreeNode(4)))  # 0
+print(TreeNode(6) == Solution().lowestCommonAncestor(deserialize('[6,2,8,0,4,7,9,null,null,3,5]'), TreeNode(0), TreeNode(8)))
+#print(TreeNode(6) == Solution().lowestCommonAncestor(deserialize('[6,2,8,0,4,7,9,null,null,3,5]'), TreeNode(2), TreeNode(8))) # 6
+#print(TreeNode(3) == Solution().lowestCommonAncestor(deserialize('[3,5,1,6,2,0,8,null,null,7,4]'), TreeNode(5), TreeNode(1))) # 3
+#print(TreeNode(5) == Solution().lowestCommonAncestor(deserialize('[3,5,1,6,2,0,8,null,null,7,4]'), TreeNode(5), TreeNode(4))) # 5
+#print(TreeNode(1) == Solution().lowestCommonAncestor(deserialize('[1,2,3,null,4]'), TreeNode(4), TreeNode(3))) # 1
 print('elapse time: {} sec'.format(time.time() - stime))

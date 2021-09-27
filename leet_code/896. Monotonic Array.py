@@ -1,9 +1,10 @@
 
 import time
-from util_list import *
-from util_tree import *
+from util.util_list import *
+from util.util_tree import *
 import copy
 import collections
+from typing import List
 
 
 class Solution:
@@ -37,6 +38,19 @@ class Solution:
                 if 0 > A[i] - pre:
                     return False
                 pre = A[i]
+        return True
+
+    def isMonotonic(self, nums: List[int]) -> bool:
+        if not nums:
+            return False
+
+        if nums[0] > nums[-1]:
+            nums = nums[::-1]
+
+        for i in range(len(nums) - 1):
+            if nums[i] > nums[i + 1]:
+                return False
+
         return True
 
 

@@ -13,8 +13,17 @@ class Solution:
             for j in range(amount+1):
                 if j >= i:
                     dp[j] += dp[j-i]
-            print(dp)
-        print(dp)
+
+        return dp[-1]
+
+    def change(self, amount, coins):
+        dp = [0]*(amount + 1)
+        dp[0] = 1
+
+        for coin in coins:
+            for i in range(coin, amount + 1):
+                dp[i] += dp[i - coin]
+
         return dp[-1]
 
 

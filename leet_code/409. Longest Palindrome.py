@@ -93,6 +93,20 @@ class Solution:
 
         return get_cost(0, len(s) - 1)
 
+    def longestPalindrome(self, s):
+        freq = collections.Counter(s)
+        odd = 0
+        cnt = 0
+
+        for k, v in freq.items():
+            if v%2 == 0:
+                cnt += v
+            else:
+                cnt += v - 1
+                odd = 1
+
+        cnt += odd
+        return cnt
 
 
 # print(collections.Counter([1, 2, 3, 4, 5, 6, 7, 3, 5, 7, 7]))

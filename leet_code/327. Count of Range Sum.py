@@ -102,8 +102,26 @@ class Solution:
         cnt = dfs(0, len(nums) - 1, sum(nums))
         return cnt
 
+    def countRangeSum(self, nums, lower, upper):
+        dp = collections.defaultdict(int)
+        tot = 0
+        cnt = 0
+        for num in nums:
+            tot += num
+            if lower <= tot <= upper:
+                cnt += 1
+
+            for k in dp:
+                if lower <= tot - k <= upper:
+                    cnt += dp[k]
+
+            dp[tot] += 1
+
+        return cnt
+
+
 stime = time.time()
-#print(3 == Solution().countRangeSum([-2,5,-1], -2, 2))
+print(3 == Solution().countRangeSum([-2,5,-1], -2, 2))
 print(4 == Solution().countRangeSum([2147483647,-2147483648,-1,0], -1, 0))
 
 #print(Solution().countRangeSum([2147483647,-2147483648,-1,0], -1, 0)) # 4
