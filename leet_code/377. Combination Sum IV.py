@@ -25,6 +25,22 @@ class Solution:
         res = dfs(nums, target, 0)
         return res
 
+    def print_all_possible_sequences(self, nums: [int], target: int) -> int:
+        def dfs(seq, tot):
+            if tot > target:
+                return
+
+            if tot == target:
+                print(seq)
+                return
+
+            for i in range(len(nums)):
+                dfs(seq + [nums[i]], tot + nums[i])
+
+            return
+
+        dfs([], 0)
+        return
 
     def combinationSum4(self, nums, target):
         if not nums:
@@ -38,22 +54,22 @@ class Solution:
                     dp[i] += dp[i-num]
         return dp[-1]
 
-    def combinationSum4(self, nums, target):
-        nums.sort()
+    def getNumOfCombinations(self, nums, target):
         dp = [0]*(target + 1)
         dp[0] = 1
 
-        for i in range(nums[0], target + 1):
+        for i in range(min(nums), target + 1):
             for num in nums:
-                if i < num:
-                    break
-
-                dp[i] += dp[i - num]
+                if num <= i:
+                    dp[i] += dp[i - num]
 
         return dp[-1]
 
 
 stime = time.time()
-print(7 == Solution().combinationSum4([1, 2, 3], 4))
-print(5 == Solution().combinationSum4([1, 2], 4))
+print(Solution().combinationSum4([3,1,2,4], 4))
+
+#print(6 == Solution().print_all_possible_sequences([1, 3, 4], 5))
+# print(7 == Solution().combinationSum4([1, 2, 3], 4))
+# print(5 == Solution().combinationSum4([1, 2], 4))
 print('elapse time: {} sec'.format(time.time() - stime))
