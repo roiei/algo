@@ -44,6 +44,24 @@ class Solution:
         
         return ''.join(stk)
 
+    def removeKdigits(self, num: str, k: int) -> str:
+        stk = []
+
+        for num in list(num):
+            while k and stk and stk[-1] > num:
+                stk.pop()
+                k -= 1
+
+            stk += num,
+
+        while stk and stk[0] == '0':
+            stk.pop(0)
+
+        while k and stk:
+            stk.pop()
+            k -= 1
+
+        return ''.join(stk) if stk else '0'
 
 
 stime = time.time()

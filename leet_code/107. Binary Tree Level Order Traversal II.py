@@ -1,8 +1,17 @@
+import time
+from util.util_list import *
+from util.util_tree import *
+import copy
+import collections
+from typing import List
+
+
 class TreeNode:
     def __init__(self, x):
         self.val = x
         self.left = None
         self.right = None
+
 
 class Solution:
     def traverse_level_order(self, root, trace):
@@ -16,7 +25,7 @@ class Solution:
             if None != cur[0].right:
                 q.append([cur[0].right, cur[1]+1])
 
-    def levelOrderBottom(self, root: TreeNode) -> 'List[List[int]]':
+    def levelOrderBottom(self, root: TreeNode) -> List[List[int]]:
         if not root:
             return []
         trace = []
@@ -36,13 +45,34 @@ class Solution:
                 levels.append(level)
         return levels
 
-root = TreeNode(3)
-root.left = TreeNode(9)
-root.right = TreeNode(20)
-root.right.left = TreeNode(15)
-root.right.right = TreeNode(7)
+    def do_level_order_from_bottom(self, root: List[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+
+        q = [root]
+        lines = []
+        
+        while q:
+            nq = []
+            line = []
+            
+            while q:
+                node = q.pop(0)
+                line += node.val,
+                
+                if node.left:
+                    nq += node.left,
+                
+                if node.right:
+                    nq += node.right,
+            
+            q = nq
+            lines.insert(0, line)
+        
+        return lines
+
 
 stime = time.time()
-sol = Solution()
-print(sol.levelOrderBottom(root))
+print(Solution().levelOrderBottom(deserialize('[5, 11, 15, 1, 2, null, 6]')))
+#print(Solution().levelOrderBottom(deserialize('[3,9,20,null,null,15,7]')))
 print('elapse time: {} sec'.format(time.time() - stime))

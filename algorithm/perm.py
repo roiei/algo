@@ -6,7 +6,7 @@ def permutate2(r, space, stk, perms):
         nstk = []
 
         while stk:
-            cur = stk.pop(0)
+            cur = stk.pop()
 
             for i in range(len(space)):
                 nstk += cur + space[i],
@@ -40,6 +40,8 @@ def call_perm():
 
     print(perms1 == perms2)
 
+call_perm()
+
 
 def combinate(r, start, space, seq, res):
     if len(seq) == r:
@@ -49,9 +51,10 @@ def combinate(r, start, space, seq, res):
     for i in range(start, len(space)):
         combinate(r, i + 1, space, seq + space[i], res)
 
-res = []
-combinate(2, 0, ['R', 'G', 'B'], '', res)
-print(res)
+
+# res = []
+# combinate(2, 0, ['R', 'G', 'B'], '', res)
+# print(res)
 
 
 

@@ -108,13 +108,48 @@ class Solution:
         
         return dist
 
+    def find_elapse_time(self, grid: List[List[int]]) -> int:
+        rows = len(grid)
+        cols = len(grid[0])
+
+        q = []
+        visited = set()
+        elapse = 0
+
+        for y in range(rows):
+            for x in range(cols):
+                if 2 == grid[y][x]:
+                    q += (y, x, 0),
+                    visited.add((y, x))
+
+        while q:
+            y, x, elapse = q.pop(0)
+
+            for ay, ax in [(y + 1, x), (y - 1, x), (y, x + 1), (y, x - 1)]:
+                if (ay, ax) in visited:
+                    continue
+
+                if not (0 <= ay < rows and 0 <= ax < cols):
+                    continue
+
+                if 1 == grid[ay][ax]:
+                    q += (ay, ax, elapse + 1),
+                    grid[ay][ax] = 2
+                    visited.add((ay, ax))
+
+        if any([1 == cell for line in grid for cell in line]):
+            return -1
+
+        return elapse
+
 
 stime = time.time()
-print(0 == Solution().orangesRotting([[0]]))
-#print(4 == Solution().orangesRotting([[2,1,1],[1,1,0],[0,1,1]]))
-#print(-1 == Solution().orangesRotting([[2,1,1],[0,1,1],[1,0,1]]))
-#print(0 == Solution().orangesRotting([[0,2]]))
-#print(-1 == Solution().orangesRotting([[1]]))
-#print(1 == Solution().orangesRotting([[1],[2],[2]]))
+print(2 == Solution().orangesRotting([[1,0,0],[2,1,1],[0,1,0]]))
+# print(0 == Solution().orangesRotting([[0]]))
+# print(4 == Solution().orangesRotting([[2,1,1],[1,1,0],[0,1,1]]))
+# print(-1 == Solution().orangesRotting([[2,1,1],[0,1,1],[1,0,1]]))
+# print(0 == Solution().orangesRotting([[0,2]]))
+# print(-1 == Solution().orangesRotting([[1]]))
+# print(1 == Solution().orangesRotting([[1],[2],[2]]))
 print('elapse time: {} sec'.format(time.time() - stime))
 

@@ -30,45 +30,31 @@ class Solution:
     
         return dfs(s, 0, len(s))[0]
 
-    def reverseParentheses(self, s: str) -> str:
-        n = len(s)
+    def reverse_string_in_parentheses(self, s: str) -> str:
         i = 0
-        stk = []
-        
+        n = len(s)
+        stk = ['']
+
         while i < n:
-            if s[i] == '(':
-                word = ''
-                i += 1
-                while i < n and s[i].isalpha():
-                    word += s[i]
-                    i += 1
-                stk += word,
-                continue
-
-            if s[i] == ')':
+            if s[i].isalpha():
+                stk[-1] += s[i]
+            elif s[i] == '(':
+                stk += '',
+            elif s[i] == ')':
+                cur = stk.pop()
                 if stk:
-                    word = stk.pop()[::-1]
-                    if stk:
-                        stk[-1] += word
-                    else:
-                        stk += word,
-                i += 1
-                continue
+                    stk[-1] += cur[::-1]
+                else:
+                    stk += cur[::-1]
+            i += 1
 
-            word = ''
-            while i < n and s[i].isalpha():
-                word += s[i]
-                i += 1
+        return ''.join(stk)
 
-            if stk:
-                stk[-1] += word
-            else:
-                stk += word,
 
-        return stk[0]
-
+print(reverse_string_in_parentheses("(tne(cell)xe)"))
 
 stime = time.time()
+print(Solution().reverseParentheses("(tne(cell)xe)"))
 print("dcba" == Solution().reverseParentheses("(abcd)"))
 print("iloveu" == Solution().reverseParentheses("(u(love)i)"))
 print("leetcode" == Solution().reverseParentheses("(ed(et(oc))el)"))

@@ -1,3 +1,4 @@
+import collections
 
 
 class ListNode:
@@ -27,17 +28,24 @@ def create_linked_list(numstr):
 def create_linked_list_from_nums(nums):
     if not nums:
         return None
-    head = cur = ListNode(nums.pop(0))
+
+    nums = collections.deque(nums)
+
+    head = cur = ListNode(nums.popleft())
+
     while nums:
-        cur.next = ListNode(nums.pop(0))
+        cur.next = ListNode(nums.popleft())
         cur = cur.next
+
     return head
 
 
 def create_circular_linked_list_from_nums(nums):
     if not nums:
         return None
+
     head = cur = ListNode(nums.pop(0))
+    
     while nums:
         cur.next = ListNode(nums.pop(0))
         cur = cur.next

@@ -1,5 +1,6 @@
 import time
 from typing import List
+import collections
 
 
 class Solution:
@@ -67,8 +68,10 @@ class Solution:
         return True
 
     def validUtf8(self, data: List[int]) -> bool:
+        data = collections.deque(data)
+
         while data:
-            header = data.pop(0)
+            header = data.popleft()
             header = '{:08b}'.format(header)
             ones = 0
 
@@ -86,7 +89,7 @@ class Solution:
             ones -= 1
 
             while data and ones:
-                chunk = data.pop(0)
+                chunk = data.popleft()
                 chunk = '{:08b}'.format(chunk)
                 if not chunk.startswith('10'):
                     return False

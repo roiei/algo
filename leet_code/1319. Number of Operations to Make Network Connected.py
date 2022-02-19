@@ -33,12 +33,12 @@ class Solution:
         return sum(dfs(i) for i in range(n)) - 1
 
 
-    def makeConnected(self, n: int, connections: [[int]]) -> int:
-        if len(connections) < n - 1:
+    def get_cable_move(self, n: int, cables: [[int]]) -> int:
+        if len(cables) < n - 1:
             return -1
         
         g = collections.defaultdict(set)
-        for u, v in connections:
+        for u, v in cables:
             g[u].add(v)
             g[v].add(u)
 
@@ -57,19 +57,22 @@ class Solution:
                 
             return 1
 
-        res = 0
+        move = 0
         for node in range(n):
             if node not in visited:
-                res += dfs(node)
+                move += dfs(node)
 
-        return res - 1
+        return move - 1
+
 
         #return sum(dfs(node) if node not in visited else 0 for node in range(n)) - 1
 
 
             
 stime = time.time()
-print(1 == Solution().makeConnected(n = 4, connections = [[0,1],[0,2],[1,2]]))
+#print(1 == Solution().makeConnected(n = 4, connections = [[0,1],[0,2],[1,2]]))
+
+print(2 == Solution().makeConnected(6, [[0,1],[0,2],[0,3],[1,2], [2,3]]))
 #print(2 == Solution().makeConnected(n = 6, connections = [[0,1],[0,2],[0,3],[1,2],[1,3]]))
 #print(-1 == Solution().makeConnected(n = 6, connections = [[0,1],[0,2],[0,3],[1,2]]))
 #print(0 == Solution().makeConnected(n = 5, connections = [[0,1],[0,2],[3,4],[2,3]]))

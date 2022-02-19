@@ -2,6 +2,7 @@
 
 
 import queue
+import collections
 
 
 class Node:
@@ -51,15 +52,15 @@ class Tree:
         print(cur.value, end = ' ')
 
     def level_order(self, cur):
-        tra_queue = queue.Queue()
-        tra_queue.put(cur)
-        while not tra_queue.empty():
-            cur = tra_queue.get()
+        q = collections.deque([cur])
+
+        while q:
+            cur = q.popleft()
             print(cur.value, end = ' ')
             if None != cur.left:
-                tra_queue.put(cur.left)
+                q.append(cur.left)
             if None != cur.right:
-                tra_queue.put(cur.right)
+                q.append(cur.right)
 
     def traverse(self, type):
         if type == 'pre':
@@ -193,7 +194,9 @@ tree.traverse('post')
 
 print('removing 90')
 tree.remove(90)
+print('\npost order')
 tree.traverse('post')
+print('\nlevel order')
 tree.traverse('level')
 
 

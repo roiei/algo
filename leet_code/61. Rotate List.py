@@ -27,9 +27,43 @@ class Solution:
             k -= 1
         return head
 
+    def rotate_list(self, head: ListNode, k: int) -> ListNode:
+        if not head:
+            return head
+
+        n = 0
+        node = head
+        last = None
+
+        while node:
+            if node:
+                last = node
+            node = node.next
+            n += 1
+
+        k = k % n
+
+        if n == 1 or k == 0 or k == n:
+            return head
+        
+        i = 0
+        pre = node = head
+
+        while node and i < n - k:
+            pre = node
+            node = node.next
+            i += 1
+
+        last.next = head
+        pre.next = None
+        head = node
+
+        return head
+
+head = rotate_list(create_linked_list_from_nums([6, 7, 4, 3]), 2)
+print(list_get_nums(head))
 
 stime = time.time()
-print(Solution().minCostClimbingStairs([0, 0, 0, 1]))
-#print(15 == Solution().minCostClimbingStairs([10, 15, 20]))
-#print(6 == Solution().minCostClimbingStairs([1, 100, 1, 1, 1, 100, 1, 1, 100, 1]))
+print([4, 3, 6, 7] == list_get_nums(Solution().rotateRight(create_linked_list_from_nums([6, 7, 4, 3]), 2)))
+#print(list_get_nums(Solution().rotateRight(create_linked_list_from_nums([1]), 0)))
 print('elapse time: {} sec'.format(time.time() - stime))

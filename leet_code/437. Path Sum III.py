@@ -1,6 +1,6 @@
 import time
-from util_list import *
-from util_tree import *
+from util.util_list import *
+from util.util_tree import *
 import copy
 import collections
 
@@ -54,9 +54,49 @@ class Solution:
                 q += cur.right,
         return num
 
+    def get_num_paths(self, root: TreeNode, target: int) -> int:
+        if not root:
+            return 0
+
+        def dfs(node, target, inc):
+            if not node:
+                return 0
+
+            cnt = 0
+            inc += node.val
+
+            if target == inc:
+                cnt = 1
+
+            cnt += dfs(node.left, target, inc)
+            cnt += dfs(node.right, target, inc)
+
+            return cnt
+
+        q = collections.deque([root])
+        cnt = 0
+
+        while q:
+            node = q.popleft()
+            if not node:
+                continue
+
+            cnt += dfs(node, target, 0)
+
+            if None != node.left:
+                q += node.left,
+
+            if None != node.right:
+                q += node.right,
+
+        return cnt
+
+
+#print(get_num_paths(deserialize('[5,4,null,1,null,3,4,null,null,5,10]'), 10))
 stime = time.time()
 #print(Solution().pathSum(deserialize('[5,4,8,11,null,13,4,7,2,null,null,5,1]'), 22))
 #print(Solution().pathSum(deserialize('[1]'), 0))
 #print(Solution().pathSum(deserialize('[-2,null,-3]'), -5))
-print(Solution().pathSum(deserialize('[6,5,null,1,null,2,5,null,null,6,12]'), 12))
+print(3 == Solution().pathSum(deserialize('[5,4,null,1,null,3,4,null,null,5,10]'), 10))
+#print(Solution().pathSum(deserialize('[6,5,null,1,null,2,5,null,null,6,12]'), 12))
 print('elapse time: {} sec'.format(time.time() - stime))

@@ -55,6 +55,31 @@ class Solution:
         i, res = dfs(0)
         return res
 
+    def decodeString(self, s: str) -> str:
+        i = 0
+        n = len(s)
+        digit = ''
+        stk = [[1, '']]
+
+        while i < n:
+            if s[i].isalpha():
+                stk[-1][1] += s[i]
+            elif s[i].isdigit():
+                digit += s[i]
+            elif s[i] == '[':
+                stk += [int(digit), ''],
+                digit = ''
+            elif s[i] == ']':
+                item = stk.pop()
+                if stk:
+                    stk[-1][1] += item[0]*item[1]
+                else:
+                    stk += item[0]*item[1]
+
+            i += 1
+
+        return stk[0][1]
+
 
 # [a] : just return the letter(s)
 # [a2[c]] : 

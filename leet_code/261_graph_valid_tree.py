@@ -43,8 +43,8 @@ class Solution:
 
         return len(edges) == n - 1
 
-    def validTree(self, n, edges):
-        def is_exist(u, v):
+    def is_no_cycle(self, n, edges):
+        def is_reachable(u, v):
             visited = set()
             visited.add(u)
             q = [u]
@@ -55,7 +55,7 @@ class Solution:
                 if cur == v:
                     return True
 
-                for adj in g[u]:
+                for adj in g[cur]:
                     if adj in visited:
                         continue
 
@@ -74,10 +74,32 @@ class Solution:
 
         return len(edges) == n - 1
 
+    def isNoCycle(self, n, edges):
+        parents = collections.defaultdict(int)
+
+        for u, v in edges:
+            parents[u] = u
+            parents[v] = v
+            
+        def get_root(parents, idx):
+            while parents[idx] != idx:
+                idx = parents[idx]
+            return idx
+
+        for u, v in edges:
+            u_root = get_root(parents, u)
+            v_root = get_root(parents, v)
+            if u_root == v_root:
+                return False
+            
+            parents[v_root] = u_root
+
+        return len(edges) == n - 1
+
 
 stime = time.time()
 #print(True == Solution().validTree(5, [[0, 1], [0, 2], [0, 3], [1, 4]]))
-print(False == Solution().validTree(5, [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]]))
+#print(False == Solution().validTree(5, [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]]))
 print(False == Solution().validTree(10, [[0,1],[5,6],[6,7],[9,0],[3,7],[4,8],[1,8],[5,2],[5,3]]))
 
 

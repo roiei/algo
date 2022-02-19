@@ -45,13 +45,13 @@ class Solution:
         if not points:
             return 0
 
-        points.sort(key=lambda p: p[1])
+        points = collections.deque(sorted(points, key=lambda p: p[1]))
         end = points[0][1]
         cnt = 1
 
         while points:
             if points[0][0] <= end:
-                points.pop(0)
+                points.popleft()
             else:
                 end = points[0][1]
                 cnt += 1

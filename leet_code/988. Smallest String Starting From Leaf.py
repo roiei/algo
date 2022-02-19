@@ -55,6 +55,7 @@ class Solution:
             
             if lval + pval < rval + pval:
                 return lval
+
             return rval
         
         return dfs(root, convert(root.val))

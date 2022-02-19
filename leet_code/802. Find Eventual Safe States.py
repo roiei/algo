@@ -6,8 +6,6 @@ import collections
 
 
 class Solution:
-    
-
     def eventualSafeNodes(self, graph: [[int]]) -> [int]:
         if not graph:
             return []
@@ -79,13 +77,7 @@ class Solution:
             if True != self.isCyclic(graph, i, set()):
                 res += i,
         print(res)
-
         return res
-
-    
-
-    
-
 
     def dfs(self, i, graph, n):
         q = [i]
@@ -197,8 +189,7 @@ class Solution:
                 res += i,
         return res
 
-    def eventualSafeNodes(self, graph):
-        # WHITE: not visit, GRAY: visiting, BLACK: visited(no cycle)
+    def find_save_vertices(self, graph):
         WHITE, GRAY, BLACK = 0, 1, 2
         n = len(graph)
         state = [WHITE]*n
@@ -211,8 +202,8 @@ class Solution:
                     continue
                 if state[adj] == GRAY:
                     return False
-                res = dfs(adj)
-                if False == res:
+
+                if False == dfs(adj):
                     return False
 
             state[node] = BLACK
@@ -228,7 +219,9 @@ class Solution:
             
             if True == ret:
                 res += node,
+
         return res
+
 
 
 #  0     1       2             3       4         5         6     7     8  9
@@ -238,7 +231,8 @@ class Solution:
 
 stime = time.time()
 #print([0, 1, 2, 3] == Solution().eventualSafeNodes([[1, 2], [], [1, 3], [1]]))
-print([] == Solution().eventualSafeNodes([[1, 2], [2], [3], [1]]))
+print(Solution().eventualSafeNodes([[1, 2], [], [1, 3], [0]]))
+#print([] == Solution().eventualSafeNodes([[1, 2], [2], [3], [1]]))
 #print([0,1,2,3,4] == Solution().eventualSafeNodes([[],[0,2,3,4],[3],[4],[]]))
 #print([2,4,5,6] == Solution().eventualSafeNodes([[1,2],[2,3],[5],[0],[5],[],[]]))
 #print([0,1,2,3,4,5,6,7,8,9] == Solution().eventualSafeNodes([[4,9],[3,5,7],[0,3,4,5,6,8],[7,8,9],[5,6,7,8],[6,7,8,9],[7,9],[8,9],[9],[]]))

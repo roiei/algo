@@ -1,3 +1,6 @@
+import collections
+
+
 class Interval(object):
     def __init__(self, s=0, e=0):
         self.start = s
@@ -36,11 +39,11 @@ class Solution:
         return out
 
     def merge(self, intervals):
-        intervals.sort()
-        res = [intervals.pop(0)]
+        intervals = collections.deque(sorted(intervals))
+        res = [intervals.popleft()]
 
         while intervals:
-            cur = intervals.pop(0)
+            cur = intervals.popleft()
 
             if res[-1][1] >= cur[0] and res[-1][0] <= cur[1]:
                 res[-1][0] = min(res[-1][0], cur[0])

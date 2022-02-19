@@ -103,10 +103,35 @@ class Solution:
 
         return mx
 
+    def get_max_level_width(self, root: TreeNode) -> int:
+        q = collections.deque([(root, 1)])
+        mx_width = 0
+
+        while q:
+            nq = collections.deque()
+            idx = first = q[0][1]
+
+            while q:
+                node, idx = q.popleft()
+
+                if node.left:
+                    nq += (node.left, idx * 2 - 1),
+                if node.right:
+                    nq += (node.right, idx * 2),
+
+            mx_width = max(mx_width, idx - first + 1)
+            q = nq
+
+        return mx_width
+
+
+
+get_max_level_width
 
 stime = time.time()
 # print(4 == Solution().widthOfBinaryTree(deserialize('[1,3,2,5,3,null,9]')))
-print(2 == Solution().widthOfBinaryTree(deserialize('[1,3,2,5]')))
+print(4 == Solution().widthOfBinaryTree(deserialize('[1, 2, 3, null, 4, null, 6, null, 7, 10]')))
+#print(2 == Solution().widthOfBinaryTree(deserialize('[1,3,2,5]')))
 # print(1 == Solution().widthOfBinaryTree(deserialize('[0]')))
 # print(8 == Solution().widthOfBinaryTree(deserialize('[1,1,1,1,null,null,1,1,null,null,1]')))
 # print(1 == Solution().widthOfBinaryTree(deserialize('[1,null,2]')))

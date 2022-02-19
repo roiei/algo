@@ -7,21 +7,22 @@ import collections
 
 
 class Solution:
-    def minAddToMakeValid(self, S: str) -> int:
-        
+    def find_min_parentheses(self, S: str) -> int:
         stk = []
         for ch in S:
             if stk and (stk[-1] == '(' and ch == ')'):
                 stk.pop()
                 continue
+
             stk += ch,
         
         return len(stk)
 
 
 stime = time.time()
-print(1 == Solution().minAddToMakeValid("())"))
-print(3 == Solution().minAddToMakeValid("((("))
-print(0 == Solution().minAddToMakeValid("()"))
-print(4 == Solution().minAddToMakeValid("()))(("))
+print(Solution().find_min_parentheses("())("))
+# print(1 == Solution().minAddToMakeValid("())"))
+# print(3 == Solution().minAddToMakeValid("((("))
+# print(0 == Solution().minAddToMakeValid("()"))
+# print(4 == Solution().minAddToMakeValid("()))(("))
 print('elapse time: {} sec'.format(time.time() - stime))

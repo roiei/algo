@@ -79,6 +79,21 @@ class Solution:
             res += num_odd <= k,
         
         return res
+
+    def canMakePaliQueries(self, s, queries):
+        N = 26
+        S = len(s) + 1
+        ints = list(map(lambda c: ord(c) - ord('a'), s))
+
+        dp = [0] * S
+        for i in range(1, S):
+            dp[i] = dp[i - 1] ^ (1 << ints[i - 1])
+
+        ones = lambda x: bin(x).count('1')
+        return [
+            ones(dp[r + 1] ^ dp[l]) >> 1 <= k
+            for l, r, k in queries
+        ]
     
     def canMakePaliQueries(self, s, queries):
         N = 26
@@ -90,22 +105,19 @@ class Solution:
 
         res = []
         for l, r, k in queries:
-            num_odd = 0
-
-            for i in range(N):
-                num_odd += (dp[r + 1][i] - dp[l][i])%2  
+            num_odd = sum((dp[r + 1][i] - dp[l][i])%2 for i in range(N))
             res += num_odd//2 <= k,
         
         return res
 
-    def canMakePaliQueries(self, s: str, queries: List[List[int]]) -> List[bool]:
+    def can_make_palindrome(self, s: str, requests: List[List[int]]) -> List[bool]:
         dp = [collections.Counter()]
         
         for i in range(len(s)):
             dp += dp[-1] + collections.Counter(s[i]),
         
         res = []
-        for l, r, k in queries:
+        for l, r, k in requests:
             req = dp[r + 1] - dp[l]
             need = sum(v%2 for v in req.values())//2
             res += need <= k,
@@ -114,5 +126,6 @@ class Solution:
 
 
 stime = time.time()
-print([True,False,False,True,True] == Solution().canMakePaliQueries("abcda", [[3,3,0],[1,2,0],[0,3,1],[0,3,2],[0,4,1]]))
+#print([True,False,False,True,True] == Solution().canMakePaliQueries("abcda", [[3,3,0],[1,2,0],[0,3,1],[0,3,2],[0,4,1]]))
+print(Solution().canMakePaliQueries("zaoza", [[1,2,0],[0,3,1],[0,4,1],[2,3,1]]))
 print('elapse time: {} sec'.format(time.time() - stime))
